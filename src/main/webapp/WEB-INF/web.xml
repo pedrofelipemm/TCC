@@ -3,7 +3,7 @@
   <display-name>MendesProject</display-name>
   
    <welcome-file-list>
-    <welcome-file>/paginas/index.xhtml</welcome-file>
+    <welcome-file>paginas/index.xhtml</welcome-file>
   </welcome-file-list>
  
   <listener>
