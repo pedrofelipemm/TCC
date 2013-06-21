@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:define name="conteudo">
+		
+		<h:form>
+		<p:panel>
+				
+				<h:panelGrid align="left" columns="2" width="450">
+				
+					<p:outputLabel for="_cliente" value="Cliente: " />
+					<p:selectOneMenu  widgetVar="cliente" id="_cliente" effect="clip" value="#{consultaPedidoMB.codCliente}" style="width:165px"  >
+						<f:selectItem itemLabel="Selecione" />
+						<f:selectItems value="#{consultaPedidoMB.clientes}" var="cliente" itemLabel="#{cliente.nome}" 
+	           				itemValue="#{cliente.codCliente}"/>  
+	           			<p:ajax event="change" listener="#{consultaPedidoMB.atualizarDados}" process="@this" update="tabelaProduto"/>
+	       			</p:selectOneMenu>
+	       			
+       			</h:panelGrid>
+       			
+       			<p:spacer height="15" width="800"/>
+
+				<p:dataTable id="tabelaProduto" var="pedido" value="#{consultaPedidoMB.pedidos}" widgetVar="tabelaProduto" 
+					emptyMessage="Não há produtos com essa especificação" scrollable="true" resizableColumns="true" style="width: 900px;">
+
+					<f:facet name="header">
+						<p:outputPanel>
+							<h:outputText value="Consulta de pedidos" />
+						</p:outputPanel>
+					</f:facet>
+					
+					<p:column id="cod" filterBy="#{pedido.cod}" sortBy="#{pedido.cod}" 
+						filterStyle="max-width: 80px; min-width: 80px;" headerText="Código" width="90">
+						<h:outputText value="#{pedido.cod}"/>
+					</p:column>
+					
+					<p:column id="cliente" filterBy="#{pedido.cliente.nome.concat(' ').concat(pedido.cliente.sobrenome)}"
+						sortBy="#{pedido.cliente.nome.concat(' ').concat(pedido.cliente.sobrenome)}"
+						filterStyle="max-width: 300px; min-width: 300px;"  headerText="Cliente" width="350"> 
+						<h:outputText value="#{pedido.cliente.nome.concat(' ').concat(pedido.cliente.sobrenome)}" /> 
+					</p:column>
+					
+					<p:column id="data" headerText="Data" width="100" sortBy="#{pedido.dataEmissao}" > 
+						<h:outputText value="#{pedido.dataEmissao}" >
+							<f:convertDateTime pattern="MM/dd/yyyy" />
+						</h:outputText>
+					</p:column>
+					
+					<p:column sortBy="#{pedido.valorTotal}" id="total" headerText="Total" width="100">
+						<h:outputText value="#{pedido.valorTotal}">
+							<f:convertNumber  type="currency" currencySymbol=""/>
+						</h:outputText>
+					</p:column>
+					
+				</p:dataTable>
+
+	</p:panel>
+		
+
+		</h:form>
+	</ui:define>
+</ui:composition>

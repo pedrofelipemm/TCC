@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:define name="conteudo">
+		
+		<p:panel>
+		<h:form >
+
+				<h3>Consulta de Clientes</h3>
+				<p:dataTable id="tabelaCliente" var="cliente" value="#{clienteMB.clientes}" widgetVar="tabelaCliente" 
+					emptyMessage="Não há clientes com essa especificação"  resizableColumns="true" style="width: 900px; margin-left: 6%;">
+
+					<f:facet name="header">
+						<p:outputPanel>
+							<h:outputText value="Consulta de clientes" />
+						</p:outputPanel>
+					</f:facet>
+					
+					<p:column id="codCliente" filterBy="#{cliente.codCliente}" 
+						filterStyle="max-width: 50px; min-width: 50px; "  headerText="Código" width="100">
+						<h:outputText value="#{cliente.codCliente}"/>
+					</p:column>
+					
+					<p:column id="nome" filterBy="#{cliente.nome}"
+						filterStyle="max-width: 130px; min-width: 130px;"  headerText="Nome" width="150"> 
+						<h:outputText value="#{cliente.nome}" /> 
+					</p:column>
+					
+					<p:column id="sobrenome" filterBy="#{cliente.sobrenome}"
+						filterStyle="max-width: 130px; min-width: 130px;"  headerText="Sobrenome" width="150">
+						<h:outputText value="#{cliente.sobrenome}" />
+					</p:column>
+					
+					<p:column id="telefone" filterBy="#{cliente.telefone}" filterMatchMode="contains"
+						filterStyle="max-width: 130px; min-width: 130px;"  headerText="Telefone" width="150">
+						<h:outputText value="#{cliente.telefone}" />
+					</p:column>
+					
+					<p:column id="celular" filterBy="#{cliente.celular}" filterMatchMode="contains"
+						filterStyle="max-width: 130px; min-width: 130px;"  headerText="Celular" width="150">
+						<h:outputText value="#{cliente.celular}" />
+					</p:column>
+									
+					<p:column>
+						<p:commandButton icon="ui-icon-pencil" title="Editar" action="#{clienteMB.iniciarEdicao(cliente.codCliente)}" ajax="false"
+								style="width:25px; height:25px;vertical-align: middle;margin-bottom: 3px;"/>
+								
+					</p:column>
+					
+					
+					
+				</p:dataTable>
+
+		
+
+		</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>

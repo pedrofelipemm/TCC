@@ -1,0 +1,85 @@
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml" xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:define name="conteudo">
+
+		<h:form id="form1"  style="text-align: left ">
+
+			<p:messages id="mensagem" autoUpdate="true">
+				<p:effect type="drop" event="load" delay="2000" speed="1000" />
+			</p:messages>
+
+			<p:panel id="panel" style="font-size: 14px; border: 0;  ">
+
+				<h2>Cadastro de Feedback</h2>
+				
+				<p:spacer height="10px"></p:spacer>
+
+				<p:focus context="panel" />
+
+				<h:panelGrid align="center" columns="4" width="950"
+					style="text-align: left" border="0">
+
+					<p:outputLabel for="_tipoAtendimento" value="Tipo de Atendimento: " />
+					
+					<p:selectOneMenu  id="_tipoAtendimento" effect="clip" value="#{feedbackMB.feedback.tipoAtendimento}" style="width:165px"  >
+						<f:selectItems value="#{feedbackMB.tiposAtendimento}"
+			            			 	var="tipo" itemLabel="#{tipo.descricao}"  itemValue="#{tipo}"/>
+        			</p:selectOneMenu>
+        			
+        			<p:outputLabel for="_cliente" value="Cliente: " />
+					<p:selectOneMenu  widgetVar="cliente" id="_cliente" effect="clip" value="#{feedbackMB.feedback.cliente.codCliente}" style="width:165px"  >
+						<f:selectItem itemLabel="Selecione" />
+						<f:selectItems value="#{clienteMB.clientes}" var="cliente" itemLabel="#{cliente.nome}" 
+            				itemValue="#{cliente.codCliente}"/>  
+            			<p:ajax event="change" listener="#{feedbackMB.escolherTipoItem}" process="@this,_tipoItem" update="_itemVendido"/>
+        			</p:selectOneMenu>
+        			
+        			<p:outputLabel for="_tipoItem" value="Tipo de Item: "  />
+					<p:selectOneMenu   id="_tipoItem" effect="clip" value="#{feedbackMB.tipoItem}" style="width:165px"  >						
+	            		<f:selectItem itemLabel="Selecione" />
+	            		<f:selectItems value="#{feedbackMB.tiposItem}"
+				            			 	var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}"/>
+				        <p:ajax event="change" listener="#{feedbackMB.escolherTipoItem}" process="@this,_cliente" update="_itemVendido"/>	
+        			</p:selectOneMenu>
+        			
+        			<p:outputLabel for="_itemVendido" value="Item Vendido: "  />        			
+					<p:selectOneMenu disabled="#{empty feedbackMB.itens}" id="_itemVendido" effect="clip"  style="width:165px"  value="#{feedbackMB.feedback.item.cod}">
+	            		<f:selectItems value="#{feedbackMB.itens}" var="obj" itemLabel="#{obj.nome}" itemValue="#{obj.cod}"/>
+				    </p:selectOneMenu>        	
+        			
+			 		<p:outputLabel for="_nota" value="Nota: " />
+					<p:inputText id="_nota" value="#{feedbackMB.feedback.nota}"
+						
+						size="20" />
+
+					<p:outputLabel for="_dataFeedback" value="Data do Feedback: " />
+					<p:calendar value="#{feedbackMB.feedback.dataFeedback}" id="_dataFeedback"  pattern="dd/MM/yyyy" locale="pt" />
+
+					<p:outputLabel for="_observacao" value="Observação: " />
+					
+					<p:inputTextarea id="_observacao" value="#{feedbackMB.feedback.observacao}" 
+						rows="2"  cols="35"/>
+				</h:panelGrid>
+			</p:panel>
+			<p:panel style="float: center; border: 0;">
+
+				<p:spacer width="10px" />
+				<p:commandButton value="Salvar" action="#{feedbackMB.salvarFeedback}" process="@all" ajax="false" style="margin: 0" />
+
+				<p:spacer width="10px" />
+				<p:commandButton value="Limpar" action="#{feedbackMB.resetDados}" process="@this" update="@all" style="margin: 0" />
+
+				<p:spacer width="10px" />
+
+
+			</p:panel>
+			
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>

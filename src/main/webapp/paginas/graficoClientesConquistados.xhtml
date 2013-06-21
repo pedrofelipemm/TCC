@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:decorate template="template.xhtml">
+		<ui:define name="conteudo">
+				
+		<p:panel  style="font-size: 14px; border: 0;  background: none;">
+		
+		<h:form>
+		
+		<h:panelGrid align="left" columns="3" width="450"
+						style="text-align: left; margin-left: 8%;" border="0"   >
+					
+			<p:outputLabel for="_meses" value="Analise dos ultimos:"/>
+			<p:selectOneMenu id="_meses" effect="clip" value="#{graficoMB.qtdePeriodos}" style="width:165px"  >
+				<f:selectItem itemValue="3" itemLabel="3 meses"/>
+				<f:selectItem itemValue="6" itemLabel="6 meses"/>
+				<f:selectItem itemValue="12" itemLabel="12 meses"/>
+          			
+          			<p:ajax event="change" listener="#{graficoMB.carregarGraficoCliente}" process="@this" update="@all" />
+          		
+        	</p:selectOneMenu>
+           		
+           </h:panelGrid>
+		
+		<p:spacer height="20"/>
+		
+		
+		<h:outputText rendered="#{empty graficoMB.linearModel}" value="Não há clientes Cadastrados"></h:outputText>
+						
+		
+			<center>
+					
+				<p:barChart rendered="#{not empty graficoMB.linearModel}" id="linear" value="#{graficoMB.linearModel}" 
+					legendPosition="w" title="Quantidade de Clientes Conquistados"  minY="0" maxY="#{graficoMB.maxY}"
+					
+					xaxisLabel="Periodo"
+            		yaxisLabel="Qtde Pessoas"
+					animate="true"
+					
+					style="height:400px"  />
+
+				<p:spacer height="50" />
+
+			</center>
+
+		</h:form>
+		
+		</p:panel>
+		
+	</ui:define>
+</ui:decorate>
+</html>

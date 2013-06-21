@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:define name="conteudo">
+
+
+		<h:form id="form1" style="text-align: left ">
+				
+				<p:messages id="mensagem" autoUpdate="true">
+					<p:effect type="drop" event="load" delay="5000" speed="1000" />
+				</p:messages>
+			
+				<p:panel id="panel" style="font-size: 14px; border: 0;  ">
+				
+				<p:panel style="font-size: 14px; border: 0;">
+				
+				<h2>Realizar Pedido</h2>	
+				<p:spacer height="10px"></p:spacer>
+				
+				<p:focus context="panel" />
+				
+				
+				<h:panelGrid align="left" columns="4" width="950"
+					style="text-align: left" border="0" >
+							
+						<p:outputLabel for="_cliente" value="Clientes: "
+							required="true" />
+												
+						<p:selectOneMenu  id="_cliente" effect="clip" value="#{pedidoMB.codCliente}" style="width:165px"  >
+          						<f:selectItems value="#{pedidoMB.clientes}" var="cliente" itemLabel="#{cliente.nome}" itemValue="#{cliente.codCliente}"/>  
+      					</p:selectOneMenu>
+      						
+      					<p:outputLabel for="_tipoItem" value="Tipo de Item: "  />
+						<p:selectOneMenu   id="_tipoItem" effect="clip" value="#{pedidoMB.tipoItem}" style="width:165px"  >						
+	            				<f:selectItem itemLabel="Selecione" />
+	            				<f:selectItems value="#{pedidoMB.tiposItem}"
+				            			 	var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}"/>
+	 				        <p:ajax event="change" listener="#{pedidoMB.escolherTipoItem}" process="@this " update="_itemVendido"/>	 
+        				</p:selectOneMenu>
+      						
+	      				<p:outputLabel for="_itemVendido" value="Item Vendido: "  />        			
+						<p:selectOneMenu disabled="#{empty pedidoMB.itens}" id="_itemVendido" effect="clip"  style="width:165px"  value="#{pedidoMB.codItem}">
+		            		<f:selectItems value="#{pedidoMB.itens}" var="obj" itemLabel="#{obj.nome}" itemValue="#{obj.cod}"/>
+					    </p:selectOneMenu>
+	      					
+	      				<p:outputLabel for="_quantidade" value="Quantidade: "
+										required="true" />
+									<p:inputText id="_quantidade"
+										value="#{pedidoMB.quantidade}" required="true"
+										requiredMessage="Quantidade não preenchida." 
+										size="22"  />
+						
+						<p:spacer height="20px"></p:spacer>
+					
+					</h:panelGrid>
+					
+					</p:panel>
+					
+				
+					
+					
+					
+					<p:panel style=" border: 0; margin-right: 13%;">
+			
+						<p:spacer width="10px" />
+						<p:commandButton value="Adicionar" action="#{pedidoMB.adicionarProduto}" ajax="true" process="@this, _itemVendido, _quantidade" update="_tabela _total" style="margin: 0" />
+	
+						<p:spacer width="10px" />
+						<p:commandButton value="Limpar Lista" action="#" style="margin: 0" />
+
+					</p:panel>
+					
+					<p:spacer height="20px"></p:spacer>
+					
+					<p:panel id="_tabela" style="border: 0;">
+						<p:dataTable id="listaItens" value="#{pedidoMB.itensPedido}" var="itemPedido" style="text-align:center">
+							<p:column headerText="Nome" style="width:40%;text-align:left" >
+								<h:outputText value="#{itemPedido.item.nome}"/>
+							</p:column>
+							<p:column headerText="Valor">
+								<h:outputText value="#{itemPedido.item.precoVenda}">
+									 <f:convertNumber  type="currency" currencySymbol="R$"/>
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Quantidade">
+								<h:outputText value="#{itemPedido.quantidade}"/>
+							</p:column>
+						</p:dataTable>
+				
+					</p:panel>
+						
+						<p:panelGrid id="_total"  columns="1" width="550" style="margin-left: 79%;text-align: center; border:0;"  >
+						
+							<p:outputLabel for="_valorTotal" value="Valor Total R$: "/>
+							<p:inputText readonly="true" id="_valorTotal" value="#{pedidoMB.total}" style="width:150px; height:40px; font-size:30px; text-align:right ">
+								<f:convertNumber  type="currency" currencySymbol=""/>
+							</p:inputText>
+							
+						</p:panelGrid>
+				
+				
+				
+		
+					</p:panel>
+				
+					
+				<p:panel style="float: center; border: 0;">
+			
+					<p:spacer width="10px" />
+
+					<p:commandButton value="Salvar" action="#{pedidoMB.salvarPedido}" ajax="false" process="@this, _cliente"
+						style="margin: 0" />
+
+					<p:spacer width="10px" />
+					<p:commandButton value="Limpar" action="#{pedidoMB.resetDados}" process="@this" update="@all"  style="margin: 0" />
+
+					<p:spacer width="10px" />
+
+					<p:commandButton value="Listar" action="#" style="margin: 0" />
+
+			</p:panel>
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>

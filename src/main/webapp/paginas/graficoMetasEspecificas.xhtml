@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:decorate template="template.xhtml">
+		<ui:define name="conteudo">
+						
+		<h:form >
+		
+		<p:spacer height="20px" />
+		
+		<p:panel  id="panel" style="font-size: 14px; border: 0;  background: none;" >
+			
+			 	
+           	<p:remoteCommand name="atualizarDados"  actionListener="#{graficoMB.carregarGraficoMetaEspecifica}" process="@all"  update="painelGrafico" />
+          			
+			<h:panelGrid  align="left" columns="7" width="900" style="position: fixed;margin-top: -20px;">
+			
+			<p:outputLabel   for="_tipoItem" value="Tipo de Item: "  />
+				<p:selectOneMenu  id="_tipoItem" effect="clip" value="#{graficoMB.tipoItem}" style="width:165px"  >						
+				<f:selectItem itemLabel="Selecione" />
+				
+				<f:selectItem itemLabel="Produto" itemValue="PRODUTO"/>
+				<f:selectItem  itemLabel="Serviço" itemValue="SERVICO"/>
+			
+				<p:ajax event="change" listener="#{graficoMB.carregarGraficoMetaEspecifica}"  process="@this" update="_itemVendido __itens" />	 
+     	    </p:selectOneMenu>
+   						
+    		<p:outputLabel for="_itemVendido" value="Item Vendido: "  />  
+			
+			<p:selectOneMenu widgetVar="origem" onchange="$('.alvo').val(origem.input.val());atualizarDados()" disabled="#{empty graficoMB.itens}" id="_itemVendido" effect="clip"  style="width:165px"  >
+           		<f:selectItem itemLabel="Selecione" />
+           		<f:selectItems id="__itens"  value="#{graficoMB.itens}" var="obj" itemLabel="#{obj.nome}" itemValue="#{obj.cod}"/>
+           		
+		    </p:selectOneMenu >
+           	           	
+           	<h:inputText id="_alvo" styleClass="alvo" value="#{graficoMB.codItem}" style="display:none" />
+           	
+           	<p:outputLabel for="_meses" value="Analise dos ultimos:"/>
+			<p:selectOneMenu id="_meses" effect="clip" value="#{graficoMB.qtdePeriodos}" style="width:165px"  >
+				<f:selectItem itemValue="3" itemLabel="3 meses"/>
+				<f:selectItem itemValue="6" itemLabel="6 meses"/>
+				<f:selectItem itemValue="12" itemLabel="12 meses"/>
+          			
+          			<p:ajax event="change" listener="#{graficoMB.carregarGraficoMetaEspecifica}" process="@this, _tipoItem, _alvo" update="painelGrafico"/>
+          		
+        	</p:selectOneMenu>
+           	           	
+           </h:panelGrid>
+           </p:panel>
+
+			<center>
+				
+			<p:spacer height="20px" />
+			
+			<p:panel id="painelGrafico" style="font-size: 14px; border: 0;  background: none;">	
+			
+				<p:barChart rendered="#{not empty graficoMB.linearModel}" id="linear" value="#{graficoMB.linearModel}" 
+				legendPosition="w" title="Meta por Produto Escífico"  minY="0" maxY="#{graficoMB.maxY}"
+				
+				xaxisLabel="Periodo"
+	          		yaxisLabel="Qtde Pessoas"
+				animate="true"
+				
+				style="height:400px"  />
+
+			
+			</p:panel>
+
+			</center>
+
+			
+		</h:form>
+	</ui:define>
+</ui:decorate>
+</html>

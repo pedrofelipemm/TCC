@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:define name="conteudo">
+		<p:panel>
+		<h:form>
+				<h3>Consulta de Serviços</h3>
+				<p:dataTable id="tabelaProduto" var="servico" value="#{servicoMB.servicos}" 
+					emptyMessage="Não serviços pra os filtros especificados." scrollable="true" resizableColumns="true" style="width: 900px; ">
+
+					<f:facet name="header">
+						<p:outputPanel>
+							<h:outputText value="Consulta de serviços" />
+						</p:outputPanel>
+					</f:facet>
+					
+					<p:column id="codServico" filterBy="#{servico.cod}" 
+						filterStyle="max-width: 50px; min-width: 50px;" headerText="Código" width="100">
+						<h:outputText value="#{servico.cod}"/>
+					</p:column>
+					
+					<p:column id="categoria" filterBy="#{servico.tipoServico.descricao}"
+						filterStyle="max-width: 130px; min-width: 130px;"  headerText="Tipo" width="150"> 
+						<h:outputText value="#{servico.tipoServico.descricao}" /> 
+					</p:column>
+					
+					<p:column id="nome" filterBy="#{servico.nome}"
+						filterStyle="max-width: 130px; min-width: 130px;"  headerText="Nome" width="150">
+						<h:outputText value="#{servico.nome}" />
+					</p:column>
+					
+					<p:column id="precocusto" filterBy="#{servico.precoCusto}"
+						filterStyle="max-width: 130px; min-width: 130px;"  headerText="Preco de Custo" width="135">
+						<h:outputText value="#{servico.precoCusto}">
+							<f:convertNumber  type="currency" currencySymbol=""/>
+						</h:outputText>
+					</p:column>
+					
+					<p:column id="precoVenda" filterBy="#{servico.precoVenda}"
+						filterStyle="max-width: 130px; min-width: 130px;"  headerText="Preco de Venda" width="135">
+						<h:outputText value="#{servico.precoVenda}">
+							<f:convertNumber  type="currency" currencySymbol=""/>
+						</h:outputText>
+					</p:column>
+					
+					<p:column width="30">
+						<p:commandButton icon="ui-icon-pencil" title="Editar" action="#{servicoMB.iniciarEdicao(servico.cod)}"  ajax="false"
+								style="width:25px; height:25px;vertical-align: middle;margin-bottom: 3px;"/>			
+					</p:column>
+					
+					
+				</p:dataTable>
+
+		
+
+		</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>
