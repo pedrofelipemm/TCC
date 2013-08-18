@@ -3,15 +3,15 @@ package br.com.mendes.model;
 public enum CategoriaProduto {
 
 	INSTRUMENTO("Instrumento"),
-	ELETRONICO("Eletrônico");
-	
+	ELETRONICO("EletrÃ´nico");
+
 	private String descricao;
-	
+
 	private CategoriaProduto(String descricao) {
 		this.descricao = descricao;
 	}
 
 	public String getDescricao() {
-		return descricao;
+		return this.descricao;
 	}
 }

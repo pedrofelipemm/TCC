@@ -6,10 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 
 import br.com.mendes.model.Cliente;
 import br.com.mendes.model.Feedback;
@@ -23,98 +22,103 @@ import br.com.mendes.service.FeedbackService;
 import br.com.mendes.service.ItemService;
 import br.com.mendes.utils.MBUtil;
 
-@Scope(value = "session")
-@Controller("feedbackMB")
+@ManagedBean(name = "feedbackMB")
+@ViewScoped
 public class FeedbackMB implements Serializable {
 
 	private static final long serialVersionUID = -4486064975269370483L;
-	
+
 	private Feedback feedback;
+
 	private String tipoAtendimento;
-	private TipoItem tipoItem;	
+
+	private TipoItem tipoItem;
 
 	private List<Feedback> feedbacks;
-	private List<Produto> produtos;
-	private List<Servico> servicos;
-	private List<Item> itens;
-	
-	private List<Cliente> clientes;
-	private List<TipoAtendimento> tiposAtendimento;
-	private List<TipoItem> tiposItem;
-	
-	
 
-	@Autowired
+	private List<Produto> produtos;
+
+	private List<Servico> servicos;
+
+	private List<Item> itens;
+
+	private List<Cliente> clientes;
+
+	private List<TipoAtendimento> tiposAtendimento;
+
+	private List<TipoItem> tiposItem;
+
+	@ManagedProperty(name = "feedbackService", value = "#{feedbackService}")
 	private FeedbackService feedbackService;
-	
-	@Autowired
+
+	@ManagedProperty(name = "itemService", value = "#{itemService}")
 	private ItemService itemService;
-	@Autowired
+
+	@ManagedProperty(name = "clienteService", value = "#{clienteService}")
 	private ClienteService clienteService;
 
 	@PostConstruct
 	public void iniciar() {
 
-		feedbacks = feedbackService.obterTodosFeedback();
-		clientes = clienteService.obterTodosCliente();
-					
+		this.feedbacks = this.feedbackService.obterTodosFeedback();
+		this.clientes = this.clienteService.obterTodosCliente();
+
 	}
 
 	public FeedbackMB() {
 
 		resetDados();
-		
-		tiposItem = Arrays.asList(TipoItem.values());		
-		tiposAtendimento = Arrays.asList(TipoAtendimento.values());
-		
+
+		this.tiposItem = Arrays.asList(TipoItem.values());
+		this.tiposAtendimento = Arrays.asList(TipoAtendimento.values());
+
 	}
-	
+
 	public String abrirTela() {
 		resetDados();
 		return "/paginas/cadastroFeedback.xhtml";
 	}
-	
-	
+
 	public void resetDados() {
-		
-		feedback = new Feedback();
-		feedback.setItem(new Item());
-		feedback.setCliente(new Cliente());
-		
-		itens = new ArrayList<Item>();
-		
+
+		this.feedback = new Feedback();
+		this.feedback.setItem(new Item());
+		this.feedback.setCliente(new Cliente());
+
+		this.itens = new ArrayList<Item>();
+
 	}
 
 	public void escolherTipoItem() {
-		
-		itens = itemService.buscarPorTipoECLiente(feedback.getCliente().getCodCliente(), tipoItem);		
-	
+
+		this.itens = this.itemService.buscarPorTipoECLiente(this.feedback.getCliente().getCodCliente(), this.tipoItem);
+
 	}
-	
-	
+
 	public void salvarFeedback() {
-		
-		if(feedback.getItem().getCod() == null) {
+
+		if (this.feedback.getItem().getCod() == null) {
 			MBUtil.addWarn("Nenhum Item foi selecionado.");
 			return;
 		}
-		
-		Feedback feedbackAtual = feedbackService.obterFeedbackPorClienteItem(
-				feedback.getCliente().getCodCliente(), feedback.getItem().getCod());
-		
-		if(feedbackAtual != null)
-			feedback.setCodFeedback(feedbackAtual.getCodFeedback());
-		
-		feedbackService.criarFeedback(feedback);
-		
+
+		Feedback feedbackAtual = this.feedbackService.obterFeedbackPorClienteItem(
+				this.feedback.getCliente().getCodCliente(), this.feedback.getItem().getCod());
+
+		if (feedbackAtual != null) {
+			this.feedback.setCodFeedback(feedbackAtual.getCodFeedback());
+		}
+
+		this.feedbackService.criarFeedback(this.feedback);
+
 		MBUtil.addInfo("Cadastrado com sucesso.");
-				
+
 		resetDados();
 
 	}
 
 	public Feedback getFeedback() {
-		return feedback;
+		return this.feedback;
 	}
 
 	public void setFeedback(Feedback feedback) {
@@ -122,7 +126,7 @@ public class FeedbackMB implements Serializable {
 	}
 
 	public List<Feedback> getFeedbacks() {
-		return feedbacks;
+		return this.feedbacks;
 	}
 
 	public void setFeedbacks(List<Feedback> feedbacks) {
@@ -130,7 +134,7 @@ public class FeedbackMB implements Serializable {
 	}
 
 	public List<Cliente> getClientes() {
-		return clientes;
+		return this.clientes;
 	}
 
 	public void setClientes(List<Cliente> clientes) {
@@ -138,7 +142,7 @@ public class FeedbackMB implements Serializable {
 	}
 
 	public String getTipoAtendimento() {
-		return tipoAtendimento;
+		return this.tipoAtendimento;
 	}
 
 	public void setTipoAtendimento(String tipoAtendimento) {
@@ -146,7 +150,7 @@ public class FeedbackMB implements Serializable {
 	}
 
 	public List<TipoAtendimento> getTiposAtendimento() {
-		return tiposAtendimento;
+		return this.tiposAtendimento;
 	}
 
 	public void setTiposAtendimento(List<TipoAtendimento> tiposAtendimento) {
@@ -154,7 +158,7 @@ public class FeedbackMB implements Serializable {
 	}
 
 	public TipoItem getTipoItem() {
-		return tipoItem;
+		return this.tipoItem;
 	}
 
 	public void setTipoItem(TipoItem tipoItem) {
@@ -162,7 +166,7 @@ public class FeedbackMB implements Serializable {
 	}
 
 	public List<TipoItem> getTiposItem() {
-		return tiposItem;
+		return this.tiposItem;
 	}
 
 	public void setTiposItem(List<TipoItem> tiposItem) {
@@ -170,7 +174,7 @@ public class FeedbackMB implements Serializable {
 	}
 
 	public List<Produto> getProdutos() {
-		return produtos;
+		return this.produtos;
 	}
 
 	public void setProdutos(List<Produto> produtos) {
@@ -178,7 +182,7 @@ public class FeedbackMB implements Serializable {
 	}
 
 	public List<Servico> getServicos() {
-		return servicos;
+		return this.servicos;
 	}
 
 	public void setServicos(List<Servico> servicos) {
@@ -186,11 +190,35 @@ public class FeedbackMB implements Serializable {
 	}
 
 	public List<Item> getItens() {
-		return itens;
+		return this.itens;
 	}
 
 	public void setItens(List<Item> itens) {
 		this.itens = itens;
+	}
+
+	public FeedbackService getFeedbackService() {
+		return this.feedbackService;
+	}
+
+	public void setFeedbackService(FeedbackService feedbackService) {
+		this.feedbackService = feedbackService;
+	}
+
+	public ItemService getItemService() {
+		return this.itemService;
+	}
+
+	public void setItemService(ItemService itemService) {
+		this.itemService = itemService;
+	}
+
+	public ClienteService getClienteService() {
+		return this.clienteService;
+	}
+
+	public void setClienteService(ClienteService clienteService) {
+		this.clienteService = clienteService;
 	}
 
 }

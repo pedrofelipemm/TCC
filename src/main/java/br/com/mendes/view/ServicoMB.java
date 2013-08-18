@@ -5,113 +5,125 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 
 import br.com.mendes.model.Meta;
 import br.com.mendes.model.Servico;
 import br.com.mendes.model.TipoServico;
 import br.com.mendes.service.MetaService;
 import br.com.mendes.service.ServicoService;
+import br.com.mendes.utils.MBUtil;
 
-@Scope(value="request")
-@Controller("servicoMB")
-public class ServicoMB implements Serializable{
-	
+@ManagedBean(name = "servicoMB")
+@ViewScoped
+public class ServicoMB implements Serializable {
+
 	private static final long serialVersionUID = 7157226923907682989L;
 
 	private Servico servico;
-	
+
 	private List<Servico> servicos;
-	
+
 	private List<TipoServico> tiposServico;
-	
+
 	private Double valorMeta;
-	
-	@Autowired 
+
+	@ManagedProperty(name = "servicoService", value = "#{servicoService}")
 	private ServicoService servicoService;
-	
-	@Autowired
+
+	@ManagedProperty(name = "metaService", value = "#{metaService}")
 	private MetaService metaService;
-	
+
 	@PostConstruct
 	public void iniciar() {
-		
-		servicos = servicoService.obterTodosServicos();
-		
-		tiposServico =  Arrays.asList(TipoServico.values());
-		
+
+		this.servicos = this.servicoService.obterTodosServicos();
+
+		this.tiposServico = Arrays.asList(TipoServico.values());
+
 		resetDados();
 	}
-	
 
 	public void resetDados() {
-		servico = new  Servico();
-		valorMeta = null;
+		this.servico = new Servico();
+		this.valorMeta = null;
 	}
-	
-    
+
 	public String iniciarEdicao(Long cod) {
-		
-		servico = servicoService.obterServicoPorCod(cod);
-		
-		Meta meta = metaService.obterMetaEspecificaAtual(cod);
-		
-		if(meta!=null)
-			valorMeta = meta.getValor();
-		
+
+		this.servico = this.servicoService.obterServicoPorCod(cod);
+
+		Meta meta = this.metaService.obterMetaEspecificaAtual(cod);
+
+		if (meta != null) {
+			this.valorMeta = meta.getValor();
+		}
+
 		return "/paginas/cadastroServico.xhtml";
 	}
-	
-    public void salvarServico() {
-    	
-    	Servico servicoSalvo = servicoService.criarServico(servico);
-    	
-    	if(valorMeta!=null)
-    		metaService.criarMetaEspecifica(valorMeta, servicoSalvo);
-    	
-    	FacesContext.getCurrentInstance().addMessage(null, 
-	      		new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso" , "Cadastrado com sucesso."));  
-    	
-    	resetDados();
-    	
-    }
+
+	public void salvarServico() {
+
+		this.servicoService.criarServico(this.servico);
+
+		if ((this.valorMeta != null) && (this.valorMeta > 0)) {
+			this.metaService.criarMetaEspecifica(this.valorMeta, this.servico);
+		}
+
+		MBUtil.addInfo("Cadastrado com sucesso.");
+
+		resetDados();
+
+	}
 
 	public Servico getServico() {
-		return servico;
+		return this.servico;
 	}
 
 	public void setServico(Servico servico) {
 		this.servico = servico;
 	}
 
-
 	public List<Servico> getServicos() {
-		return servicos;
+		return this.servicos;
 	}
-
 
 	public void setServicos(List<Servico> servicos) {
-		this.servicos= servicos;
+		this.servicos = servicos;
 	}
-	
+
 	public List<TipoServico> getTiposServico() {
-		return tiposServico;
+		return this.tiposServico;
 	}
 
 	public void setTiposServico(List<TipoServico> tiposServico) {
 		this.tiposServico = tiposServico;
-	}  
+	}
 
 	public Double getValorMeta() {
-		return valorMeta;
+		return this.valorMeta;
 	}
 
 	public void setValorMeta(Double valorMeta) {
 		this.valorMeta = valorMeta;
 	}
+
+	public ServicoService getServicoService() {
+		return this.servicoService;
+	}
+
+	public void setServicoService(ServicoService servicoService) {
+		this.servicoService = servicoService;
+	}
+
+	public MetaService getMetaService() {
+		return this.metaService;
+	}
+
+	public void setMetaService(MetaService metaService) {
+		this.metaService = metaService;
+	}
+
 }

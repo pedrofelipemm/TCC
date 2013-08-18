@@ -10,7 +10,7 @@ import br.com.mendes.model.Servico;
 import br.com.mendes.model.dao.ServicoDAO;
 import br.com.mendes.service.ServicoService;
 
-@Service
+@Service("servicoService")
 public class ServicoServiceImpl implements ServicoService {
 
 	@Autowired
@@ -19,18 +19,18 @@ public class ServicoServiceImpl implements ServicoService {
 	@Override
 	@Transactional
 	public Servico obterServicoPorCod(Long codServico) {
-		return servicoDAO.getByCod(codServico);
+		return this.servicoDAO.getByCod(codServico);
 	}
 
 	@Override
 	@Transactional
 	public List<Servico> obterTodosServicos() {
-		return servicoDAO.getAll();
+		return this.servicoDAO.getAll();
 	}
 
 	@Override
 	@Transactional
-	public Servico criarServico(Servico servico) {
-		return servicoDAO.saveUpdateGetEntity(servico);
+	public void criarServico(Servico servico) {
+		this.servicoDAO.saveUpdateGetEntity(servico);
 	}
 }

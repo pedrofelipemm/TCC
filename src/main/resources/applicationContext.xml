@@ -22,7 +22,7 @@
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
 		<property name="driverClass" value="org.postgresql.Driver" />
-		<property name="jdbcUrl" value="jdbc:postgresql://127.0.0.1:5432/mendes_bd" />
+		<property name="jdbcUrl" value="jdbc:postgresql://127.0.0.1:5432/Mendes" />
 		<property name="user" value="postgres" />
 		<property name="password" value="root" />
 		<property name="maxPoolSize" value="10" />

@@ -10,12 +10,7 @@
 
 	<ui:define name="conteudo">
 
-
 		<h:form id="form1" style="text-align: left ">
-				
-				<p:messages id="mensagem" autoUpdate="true">
-					<p:effect type="drop" event="load" delay="2000" speed="1000" />
-				</p:messages>
 				
 				<p:panel id="panel" style="font-size: 14px; border: 0;  ">
 				
@@ -24,47 +19,33 @@
 				
 				<p:focus context="panel" />
 				
-				<h:inputHidden value="#{produtoMB.produto.cod}"/>
-				
 				<h:panelGrid align="left" columns="6" width="950"
 					style="text-align: left" border="0" >
 					
-								<p:outputLabel for="_nome" value="Nome: " />
-								<p:inputText id="_nome" value="#{produtoMB.produto.nome}"
-									required="true" 
-									requiredMessage="Nome não preenchido."
-									size="22" styleClass="inputSize" />
+								<p:outputLabel for="nome" value="Nome: " />
+								<p:inputText id="nome" value="#{produtoMB.produto.nome}" size="22" styleClass="inputSize" />
+								<p:message for="nome"/>
 									
-								<p:outputLabel for="_categoria" value="Categorias: " required="true" />
-								<p:selectOneMenu  id="_categoria" effect="clip" value="#{produtoMB.produto.categoria}" style="width:165px"  >
+								<p:outputLabel for="categoria" value="Categorias: "/>
+								<p:selectOneMenu id="categoria" effect="clip" value="#{produtoMB.produto.categoria}" style="width:165px"  >
 									<f:selectItems value="#{produtoMB.categoriasProduto}"
 			            			 	var="categoria" itemLabel="#{categoria.descricao}" itemValue="#{categoria}"/>
 			            		</p:selectOneMenu>
+			            		<p:message for="categoria"/>
         						
-        						<p:outputLabel for="_precocusto" value="Preco de Custo: "
-									required="true" />
-								<p:inputText id="_precocusto"
-									value="#{produtoMB.produto.precoCusto}" required="true"
-									requiredMessage="Preco de custo não preenchido." 
-									size="22" styleClass="inputSize"/>
+        						<p:outputLabel for="custo" value="Custo: " />
+								<p:inputText id="custo" value="#{produtoMB.produto.custo}" size="22" styleClass="inputSize"/>
+								<p:message for="custo"/>
 									
-								<p:outputLabel for="_precovenda" value="Preco de Venda: "
-									required="true" />
-								<p:inputText id="_precovenda"
-									value="#{produtoMB.produto.precoVenda}" required="true"
-									requiredMessage="Preco de Venda não preenchido." 
-									size="22" styleClass="inputSize"/>
+								<p:outputLabel for="precovenda" value="Preco de Venda: " />
+								<p:inputText id="precovenda" value="#{produtoMB.produto.precoVenda}" size="22" styleClass="inputSize"/>
+								<p:message for="precovenda"/>	
 									
-								<p:outputLabel for="_meta" value="Meta: "
-									required="true" />
-								<p:inputText id="_meta"
-									value="#{produtoMB.valorMeta}" required="true"
-									requiredMessage="Preco de venda não preenchido." 
-									size="22" styleClass="inputSize">
-									<f:convertNumber  maxFractionDigits="0"/>
+								<p:outputLabel for="meta" value="Meta: " />
+								<p:inputText id="meta" value="#{produtoMB.valorMeta}" size="22" styleClass="inputSize">
+									<f:convertNumber maxFractionDigits="0"/>
 								</p:inputText>
-									
-									
+								<p:message for="meta"/>
         						
 					</h:panelGrid>
 				</p:panel>
@@ -72,18 +53,15 @@
 			
 				<p:spacer width="10px" />
 
-				<p:commandButton value="Salvar" action="#{produtoMB.salvarProduto}" update="@all" style="margin: 0" />
+				<p:commandButton value="Salvar" action="#{produtoMB.salvarProduto}" ajax="false" update="@all" style="margin: 0" />
 
 				<p:spacer width="10px" />
-				<p:commandButton value="Limpar" action="#{produtoMB.resetDados}" process="@this" update="@all" style="margin: 0" />
-
-				<p:spacer width="10px" />
-
-				<p:commandButton value="Listar" action="/paginas/consultaProduto.xhtml" process="@this" style="margin: 0" />
+				<p:commandButton value="Limpar" process="@this" update="@all" style="margin: 0" >
+					<p:resetInput target="panel" />
+				</p:commandButton>
 
 			</p:panel>
 		</h:form>
-
 
 	</ui:define>
 </ui:composition>

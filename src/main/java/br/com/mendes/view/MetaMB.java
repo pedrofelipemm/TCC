@@ -4,18 +4,17 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
 
 import br.com.mendes.model.MetaGeral;
 import br.com.mendes.model.TipoMetaGeral;
 import br.com.mendes.service.MetaService;
 
-@Scope(value="request")
-@Controller("metaMB")
+@ManagedBean(name = "metaMB")
+@ViewScoped
 public class MetaMB implements Serializable{
 
 	private static final long serialVersionUID = 8057294283144563153L;
@@ -26,58 +25,64 @@ public class MetaMB implements Serializable{
 	private MetaGeral metaFeedBackEmail;
 	private MetaGeral metaFeedBackTelefone;
 	private MetaGeral metaFeedBackPessoal;
-		
-	@Autowired 
+
+	@ManagedProperty(name = "metaService", value = "#{metaService}")
 	private MetaService metaService;
-	
+
 	@PostConstruct
 	public void iniciar() {
-		
-		metaCliente = metaService.obterMetaGeralAtual(TipoMetaGeral.CLIENTE);
-    	metaProduto = metaService.obterMetaGeralAtual(TipoMetaGeral.PRODUTO);
-    	metaServico = metaService.obterMetaGeralAtual(TipoMetaGeral.SERVICO);
-    	metaFeedBackTelefone = metaService.obterMetaGeralAtual(TipoMetaGeral.FEEDBACK_TELEFONE);
-    	metaFeedBackEmail = metaService.obterMetaGeralAtual(TipoMetaGeral.FEEDBACK_EMAIL);
-    	metaFeedBackPessoal = metaService.obterMetaGeralAtual(TipoMetaGeral.FEEDBACK_PESSOAL);
-    	
-    	if(metaCliente==null)
-    		metaCliente = new MetaGeral(TipoMetaGeral.CLIENTE);
-    	if(metaProduto==null)
-    		metaProduto = new MetaGeral(TipoMetaGeral.PRODUTO);
-    	if(metaServico==null)
-    		metaServico = new MetaGeral(TipoMetaGeral.SERVICO);
-    	if(metaFeedBackEmail==null)
-    		metaFeedBackEmail = new MetaGeral(TipoMetaGeral.FEEDBACK_EMAIL);
-    	if(metaFeedBackTelefone==null)
-    		metaFeedBackTelefone = new MetaGeral(TipoMetaGeral.FEEDBACK_TELEFONE);
-    	if(metaFeedBackPessoal==null)
-    		metaFeedBackPessoal = new MetaGeral(TipoMetaGeral.FEEDBACK_PESSOAL);
+
+		this.metaCliente = this.metaService.obterMetaGeralAtual(TipoMetaGeral.CLIENTE);
+		this.metaProduto = this.metaService.obterMetaGeralAtual(TipoMetaGeral.PRODUTO);
+		this.metaServico = this.metaService.obterMetaGeralAtual(TipoMetaGeral.SERVICO);
+		this.metaFeedBackTelefone = this.metaService.obterMetaGeralAtual(TipoMetaGeral.FEEDBACK_TELEFONE);
+		this.metaFeedBackEmail = this.metaService.obterMetaGeralAtual(TipoMetaGeral.FEEDBACK_EMAIL);
+		this.metaFeedBackPessoal = this.metaService.obterMetaGeralAtual(TipoMetaGeral.FEEDBACK_PESSOAL);
+
+		if(this.metaCliente==null) {
+			this.metaCliente = new MetaGeral(TipoMetaGeral.CLIENTE);
+		}
+		if(this.metaProduto==null) {
+			this.metaProduto = new MetaGeral(TipoMetaGeral.PRODUTO);
+		}
+		if(this.metaServico==null) {
+			this.metaServico = new MetaGeral(TipoMetaGeral.SERVICO);
+		}
+		if(this.metaFeedBackEmail==null) {
+			this.metaFeedBackEmail = new MetaGeral(TipoMetaGeral.FEEDBACK_EMAIL);
+		}
+		if(this.metaFeedBackTelefone==null) {
+			this.metaFeedBackTelefone = new MetaGeral(TipoMetaGeral.FEEDBACK_TELEFONE);
+		}
+		if(this.metaFeedBackPessoal==null) {
+			this.metaFeedBackPessoal = new MetaGeral(TipoMetaGeral.FEEDBACK_PESSOAL);
+		}
 	}
 
 	public void limparDados() {
-		metaCliente = new MetaGeral(TipoMetaGeral.CLIENTE);
-		metaProduto = new MetaGeral(TipoMetaGeral.PRODUTO);
-		metaServico = new MetaGeral(TipoMetaGeral.SERVICO);
-		metaFeedBackEmail = new MetaGeral(TipoMetaGeral.FEEDBACK_EMAIL);
-		metaFeedBackTelefone = new MetaGeral(TipoMetaGeral.FEEDBACK_TELEFONE);
-		metaFeedBackPessoal = new MetaGeral(TipoMetaGeral.FEEDBACK_PESSOAL);
+		this.metaCliente = new MetaGeral(TipoMetaGeral.CLIENTE);
+		this.metaProduto = new MetaGeral(TipoMetaGeral.PRODUTO);
+		this.metaServico = new MetaGeral(TipoMetaGeral.SERVICO);
+		this.metaFeedBackEmail = new MetaGeral(TipoMetaGeral.FEEDBACK_EMAIL);
+		this.metaFeedBackTelefone = new MetaGeral(TipoMetaGeral.FEEDBACK_TELEFONE);
+		this.metaFeedBackPessoal = new MetaGeral(TipoMetaGeral.FEEDBACK_PESSOAL);
 	}
-	
+
 	public void salvarMeta() {
-    	
-    	metaService.criarMetaGeral(metaCliente);
-    	metaService.criarMetaGeral(metaProduto);
-    	metaService.criarMetaGeral(metaServico);
-    	metaService.criarMetaGeral(metaFeedBackEmail);
-    	metaService.criarMetaGeral(metaFeedBackTelefone);
-    	metaService.criarMetaGeral(metaFeedBackPessoal);
-    	
-    	FacesContext.getCurrentInstance().addMessage(null, 
-	      		new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso" , "Cadastrado com sucesso."));  
-    }
+
+		this.metaService.criarMetaGeral(this.metaCliente);
+		this.metaService.criarMetaGeral(this.metaProduto);
+		this.metaService.criarMetaGeral(this.metaServico);
+		this.metaService.criarMetaGeral(this.metaFeedBackEmail);
+		this.metaService.criarMetaGeral(this.metaFeedBackTelefone);
+		this.metaService.criarMetaGeral(this.metaFeedBackPessoal);
+
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso" , "Cadastrado com sucesso."));
+	}
 
 	public MetaGeral getMetaCliente() {
-		return metaCliente;
+		return this.metaCliente;
 	}
 
 	public void setMetaCliente(MetaGeral metaCliente) {
@@ -85,7 +90,7 @@ public class MetaMB implements Serializable{
 	}
 
 	public MetaGeral getMetaProduto() {
-		return metaProduto;
+		return this.metaProduto;
 	}
 
 	public void setMetaProduto(MetaGeral metaProduto) {
@@ -93,7 +98,7 @@ public class MetaMB implements Serializable{
 	}
 
 	public MetaGeral getMetaServico() {
-		return metaServico;
+		return this.metaServico;
 	}
 
 	public void setMetaServico(MetaGeral metaServico) {
@@ -101,7 +106,7 @@ public class MetaMB implements Serializable{
 	}
 
 	public MetaGeral getMetaFeedBackEmail() {
-		return metaFeedBackEmail;
+		return this.metaFeedBackEmail;
 	}
 
 	public void setMetaFeedBackEmail(MetaGeral metaFeedBackEmail) {
@@ -109,7 +114,7 @@ public class MetaMB implements Serializable{
 	}
 
 	public MetaGeral getMetaFeedBackTelefone() {
-		return metaFeedBackTelefone;
+		return this.metaFeedBackTelefone;
 	}
 
 	public void setMetaFeedBackTelefone(MetaGeral metaFeedBackTelefone) {
@@ -117,7 +122,7 @@ public class MetaMB implements Serializable{
 	}
 
 	public MetaGeral getMetaFeedBackPessoal() {
-		return metaFeedBackPessoal;
+		return this.metaFeedBackPessoal;
 	}
 
 	public void setMetaFeedBackPessoal(MetaGeral metaFeedBackPessoal) {
@@ -125,5 +130,5 @@ public class MetaMB implements Serializable{
 	}
 
 
-  
+
 }

@@ -10,67 +10,52 @@
 
 	<ui:define name="conteudo">
 
-
 		<h:form id="form1" style="text-align: left ">
 				
-				<p:messages id="mensagem" autoUpdate="true">
-					<p:effect type="drop" event="load" delay="5000" speed="1000" />
-				</p:messages>
+			<p:panel id="panel" style="font-size: 14px; border: 0;  ">
 			
-				<p:panel id="panel" style="font-size: 14px; border: 0;  ">
-				
 				<p:panel style="font-size: 14px; border: 0;">
+			
+					<h2>Realizar Pedido</h2>	
+					<p:spacer height="10px"></p:spacer>
+					
+					<p:focus context="panel" />
 				
-				<h2>Realizar Pedido</h2>	
-				<p:spacer height="10px"></p:spacer>
-				
-				<p:focus context="panel" />
-				
-				
-				<h:panelGrid align="left" columns="4" width="950"
-					style="text-align: left" border="0" >
+					<h:panelGrid align="left" columns="6" width="950" style="text-align: left" border="0" >
 							
-						<p:outputLabel for="_cliente" value="Clientes: "
-							required="true" />
-												
-						<p:selectOneMenu  id="_cliente" effect="clip" value="#{pedidoMB.codCliente}" style="width:165px"  >
-          						<f:selectItems value="#{pedidoMB.clientes}" var="cliente" itemLabel="#{cliente.nome}" itemValue="#{cliente.codCliente}"/>  
-      					</p:selectOneMenu>
-      						
-      					<p:outputLabel for="_tipoItem" value="Tipo de Item: "  />
-						<p:selectOneMenu   id="_tipoItem" effect="clip" value="#{pedidoMB.tipoItem}" style="width:165px"  >						
-	            				<f:selectItem itemLabel="Selecione" />
-	            				<f:selectItems value="#{pedidoMB.tiposItem}"
-				            			 	var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}"/>
-	 				        <p:ajax event="change" listener="#{pedidoMB.escolherTipoItem}" process="@this " update="_itemVendido"/>	 
-        				</p:selectOneMenu>
-      						
-	      				<p:outputLabel for="_itemVendido" value="Item Vendido: "  />        			
-						<p:selectOneMenu disabled="#{empty pedidoMB.itens}" id="_itemVendido" effect="clip"  style="width:165px"  value="#{pedidoMB.codItem}">
-		            		<f:selectItems value="#{pedidoMB.itens}" var="obj" itemLabel="#{obj.nome}" itemValue="#{obj.cod}"/>
+						<p:outputLabel for="cliente" value="Clientes: " />
+						<p:selectOneMenu  id="cliente" effect="clip" value="#{pedidoMB.codCliente}" style="width:165px" >
+	         				<f:selectItems value="#{pedidoMB.clientes}" var="cliente" itemLabel="#{cliente.nome}" itemValue="#{cliente.codCliente}"/>  
+	     				</p:selectOneMenu>
+	     				<p:message for="cliente"/>
+	     						
+	     				<p:outputLabel for="tipoItem" value="Tipo de Item: "/>
+						<p:selectOneMenu id="tipoItem" effect="clip" value="#{pedidoMB.tipoItem}" style="width:165px">		
+	            			<f:selectItems value="#{pedidoMB.tiposItem}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}"/>
+	 				        <f:ajax event="change" listener="#{pedidoMB.escolherTipoItem}" execute="itemVendido" render="itemVendido"/>
+	       				</p:selectOneMenu>
+	       				<p:message for="tipoItem"/>
+	     						
+	      				<p:outputLabel for="itemVendido" value="Item Vendido: "/>        			
+						<p:selectOneMenu disabled="#{empty pedidoMB.itens}" id="itemVendido" effect="clip" style="width:165px" value="#{pedidoMB.codItem}">
+		            		<f:selectItems value="#{pedidoMB.itens}" var="item" itemLabel="#{item.nome}" itemValue="#{item.cod}"/>
 					    </p:selectOneMenu>
+					    <p:message for="itemVendido"/>
 	      					
-	      				<p:outputLabel for="_quantidade" value="Quantidade: "
-										required="true" />
-									<p:inputText id="_quantidade"
-										value="#{pedidoMB.quantidade}" required="true"
-										requiredMessage="Quantidade não preenchida." 
-										size="22"  />
+	      				<p:outputLabel for="quantidade" value="Quantidade: "/>
+						<p:inputText id="quantidade" value="#{pedidoMB.quantidade}" size="22"/>
+						<p:message for="quantidade"/>
 						
 						<p:spacer height="20px"></p:spacer>
-					
-					</h:panelGrid>
-					
-					</p:panel>
-					
 				
-					
-					
-					
+					</h:panelGrid>
+				
+				</p:panel>
+
 					<p:panel style=" border: 0; margin-right: 13%;">
 			
 						<p:spacer width="10px" />
-						<p:commandButton value="Adicionar" action="#{pedidoMB.adicionarProduto}" ajax="true" process="@this, _itemVendido, _quantidade" update="_tabela _total" style="margin: 0" />
+						<p:commandButton value="Adicionar" action="#{pedidoMB.adicionarProduto}" ajax="true" process="@this, itemVendido, quantidade" update="tabela total" style="margin: 0" />
 	
 						<p:spacer width="10px" />
 						<p:commandButton value="Limpar Lista" action="#" style="margin: 0" />
@@ -79,7 +64,7 @@
 					
 					<p:spacer height="20px"></p:spacer>
 					
-					<p:panel id="_tabela" style="border: 0;">
+					<p:panel id="tabela" style="border: 0;">
 						<p:dataTable id="listaItens" value="#{pedidoMB.itensPedido}" var="itemPedido" style="text-align:center">
 							<p:column headerText="Nome" style="width:40%;text-align:left" >
 								<h:outputText value="#{itemPedido.item.nome}"/>
@@ -96,34 +81,29 @@
 				
 					</p:panel>
 						
-						<p:panelGrid id="_total"  columns="1" width="550" style="margin-left: 79%;text-align: center; border:0;"  >
+						<p:panelGrid id="total"  columns="1" width="550" style="margin-left: 79%;text-align: center; border:0;"  >
 						
-							<p:outputLabel for="_valorTotal" value="Valor Total R$: "/>
-							<p:inputText readonly="true" id="_valorTotal" value="#{pedidoMB.total}" style="width:150px; height:40px; font-size:30px; text-align:right ">
+							<p:outputLabel for="valorTotal" value="Valor Total R$: "/>
+							<p:inputText readonly="true" id="valorTotal" value="#{pedidoMB.total}" style="width:150px; height:40px; font-size:30px; text-align:right ">
 								<f:convertNumber  type="currency" currencySymbol=""/>
 							</p:inputText>
 							
 						</p:panelGrid>
-				
-				
-				
-		
+
 					</p:panel>
-				
 					
 				<p:panel style="float: center; border: 0;">
 			
 					<p:spacer width="10px" />
 
-					<p:commandButton value="Salvar" action="#{pedidoMB.salvarPedido}" ajax="false" process="@this, _cliente"
-						style="margin: 0" />
+					<p:commandButton value="Salvar" action="#{pedidoMB.salvarPedido}" ajax="false" process="@this, cliente" style="margin: 0" />
 
 					<p:spacer width="10px" />
-					<p:commandButton value="Limpar" action="#{pedidoMB.resetDados}" process="@this" update="@all"  style="margin: 0" />
+					<p:commandButton value="Limpar" process="@this" update="@all" style="margin: 0" >
+						<p:resetInput target="panel panelEndereco" />
+					</p:commandButton>
 
 					<p:spacer width="10px" />
-
-					<p:commandButton value="Listar" action="#" style="margin: 0" />
 
 			</p:panel>
 		</h:form>

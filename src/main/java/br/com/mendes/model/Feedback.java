@@ -13,10 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-/**
- * 
- * @author Pedro
- */
 @Entity
 public class Feedback implements Serializable {
 
@@ -57,7 +53,7 @@ public class Feedback implements Serializable {
 	}
 
 	public Long getCodFeedback() {
-		return codFeedback;
+		return this.codFeedback;
 	}
 
 	public void setCodFeedback(Long codFeedback) {
@@ -65,7 +61,7 @@ public class Feedback implements Serializable {
 	}
 
 	public Cliente getCliente() {
-		return cliente;
+		return this.cliente;
 	}
 
 	public void setCliente(Cliente cliente) {
@@ -73,7 +69,7 @@ public class Feedback implements Serializable {
 	}
 
 	public Double getNota() {
-		return nota;
+		return this.nota;
 	}
 
 	public void setNota(Double nota) {
@@ -81,7 +77,7 @@ public class Feedback implements Serializable {
 	}
 
 	public TipoAtendimento getTipoAtendimento() {
-		return tipoAtendimento;
+		return this.tipoAtendimento;
 	}
 
 	public void setTipoAtendimento(TipoAtendimento tipoAtendimento) {
@@ -89,7 +85,7 @@ public class Feedback implements Serializable {
 	}
 
 	public String getObservacao() {
-		return observacao;
+		return this.observacao;
 	}
 
 	public void setObservacao(String observacao) {
@@ -97,7 +93,7 @@ public class Feedback implements Serializable {
 	}
 
 	public Date getDataFeedback() {
-		return dataFeedback;
+		return this.dataFeedback;
 	}
 
 	public void setDataFeedback(Date dataFeedback) {
@@ -105,12 +101,11 @@ public class Feedback implements Serializable {
 	}
 
 	public Item getItem() {
-		return item;
+		return this.item;
 	}
 
 	public void setItem(Item item) {
 		this.item = item;
 	}
-	
-	
+
 }

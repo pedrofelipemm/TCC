@@ -12,43 +12,43 @@ import br.com.mendes.model.dao.ItemPedidoDAO;
 import br.com.mendes.model.dao.PedidoDAO;
 import br.com.mendes.service.PedidoService;
 
-@Service
+@Service("pedidoService")
 public class PedidoServiceImpl implements PedidoService {
 
 	@Autowired
 	private PedidoDAO pedidoDAO;
-	
+
 	@Autowired
 	private ItemPedidoDAO itemPedidoDAO;
-	
-	
+
+
 	@Override
 	@Transactional
 	public Pedido obterPedidoPorCod(Long codPedido) {
-		return pedidoDAO.getByCod(codPedido);
+		return this.pedidoDAO.getByCod(codPedido);
 	}
 
 	@Override
 	@Transactional
 	public List<Pedido> obterTodosPedidos() {
-		return pedidoDAO.getAll();
+		return this.pedidoDAO.getAll();
 	}
 
 	@Override
 	@Transactional
-	public Pedido criarPedido(Pedido pedido) {
-		return pedidoDAO.saveUpdateGetEntity(pedido);
+	public void criarPedido(Pedido pedido) {
+		this.pedidoDAO.saveUpdateGetEntity(pedido);
 	}
-	
+
 	@Transactional
 	@Override
-	public ItemPedido criarAlterarItemPedido(ItemPedido itemPedido) {
-		return itemPedidoDAO.saveUpdateGetEntity(itemPedido);
+	public void criarAlterarItemPedido(ItemPedido itemPedido) {
+		this.itemPedidoDAO.saveUpdateGetEntity(itemPedido);
 	}
 
 	@Override
 	@Transactional
 	public List<Pedido> obterPedidoPorCliente(Long codCliente) {
-		return itemPedidoDAO.obterPedidoPorCliente(codCliente);
+		return this.itemPedidoDAO.obterPedidoPorCliente(codCliente);
 	}
 }

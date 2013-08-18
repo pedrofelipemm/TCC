@@ -9,18 +9,18 @@
 
 	<ui:define name="conteudo">
 		
-		<h:form>
-		<p:panel>
+		<h:form id="form1">
+			<p:panel>
 				
-				<h:panelGrid align="left" columns="2" width="450">
+				<h:panelGrid align="left" columns="3" width="450">
 				
-					<p:outputLabel for="_cliente" value="Cliente: " />
-					<p:selectOneMenu  widgetVar="cliente" id="_cliente" effect="clip" value="#{consultaPedidoMB.codCliente}" style="width:165px"  >
-						<f:selectItem itemLabel="Selecione" />
-						<f:selectItems value="#{consultaPedidoMB.clientes}" var="cliente" itemLabel="#{cliente.nome}" 
-	           				itemValue="#{cliente.codCliente}"/>  
+					<p:outputLabel for="cliente" value="Cliente: " />
+					<p:selectOneMenu  widgetVar="cliente" id="cliente" effect="clip" value="#{consultaPedidoMB.codCliente}" style="width:165px"  >
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+						<f:selectItems value="#{consultaPedidoMB.clientes}" var="cliente" itemLabel="#{cliente.nome}" itemValue="#{cliente.codCliente}"/>  
 	           			<p:ajax event="change" listener="#{consultaPedidoMB.atualizarDados}" process="@this" update="tabelaProduto"/>
 	       			</p:selectOneMenu>
+	       			<p:message for="cliente"/>
 	       			
        			</h:panelGrid>
        			

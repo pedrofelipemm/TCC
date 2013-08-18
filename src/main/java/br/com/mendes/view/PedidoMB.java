@@ -7,10 +7,9 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 
 import br.com.mendes.model.Cliente;
 import br.com.mendes.model.Item;
@@ -27,155 +26,162 @@ import br.com.mendes.service.ProdutoService;
 import br.com.mendes.service.ServicoService;
 import br.com.mendes.utils.MBUtil;
 
-@Scope(value = "session")
-@Controller("pedidoMB")
+@ManagedBean(name = "pedidoMB")
+@ViewScoped
 public class PedidoMB implements Serializable {
 
 	private static final long serialVersionUID = -2031182511996672906L;
 
 	private TipoItem tipoItem;
+
 	private Long codCliente;
+
 	private Long codItem;
+
 	private Integer quantidade;
-	private Double total;	
+
+	private Double total;
 
 	private List<Pedido> pedidos;
-	private List<Cliente> clientes;
-	private List<Produto> produtos;
-	private List<Servico> servicos;
-	private List<TipoItem> tiposItem;
-	private List<Item> itens;
-	private List<ItemPedido> itensPedido;
-	
 
-	@Autowired
+	private List<Cliente> clientes;
+
+	private List<Produto> produtos;
+
+	private List<Servico> servicos;
+
+	private List<TipoItem> tiposItem;
+
+	private List<Item> itens;
+
+	private List<ItemPedido> itensPedido;
+
+	@ManagedProperty(name = "pedidoService", value = "#{pedidoService}")
 	private PedidoService pedidoService;
 
-	@Autowired
+	@ManagedProperty(name = "clienteService", value = "#{clienteService}")
 	private ClienteService clienteService;
 
-	@Autowired
+	@ManagedProperty(name = "produtoService", value = "#{produtoService}")
 	private ProdutoService produtoService;
 
-	@Autowired
+	@ManagedProperty(name = "servicoService", value = "#{servicoService}")
 	private ServicoService servicoService;
-	
-	@Autowired
+
+	@ManagedProperty(name = "itemService", value = "#{itemService}")
 	private ItemService itemService;
 
 	@PostConstruct
 	public void iniciar() {
-		
-		pedidos = pedidoService.obterTodosPedidos();
-		clientes = clienteService.obterTodosCliente();
-		produtos = produtoService.obterTodosProduto();
-		servicos = servicoService.obterTodosServicos();
-		itens = itemService.buscarTodos(null);
-		
+
+		this.pedidos = this.pedidoService.obterTodosPedidos();
+		this.clientes = this.clienteService.obterTodosCliente();
+		this.produtos = this.produtoService.obterTodosProduto();
+		this.servicos = this.servicoService.obterTodosServicos();
+		this.tiposItem = Arrays.asList(TipoItem.values());
+
 		resetDados();
-		
+
+		this.tipoItem = TipoItem.PRODUTO;
+		this.itens = this.itemService.buscarTodos(this.tipoItem);
 	}
 
 	public String abrirTela() {
 		resetDados();
 		return "/paginas/realizarPedido.xhtml";
 	}
-	
+
 	public PedidoMB() {
-				
-		tiposItem = Arrays.asList(TipoItem.values());		
+
+		this.tiposItem = Arrays.asList(TipoItem.values());
 	}
-	
+
 	public void resetDados() {
-			
-		codCliente=null;
-		codItem=null;
-		tipoItem=null;
-		quantidade = 1;
-		itensPedido = new ArrayList<ItemPedido>();
-		itens = new ArrayList<Item>();		
-		total = 0.0;
-		
+
+		this.codCliente = null;
+		this.codItem = null;
+		this.tipoItem = null;
+		this.quantidade = 1;
+		this.itensPedido = new ArrayList<ItemPedido>();
+		this.itens = new ArrayList<Item>();
+		this.total = 0.0;
+
 	}
 
 	public void adicionarProduto() {
-		
-		if(itensPedido==null)
-			itensPedido = new ArrayList<ItemPedido>();
-		
-		if(codItem == null) {
-			MBUtil.addWarn("Item n„o foi selecionado.");
+
+		if (this.itensPedido == null) {
+			this.itensPedido = new ArrayList<ItemPedido>();
+		}
+
+		if (this.codItem == null) {
+			MBUtil.addWarn("Item n√£o foi selecionado.");
 			return;
 		}
-		
+
 		boolean encontrado = false;
-		
-		for(ItemPedido ip :itensPedido) {
-			
-			if(ip.getItem().getCod().equals(codItem)) {
-				ip.setQuantidade(quantidade);
+
+		for (ItemPedido ip : this.itensPedido) {
+
+			if (ip.getItem().getCod().equals(this.codItem)) {
+				ip.setQuantidade(this.quantidade);
 				encontrado = true;
-				MBUtil.addWarn("Produto j· estava na lista, sua quantidade foi alterada.");
+				MBUtil.addWarn("Produto j√° estava na lista, sua quantidade foi alterada.");
 			}
-			
-			
+
 		}
-		
-		if(!encontrado) {
-			
-			Item item = itemService.buscarPorCodigo(codItem);
-			
+
+		if (!encontrado) {
+
+			Item item = this.itemService.buscarPorCodigo(this.codItem);
+
 			ItemPedido itemPedido = new ItemPedido();
 			itemPedido.setItem(item);
-			itemPedido.setQuantidade(quantidade);
-			itensPedido.add(itemPedido);
+			itemPedido.setQuantidade(this.quantidade);
+			this.itensPedido.add(itemPedido);
 		}
-		
+
 		calcularTotal();
 	}
-		
+
 	public Double calcularTotal() {
-		
-		total = 0.0;
-		
-		for(ItemPedido ip :itensPedido) {
-			total+=ip.getItem().getPrecoVenda() * ip.getQuantidade();
+
+		this.total = 0.0;
+
+		for (ItemPedido ip : this.itensPedido) {
+			this.total += ip.getItem().getPrecoVenda() * ip.getQuantidade();
 		}
-		
-		return total;
-	}
-	
-	public void escolherTipoItem() {
-		
-		itens = itemService.buscarTodos(tipoItem);	
-	
+
+		return this.total;
 	}
 
-		
+	public void escolherTipoItem() {
+		this.itens = this.itemService.buscarTodos(this.tipoItem);
+	}
+
 	public void salvarPedido() {
 
 		Pedido pedido = new Pedido();
 		pedido.setStatus(StatusPedido.PAGO);
 		pedido.setDataEmissao(new Date());
-		pedido.setCliente(new Cliente(codCliente));		
+		pedido.setCliente(new Cliente(this.codCliente));
 		pedido.setValorTotal(calcularTotal());
-		
-		pedido = pedidoService.criarPedido(pedido);
-		
-		for(ItemPedido ip :itensPedido) {
+
+		this.pedidoService.criarPedido(pedido);
+
+		for (ItemPedido ip : this.itensPedido) {
 			ip.setPedido(pedido);
-			pedidoService.criarAlterarItemPedido(ip);
+			this.pedidoService.criarAlterarItemPedido(ip);
 		}
-		
+
 		MBUtil.addInfo("Cadastrado com sucesso.");
-		
+
 		resetDados();
 
 	}
-	
 
 	public List<Pedido> getPedidos() {
-		return pedidos;
+		return this.pedidos;
 	}
 
 	public void setOrcamentos(List<Pedido> pedidos) {
@@ -183,7 +189,7 @@ public class PedidoMB implements Serializable {
 	}
 
 	public List<Cliente> getClientes() {
-		return clientes;
+		return this.clientes;
 	}
 
 	public void setClientes(List<Cliente> clientes) {
@@ -191,7 +197,7 @@ public class PedidoMB implements Serializable {
 	}
 
 	public List<Produto> getProdutos() {
-		return produtos;
+		return this.produtos;
 	}
 
 	public void setProdutos(List<Produto> produtos) {
@@ -199,7 +205,7 @@ public class PedidoMB implements Serializable {
 	}
 
 	public List<Servico> getServicos() {
-		return servicos;
+		return this.servicos;
 	}
 
 	public void setServicos(List<Servico> servicos) {
@@ -207,7 +213,7 @@ public class PedidoMB implements Serializable {
 	}
 
 	public TipoItem getTipoItem() {
-		return tipoItem;
+		return this.tipoItem;
 	}
 
 	public void setTipoItem(TipoItem tipoItem) {
@@ -215,7 +221,7 @@ public class PedidoMB implements Serializable {
 	}
 
 	public List<TipoItem> getTiposItem() {
-		return tiposItem;
+		return this.tiposItem;
 	}
 
 	public void setTiposItem(List<TipoItem> tiposItem) {
@@ -223,7 +229,7 @@ public class PedidoMB implements Serializable {
 	}
 
 	public List<Item> getItens() {
-		return itens;
+		return this.itens;
 	}
 
 	public void setItens(List<Item> itens) {
@@ -231,7 +237,7 @@ public class PedidoMB implements Serializable {
 	}
 
 	public List<ItemPedido> getItensPedido() {
-		return itensPedido;
+		return this.itensPedido;
 	}
 
 	public void setItensPedido(List<ItemPedido> itensPedido) {
@@ -239,7 +245,7 @@ public class PedidoMB implements Serializable {
 	}
 
 	public Double getTotal() {
-		return total;
+		return this.total;
 	}
 
 	public void setTotal(Double total) {
@@ -247,7 +253,7 @@ public class PedidoMB implements Serializable {
 	}
 
 	public Integer getQuantidade() {
-		return quantidade;
+		return this.quantidade;
 	}
 
 	public void setQuantidade(Integer quantidade) {
@@ -255,7 +261,7 @@ public class PedidoMB implements Serializable {
 	}
 
 	public Long getCodItem() {
-		return codItem;
+		return this.codItem;
 	}
 
 	public void setCodItem(Long codItem) {
@@ -263,11 +269,55 @@ public class PedidoMB implements Serializable {
 	}
 
 	public Long getCodCliente() {
-		return codCliente;
+		return this.codCliente;
 	}
 
 	public void setCodCliente(Long codCliente) {
 		this.codCliente = codCliente;
+	}
+
+	public PedidoService getPedidoService() {
+		return this.pedidoService;
+	}
+
+	public void setPedidoService(PedidoService pedidoService) {
+		this.pedidoService = pedidoService;
+	}
+
+	public ClienteService getClienteService() {
+		return this.clienteService;
+	}
+
+	public void setClienteService(ClienteService clienteService) {
+		this.clienteService = clienteService;
+	}
+
+	public ProdutoService getProdutoService() {
+		return this.produtoService;
+	}
+
+	public void setProdutoService(ProdutoService produtoService) {
+		this.produtoService = produtoService;
+	}
+
+	public ServicoService getServicoService() {
+		return this.servicoService;
+	}
+
+	public void setServicoService(ServicoService servicoService) {
+		this.servicoService = servicoService;
+	}
+
+	public ItemService getItemService() {
+		return this.itemService;
+	}
+
+	public void setItemService(ItemService itemService) {
+		this.itemService = itemService;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 
 }

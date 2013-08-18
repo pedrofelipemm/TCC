@@ -11,7 +11,7 @@ import br.com.mendes.model.dao.EnderecoDAO;
 import br.com.mendes.service.EnderecoService;
 
 
-@Service
+@Service("enderecoService")
 public class EnderecoServiceImpl implements EnderecoService {
 
 	@Autowired
@@ -20,18 +20,18 @@ public class EnderecoServiceImpl implements EnderecoService {
 	@Override
 	@Transactional
 	public Endereco obterEnderecoPorCod(Long codEndereco) {
-		return enderecoDAO.getByCod(codEndereco);
+		return this.enderecoDAO.getByCod(codEndereco);
 	}
 
 	@Override
 	@Transactional
 	public List<Endereco> obterTodosEnderecos() {
-		return enderecoDAO.getAll();
+		return this.enderecoDAO.getAll();
 	}
 
 	@Override
 	@Transactional
-	public Endereco criarEndereco(Endereco endereco) {
-		return enderecoDAO.saveUpdateGetEntity(endereco);
+	public void criarEndereco(Endereco endereco) {
+		this.enderecoDAO.saveUpdateGetEntity(endereco);
 	}
 }

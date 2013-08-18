@@ -4,105 +4,126 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import br.com.mendes.model.Cliente;
 import br.com.mendes.model.Endereco;
 import br.com.mendes.service.ClienteService;
 import br.com.mendes.service.EnderecoService;
+import br.com.mendes.utils.MBUtil;
 
-@Scope(value="request")
-@Controller("clienteMB")
-public class ClienteMB implements Serializable{
+@ManagedBean(name = "clienteMB")
+@ViewScoped
+public class ClienteMB implements Serializable {
 
 	private static final long serialVersionUID = 7948132687109359178L;
 
 	private Cliente cliente;
-	
+
 	private Endereco endereco;
-	
+
 	private List<Cliente> clientes;
-	
-	@Autowired 
+
+	@ManagedProperty(name = "clienteService", value = "#{clienteService}")
 	private ClienteService clienteService;
-	
-	@Autowired 
+
+	@ManagedProperty(name = "enderecoService", value = "#{enderecoService}")
 	private EnderecoService enderecoService;
-	
+
 	@PostConstruct
 	public void iniciar() {
-		
-		cliente = new Cliente();
-		
-		endereco = new Endereco();
-		
-		clientes = clienteService.obterTodosCliente();
-	}    
-	
-	public ClienteMB() {
-		
+
+		this.cliente = new Cliente();
+
+		this.endereco = new Endereco();
+
+		this.clientes = this.clienteService.obterTodosCliente();
 	}
-	
+
+	public ClienteMB() {
+
+	}
+
 	public String iniciarEdicao(Long codCliente) {
-		
-		cliente = clienteService.obterClientePorCod(codCliente);
-		
-		endereco = cliente.getEndereco();
-		
+
+		this.cliente = this.clienteService.obterClientePorCod(codCliente);
+
+		this.endereco = this.cliente.getEndereco();
+
 		return "/paginas/cadastroCliente.xhtml";
 	}
-	
-    public void salvarCliente() {
-    	
-    	endereco = enderecoService.criarEndereco(endereco);
-    	
-    	cliente.setEndereco(endereco);
-    	
-    	cliente = clienteService.criarCliente(cliente);
-    	
-    	FacesContext.getCurrentInstance().addMessage(null, 
-	      		new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso" , "Cadastrado com sucesso."));  
-    	
-    	clientes = clienteService.obterTodosCliente();
-    	
-    	limparDados();
-    }
-    
-    public void limparDados() {
-    	cliente = new Cliente();
-    	endereco = new Endereco();
-    }
+
+	public void salvarCliente() {
+
+		this.enderecoService.criarEndereco(this.endereco);
+
+		this.cliente.setEndereco(this.endereco);
+
+		try {
+			this.clienteService.criarCliente(this.cliente);
+			MBUtil.addInfo("Cadastrado com sucesso.");
+
+			this.clientes = this.clienteService.obterTodosCliente();
+
+			limparDados();
+		} catch (DataIntegrityViolationException exception) {
+			exception.printStackTrace();
+
+			String msg = exception.getMessage().substring(exception.getMessage().indexOf("Detalhe"),
+					exception.getMessage().indexOf(".;"));
+
+			MBUtil.addError(msg);
+		}
+
+	}
+
+	public void limparDados() {
+		this.cliente = new Cliente();
+		this.endereco = new Endereco();
+	}
 
 	public Cliente getCliente() {
-		return cliente;
+		return this.cliente;
 	}
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
 
-
 	public List<Cliente> getClientes() {
-		return clientes;
+		return this.clientes;
 	}
-
 
 	public void setClientes(List<Cliente> clientes) {
 		this.clientes = clientes;
 	}
 
 	public Endereco getEndereco() {
-		return endereco;
+		return this.endereco;
 	}
 
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
-	
-  
+
+	public ClienteService getClienteService() {
+		return this.clienteService;
+	}
+
+	public void setClienteService(ClienteService clienteService) {
+		this.clienteService = clienteService;
+	}
+
+	public EnderecoService getEnderecoService() {
+		return this.enderecoService;
+	}
+
+	public void setEnderecoService(EnderecoService enderecoService) {
+		this.enderecoService = enderecoService;
+	}
+
 }

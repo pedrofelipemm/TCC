@@ -10,7 +10,7 @@ import br.com.mendes.model.Produto;
 import br.com.mendes.model.dao.ProdutoDAO;
 import br.com.mendes.service.ProdutoService;
 
-@Service
+@Service("produtoService")
 public class ProdutoServiceImpl implements ProdutoService {
 
 	@Autowired
@@ -19,18 +19,18 @@ public class ProdutoServiceImpl implements ProdutoService {
 	@Override
 	@Transactional
 	public Produto obterProdutoPorCod(Long codProduto) {
-		return produtoDAO.getByCod(codProduto);
+		return this.produtoDAO.getByCod(codProduto);
 	}
 
 	@Override
 	@Transactional
 	public List<Produto> obterTodosProduto() {
-		return produtoDAO.getAll();
+		return this.produtoDAO.getAll();
 	}
 
 	@Override
 	@Transactional
-	public Produto criarProduto(Produto produto) {
-		return produtoDAO.saveUpdateGetEntity(produto);
+	public void criarProduto(Produto produto) {
+		this.produtoDAO.saveUpdateGetEntity(produto);
 	}
 }

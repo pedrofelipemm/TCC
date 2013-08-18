@@ -3,16 +3,16 @@ package br.com.mendes.model;
 public enum TipoItem {
 
 	PRODUTO("Produto"),
-	SERVICO("Serviço");
-	
+	SERVICO("ServiÃ§o");
+
 	private String descricao;
-	
+
 	private TipoItem(String descricao) {
 		this.descricao = descricao;
 	}
 
 	public String getDescricao() {
-		return descricao;
+		return this.descricao;
 	}
-	
+
 }

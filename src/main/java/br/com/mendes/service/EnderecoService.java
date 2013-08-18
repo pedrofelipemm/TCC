@@ -6,9 +6,9 @@ import br.com.mendes.model.Endereco;
 
 public interface EnderecoService {
 
-	Endereco obterEnderecoPorCod(Long codEndereco);
+	public abstract Endereco obterEnderecoPorCod(Long codEndereco);
 
-	List<Endereco> obterTodosEnderecos();
+	public abstract List<Endereco> obterTodosEnderecos();
 
-	Endereco criarEndereco(Endereco endereco);
+	public abstract void criarEndereco(Endereco endereco);
 }

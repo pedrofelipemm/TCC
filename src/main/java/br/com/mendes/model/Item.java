@@ -3,6 +3,7 @@ package br.com.mendes.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -27,44 +29,42 @@ public class Item implements Serializable {
 	@OneToMany(mappedBy = "item")
 	private List<Feedback> feedbacks;
 
+	@NotNull
+	@Column(nullable = false)
 	private String nome;
 
-	private Double precoCusto;
+	@NotNull
+	@Column(nullable = false)
+	private Double custo;
 
+	@NotNull
+	@Column(nullable = false)
 	private Double precoVenda;
-	
-	@OneToMany(mappedBy="item")
+
+	@OneToMany(mappedBy = "item")
 	private List<MetaEspecifica> metas;
 
 	@OneToMany(mappedBy = "item")
 	private List<ItemPedido> itensPedido;
 
 	public Item() {
-		
+
 	}
-	
+
 	public Item(Long codItem) {
 		this.cod = codItem;
 	}
 
 	public String getNome() {
-		return nome;
+		return this.nome;
 	}
 
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-	public Double getPrecoCusto() {
-		return precoCusto;
-	}
-
-	public void setPrecoCusto(Double precoCusto) {
-		this.precoCusto = precoCusto;
-	}
-
 	public Double getPrecoVenda() {
-		return precoVenda;
+		return this.precoVenda;
 	}
 
 	public void setPrecoVenda(Double precoVenda) {
@@ -72,7 +72,7 @@ public class Item implements Serializable {
 	}
 
 	public List<Feedback> getFeedbacks() {
-		return feedbacks;
+		return this.feedbacks;
 	}
 
 	public void setFeedbacks(List<Feedback> feedbacks) {
@@ -80,7 +80,7 @@ public class Item implements Serializable {
 	}
 
 	public List<MetaEspecifica> getMetas() {
-		return metas;
+		return this.metas;
 	}
 
 	public void setMetas(List<MetaEspecifica> metas) {
@@ -88,7 +88,7 @@ public class Item implements Serializable {
 	}
 
 	public List<ItemPedido> getItensPedido() {
-		return itensPedido;
+		return this.itensPedido;
 	}
 
 	public void setItensPedido(List<ItemPedido> itensPedido) {
@@ -96,7 +96,7 @@ public class Item implements Serializable {
 	}
 
 	public Long getCod() {
-		return cod;
+		return this.cod;
 	}
 
 	public void setCod(Long cod) {
@@ -105,11 +105,16 @@ public class Item implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Item [cod=" + cod + ", nome=" + nome + ", precoCusto="
-				+ precoCusto + ", precoVenda=" + precoVenda + "]";
+		return "Item [cod=" + this.cod + ", nome=" + this.nome + ", custo="
+				+ this.custo + ", precoVenda=" + this.precoVenda + "]";
 	}
 
-	
-	
-	
+	public Double getCusto() {
+		return this.custo;
+	}
+
+	public void setCusto(Double custo) {
+		this.custo = custo;
+	}
+
 }

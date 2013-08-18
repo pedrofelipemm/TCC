@@ -5,10 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 
 import br.com.mendes.model.CategoriaProduto;
 import br.com.mendes.model.Meta;
@@ -17,97 +16,112 @@ import br.com.mendes.service.MetaService;
 import br.com.mendes.service.ProdutoService;
 import br.com.mendes.utils.MBUtil;
 
+@ManagedBean(name = "produtoMB")
+@ViewScoped
+public class ProdutoMB implements Serializable {
 
-@Scope(value="request")
-@Controller("produtoMB")
-public class ProdutoMB implements Serializable{
-	
 	private static final long serialVersionUID = -8900938210077927756L;
 
 	private Produto produto;
-	
+
 	private List<Produto> produtos;
-	
+
 	private List<CategoriaProduto> categoriasProduto;
-	
+
 	private Double valorMeta;
-	
-	@Autowired 
+
+	@ManagedProperty(name = "produtoService", value = "#{produtoService}")
 	private ProdutoService produtoService;
-	
-	@Autowired 
+
+	@ManagedProperty(name = "metaService", value = "#{metaService}")
 	private MetaService metaService;
-	
+
 	@PostConstruct
 	public void iniciar() {
-		produtos = produtoService.obterTodosProduto();
-		
-    	categoriasProduto = Arrays.asList(CategoriaProduto.values());
-    	
-    	resetDados();
+		this.produtos = this.produtoService.obterTodosProduto();
+
+		this.categoriasProduto = Arrays.asList(CategoriaProduto.values());
+
+		resetDados();
 	}
-	
+
 	public void resetDados() {
-		produto = new  Produto();
-		valorMeta = null;
+		this.produto = new Produto();
+		this.valorMeta = null;
 	}
-        
+
 	public String iniciarEdicao(Long codProduto) {
-		
-		produto = produtoService.obterProdutoPorCod(codProduto);
-		
-		Meta meta = metaService.obterMetaEspecificaAtual(codProduto);
-		
-		if(meta!=null)
-			valorMeta = meta.getValor();
-		
+
+		this.produto = this.produtoService.obterProdutoPorCod(codProduto);
+
+		Meta meta = this.metaService.obterMetaEspecificaAtual(codProduto);
+
+		if (meta != null) {
+			this.valorMeta = meta.getValor();
+		}
+
 		return "/paginas/cadastroProduto.xhtml";
 	}
-	
 
-    public void salvarProduto() {
+	public void salvarProduto() {
 
-    	Produto produtoSalvo = produtoService.criarProduto(produto);
-    	
-    	if(valorMeta!=null)
-    		metaService.criarMetaEspecifica(valorMeta, produtoSalvo);
-    	
-    	MBUtil.addInfo("Cadastrado com sucesso.");  
-    	
-    	resetDados();
-    }
+		this.produtoService.criarProduto(this.produto);
+
+		if ((this.valorMeta != null) && (this.valorMeta > 0)) {
+			this.metaService.criarMetaEspecifica(this.valorMeta, this.produto);
+		}
+
+		MBUtil.addInfo("Cadastrado com sucesso.");
+
+		resetDados();
+	}
 
 	public Produto getProduto() {
-		return produto;
+		return this.produto;
 	}
 
 	public void setProduto(Produto produto) {
 		this.produto = produto;
 	}
 
-
 	public List<Produto> getProdutos() {
-		return produtos;
+		return this.produtos;
 	}
-
 
 	public void setProdutos(List<Produto> produtos) {
 		this.produtos = produtos;
 	}
 
 	public List<CategoriaProduto> getCategoriasProduto() {
-		return categoriasProduto;
+		return this.categoriasProduto;
 	}
 
 	public void setCategoriasProduto(List<CategoriaProduto> categoriasProduto) {
 		this.categoriasProduto = categoriasProduto;
 	}
-	
+
 	public Double getValorMeta() {
-		return valorMeta;
+		return this.valorMeta;
 	}
-	
+
 	public void setValorMeta(Double valorMeta) {
 		this.valorMeta = valorMeta;
 	}
+
+	public ProdutoService getProdutoService() {
+		return this.produtoService;
+	}
+
+	public void setProdutoService(ProdutoService produtoService) {
+		this.produtoService = produtoService;
+	}
+
+	public MetaService getMetaService() {
+		return this.metaService;
+	}
+
+	public void setMetaService(MetaService metaService) {
+		this.metaService = metaService;
+	}
+
 }

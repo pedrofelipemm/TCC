@@ -6,9 +6,9 @@ import br.com.mendes.model.Servico;
 
 public interface ServicoService {
 
-    Servico obterServicoPorCod(Long codServico);
-    
-    List<Servico> obterTodosServicos();
-    
-    Servico criarServico(Servico servico);
+	public abstract Servico obterServicoPorCod(Long codServico);
+
+	public abstract List<Servico> obterTodosServicos();
+
+	public abstract void criarServico(Servico servico);
 }

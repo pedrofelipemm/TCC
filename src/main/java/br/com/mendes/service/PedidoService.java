@@ -7,13 +7,13 @@ import br.com.mendes.model.Pedido;
 
 public interface PedidoService {
 
-	Pedido obterPedidoPorCod(Long codPedido);
+	public abstract Pedido obterPedidoPorCod(Long codPedido);
 
-	List<Pedido> obterTodosPedidos();
+	public abstract List<Pedido> obterTodosPedidos();
 
-	Pedido criarPedido(Pedido pedido);
+	public abstract void criarPedido(Pedido pedido);
 
-	ItemPedido criarAlterarItemPedido(ItemPedido itemPedido);
+	public abstract void criarAlterarItemPedido(ItemPedido itemPedido);
 
-	List<Pedido> obterPedidoPorCliente(Long codCliente);
+	public abstract List<Pedido> obterPedidoPorCliente(Long codCliente);
 }

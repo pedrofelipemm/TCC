@@ -9,14 +9,14 @@ import br.com.mendes.model.TipoAtendimento;
 
 public interface FeedbackService extends Serializable {
 
-	Feedback obterFeedbackPorCod(Long codFeedback);
+	public abstract Feedback obterFeedbackPorCod(Long codFeedback);
 
-	List<Feedback> obterTodosFeedback();
+	public abstract List<Feedback> obterTodosFeedback();
 
-	Feedback criarFeedback(Feedback feedback);
+	public abstract void criarFeedback(Feedback feedback);
 
-	Feedback obterFeedbackPorClienteItem(Long codCliente, Long codItem);
+	public abstract Feedback obterFeedbackPorClienteItem(Long codCliente, Long codItem);
 
-	List<QtdePeriodoDTO> obterQtdesFeedbackNosPeriodos(
+	public abstract List<QtdePeriodoDTO> obterQtdesFeedbackNosPeriodos(
 			TipoAtendimento tipoAtendimento, List<QtdePeriodoDTO> periodos);
 }

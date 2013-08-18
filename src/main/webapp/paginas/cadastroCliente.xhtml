@@ -12,10 +12,6 @@
 
 		<h:form id="form1" style="text-align: left ">
 			
-			<p:messages id="mensagem" autoUpdate="true">
-				<p:effect type="drop" event="load" delay="2000" speed="1000" />
-			</p:messages>
-
 			<p:panel id="panel" style="font-size: 14px; border: 0;  ">
 
 				<h2>Cadastro de Clientes</h2>
@@ -24,82 +20,76 @@
 
 				<p:focus context="panel" />
 
-				<h:inputHidden value="#{clienteMB.cliente.codCliente}"/>
-				<h:inputHidden value="#{clienteMB.endereco.codEndereco}"/>
-
 				<h:panelGrid align="center" columns="6" width="900"
 					style="text-align: left" border="0">
 
-					<p:outputLabel for="_nome" value="Nome: " />
-					<p:inputText id="_nome" value="#{clienteMB.cliente.nome}"
-						required="true" requiredMessage="Nome não preenchido"/>
+					<p:outputLabel for="nome" value="Nome: " />
+					<p:inputText id="nome" value="#{clienteMB.cliente.nome}"/>
+					<p:message for="nome" />
 
-					<p:outputLabel for="_sobrenome" value="Sobrenome: " required="true" />
-					<p:inputText id="_sobrenome" value="#{clienteMB.cliente.sobrenome}"
-						required="true" requiredMessage="Sobrenome não preenchido."
-						size="20" />
+					<p:outputLabel for="sobrenome" value="Sobrenome: "  />
+					<p:inputText id="sobrenome" value="#{clienteMB.cliente.sobrenome}" size="20" />
+					<p:message for="sobrenome" />
 
-					<p:outputLabel for="_telefone" value="Tel: " required="true" />
-					<p:inputMask id="_telefone" value="#{clienteMB.cliente.telefone}"
-						required="true" requiredMessage="Telefone não preenchido"
-						size="20" mask="(99) 9999-9999" />
-
-					<p:outputLabel for="_celular" value="Cel: " required="true" />
-					<p:inputMask id="_celular" value="#{clienteMB.cliente.celular}"
-						required="true" requiredMessage="Celular não preenchido."
-						size="20" mask="(99) 9999-9999" />
-
-					<p:outputLabel for="_rg" value="RG: " required="true" />
-					<p:inputMask id="_rg" value="#{clienteMB.cliente.rg}"
-						required="true" requiredMessage="RG não preenchido." size="20"
-						mask="99.999.999-9" />
-
-					<p:outputLabel for="_cpf" value="CPF: " required="true" />
-					<p:inputMask id="_cpf" value="#{clienteMB.cliente.cpf}"
-						required="true" requiredMessage="CPF não preenchido." size="20"
-						mask="999.999.999-99" />
+					<p:outputLabel for="telefone" value="Tel: "  />
+					<p:inputMask id="telefone" value="#{clienteMB.cliente.telefone}" size="20" mask="(99) 9999-9999" />
+					<p:message for="telefone" />
+					
+					<p:outputLabel for="celular" value="Cel: "  />
+					<p:inputMask id="celular" value="#{clienteMB.cliente.celular}" size="20" mask="(99) 9999-9999" />
+					<p:message for="celular" />
+					
+					<p:outputLabel for="rg" value="RG: "  />
+					<p:inputMask id="rg" value="#{clienteMB.cliente.rg}" mask="99.999.999-9" />
+					<p:message for="rg" />
+					
+					<p:outputLabel for="cpf" value="CPF: "  />
+					<p:inputMask id="cpf" value="#{clienteMB.cliente.cpf}" mask="999.999.999-99" />
+					<p:message for="cpf" />
 
 					<p:outputLabel for="dataNascimento" value="Data Nascimento:  " />
-					<p:calendar value="#{clienteMB.cliente.dataNascimento}" id="dataNascimento" pattern="dd/MM/yyyy" locale="pt"/>
+					<p:calendar value="#{clienteMB.cliente.dataNascimento}" readonlyInput="true" id="dataNascimento" pattern="dd/MM/yyyy" locale="pt">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</p:calendar>
+					<span/>
 					
 					<p:outputLabel for="dataCadastro" value="Data Cadastro:  " />
-					<p:calendar value="#{clienteMB.cliente.dataCadastro}" id="dataCadastro" pattern="dd/MM/yyyy" locale="pt" />
+					<p:calendar value="#{clienteMB.cliente.dataCadastro}" readonlyInput="true" id="dataCadastro" pattern="dd/MM/yyyy" locale="pt" />
+					<span/>
 
 				</h:panelGrid>
 			</p:panel>
 			
-						<p:panel id="panelEndereco" style="font-size: 14px; border: 0;  ">
+				<p:panel id="panelEndereco" style="font-size: 14px; border: 0;  ">
 
 				<h2>Endereço</h2>
 				<p:spacer height="10px"></p:spacer>
 				
-				<p:focus context="panelEndereco" />
-				
 				<h:panelGrid align="left" columns="6" width="1000"
 					style="text-align: left" border="0" >
 
-					<p:outputLabel for="_logradouro" value="Logradouro: " />
-					<p:inputText id="_logradouro" value="#{clienteMB.endereco.logradouro}"
-						required="true" requiredMessage="Número não preenchido." size="20" />
+					<p:outputLabel for="logradouro" value="Logradouro: " />
+					<p:inputText id="logradouro" value="#{clienteMB.endereco.logradouro}" size="20" />
+					<p:message for="logradouro" />
 
-					<p:outputLabel for="_numero" value="Número: " required="true" />
-					<p:inputText id="_numero" value="#{clienteMB.endereco.numero}"
-						required="true" requiredMessage="Número não preenchido." size="20" />
-
-					<p:outputLabel for="_bairro" value="Bairro: " required="true" />					
-					<p:inputMask id="_bairro" value="#{clienteMB.endereco.bairro}" 
-						required="true" requiredMessage="Bairro não preenchido" size="20" />
-
-					<p:outputLabel for="_cidade" value="Cidade: " required="true" />
-					<p:inputMask id="_cidade" value="#{clienteMB.endereco.cidade}"
-						required="true" requiredMessage="Cidade não preenchido." size="20" />
-
-					<p:outputLabel for="_cep" value="CEP: " required="true" />
-					<p:inputMask id="_cep" value="#{clienteMB.endereco.cep}"
-						required="true" requiredMessage="CEP não preenchido." size="20" mask="99.999-999" />
+					<p:outputLabel for="numero" value="Número: "  />
+					<p:inputText id="numero" value="#{clienteMB.endereco.numero}" size="20" />
+					<p:message for="numero" />
 					
-					<p:outputLabel for="_estado" value="Estado: "  required="true" />
-					<p:selectOneMenu id="_estado" effect="clip" value="#{clienteMB.endereco.estado}" style="width:180px">  
+					<p:outputLabel for="bairro" value="Bairro: "  />					
+					<p:inputMask id="bairro" value="#{clienteMB.endereco.bairro}" size="20" />
+					<p:message for="bairro" />
+
+					<p:outputLabel for="cidade" value="Cidade: "  />
+					<p:inputMask id="cidade" value="#{clienteMB.endereco.cidade}" size="20" />
+					<p:message for="cidade" />
+
+					<p:outputLabel for="cep" value="CEP: "  />
+					<p:inputMask id="cep" value="#{clienteMB.endereco.cep}" size="20" mask="99.999-999" />
+					<p:message for="cep" />
+					
+					<p:outputLabel for="estado" value="Estado: " />
+					<p:selectOneMenu id="estado" effect="clip" value="#{clienteMB.endereco.estado}" style="width:180px">  
             			<f:selectItem itemLabel="Acre" itemValue="AC" />  
             			<f:selectItem itemLabel="Alagoas" itemValue="AL" />  
             			<f:selectItem itemLabel="Amapá" itemValue="AP" />
@@ -128,27 +118,27 @@
             			<f:selectItem itemLabel="Sergipe" itemValue="SE" />
             			<f:selectItem itemLabel="Tocantins" itemValue="TO" />  
         			</p:selectOneMenu>
+        			<p:message for="estado" />
+        			
+        			<p:outputLabel for="pais" value="País: " />
+					<p:inputText id="pais" value="#{clienteMB.endereco.pais}" size="20" />
+					<p:message for="pais" />
 
 					</h:panelGrid>
 			</p:panel>
 			
-			
 			<p:panel style="float: center; border: 0;">
 
 				<p:spacer width="10px" />
-
-				<p:commandButton value="Salvar" action="#{clienteMB.salvarCliente}" update="@all" style="margin: 0" />
-
-				<p:spacer width="10px" />
-				<p:commandButton value="Limpar" action="#{clienteMB.limparDados}" process="@this" update="@all" style="margin: 0" />
+				<p:commandButton value="Salvar" action="#{clienteMB.salvarCliente}" ajax="false" update="@all" style="margin: 0" />
 
 				<p:spacer width="10px" />
-
-				<p:commandButton value="Listar" action="/paginas/consultaCliente.xhtml" process="@this" style="margin: 0" />
+				<p:commandButton value="Limpar" process="@this" update="@all" style="margin: 0" >
+					<p:resetInput target="panel panelEndereco" />
+				</p:commandButton>
 
 			</p:panel>
 		</h:form>
-
 
 	</ui:define>
 </ui:composition>

@@ -12,10 +12,6 @@
 
 		<h:form id="form1" style="text-align: left ">
 
-			<p:messages id="mensagem" autoUpdate="true">
-				<p:effect type="drop" event="load" delay="2000" speed="1000" />
-			</p:messages>
-
 			<p:panel id="panel"	style="font-size: 14px; border: 0;  ">
 
 				<h2>Cadastro de Serviço</h2>
@@ -23,59 +19,48 @@
 				
 				<p:focus context="panel" />
 				
-				<h:inputHidden value="#{servicoMB.servico.cod}"/>
-				
-				<h:panelGrid align="left" columns="6" width="950"
-					style="text-align: left" border="0" >
+				<h:panelGrid align="left" columns="6" width="950" style="text-align: left" border="0" >
 
-					<p:outputLabel for="_descricao" value="Descrição: " />
-					<p:inputText id="_descricao" value="#{servicoMB.servico.nome}"
-						required="true" size="20"/>
+					<p:outputLabel for="descricao" value="Descrição: " />
+					<p:inputText id="descricao" value="#{servicoMB.servico.nome}" size="20" styleClass="inputSize"/>
+					<p:message for="descricao"/>
 						
-					<p:outputLabel for="_tpServico" value="Tipo Serviço: " required="true" />
-							<p:selectOneMenu  id="_tpServico" effect="clip" value="#{servicoMB.servico.tipoServico}" style="width:165px"  >
-								<f:selectItems value="#{servicoMB.tiposServico}" var="tipoServico" 
-								 itemLabel="#{tipoServico.descricao}" itemValue="#{tipoServico}" />  
-		            		</p:selectOneMenu>
+					<p:outputLabel for="tipoServico" value="Tipo Serviço: " />
+					<p:selectOneMenu id="tipoServico" effect="clip" value="#{servicoMB.servico.tipoServico}" style="width:165px"  >
+						<f:selectItems value="#{servicoMB.tiposServico}" var="tipoServico" 
+						 itemLabel="#{tipoServico.descricao}" itemValue="#{tipoServico}" />  
+            		</p:selectOneMenu>
+            		<p:message for="tipoServico"/>
 
-					<p:outputLabel for="_precoCusto" value="Preco de Custo: " required="true" />
-					<p:inputText id="_precoCusto" value="#{servicoMB.servico.precoCusto}"
-						required="true" requiredMessage="Preço de custo não preenchido."
-						size="20" />
+					<p:outputLabel for="custo" value="Custo: " />
+					<p:inputText id="custo" value="#{servicoMB.servico.custo}" size="20" styleClass="inputSize" />
+					<p:message for="custo"/>
 					
-					<p:outputLabel for="_precoVenda" value="Preço de Venda: " required="true" />					
-					<p:inputText id="_precoVenda" value="#{servicoMB.servico.precoVenda}" 
-						required="true" requiredMessage="Preço de venda não preenchido" 
-						size="20"/>
+					<p:outputLabel for="precoVenda" value="Preço de Venda: " />					
+					<p:inputText id="precoVenda" value="#{servicoMB.servico.precoVenda}" size="20" styleClass="inputSize"/>
+					<p:message for="precoVenda"/>
 						
-						<p:outputLabel for="_meta" value="Meta: "
-									required="true" />
-								<p:inputText id="_meta"
-									value="#{servicoMB.valorMeta}" required="true"
-									requiredMessage="Preco de venda não preenchido." 
-									size="22" styleClass="inputSize">
-									<f:convertNumber  maxFractionDigits="0"/>
-								</p:inputText>
+					<p:outputLabel for="meta" value="Meta: " />
+					<p:inputText id="meta" value="#{servicoMB.valorMeta}" size="20" styleClass="inputSize">
+						<f:convertNumber  maxFractionDigits="0"/>
+					</p:inputText>
+					<p:message for="meta"/>
 
 				</h:panelGrid>
 			</p:panel>
+			
 			<p:panel style="float: center; border: 0;">
 			
 				<p:spacer width="10px" />
-
-				<p:commandButton value="Salvar" action="#{servicoMB.salvarServico}"
-					style="margin: 0" />
+				<p:commandButton value="Salvar" action="#{servicoMB.salvarServico}" ajax="false" update="@all" style="margin: 0" />
 
 				<p:spacer width="10px" />
-				<p:commandButton value="Limpar" action="#{servicoMB.resetDados}" process="@this" update="@all" style="margin: 0" />
-
-				<p:spacer width="10px" />
-
-				<p:commandButton value="Listar" action="/paginas/consultaServico.xhtml" process="@this" style="margin: 0" />
+				<p:commandButton value="Limpar" process="@this" update="@all" style="margin: 0" >
+					<p:resetInput target="panel" />
+				</p:commandButton>
 
 			</p:panel>
 		</h:form>
-
 
 	</ui:define>
 </ui:composition>

@@ -11,48 +11,47 @@ import br.com.mendes.model.Cliente;
 import br.com.mendes.model.dao.ClienteDAO;
 import br.com.mendes.service.ClienteService;
 
-@Service
+@Service("clienteService")
 public class ClienteServiceImpl implements ClienteService {
 
 	private static final long serialVersionUID = -2496241306168858374L;
-	
+
 	@Autowired
 	private ClienteDAO clienteDAO;
 
 	@Override
 	@Transactional
 	public Cliente obterClientePorCod(Long codCliente) {
-		return clienteDAO.getByCod(codCliente);
+		return this.clienteDAO.getByCod(codCliente);
 	}
 
 	@Override
 	@Transactional
 	public List<Cliente> obterTodosCliente() {
-		return clienteDAO.getAll();
+		return this.clienteDAO.getAll();
 	}
 
 	@Override
 	@Transactional
-	public Cliente criarCliente(Cliente cliente) {
-		return clienteDAO.saveUpdateGetEntity(cliente);
+	public void criarCliente(Cliente cliente) {
+		this.clienteDAO.saveUpdateGetEntity(cliente);
 	}
-	
+
 	@Override
 	@Transactional
 	public Long obterQtdeClientesNoAnoMes(Integer ano, Integer mes) {
-		return clienteDAO.obterQtdeClientesNoAnoMes(ano, mes);
+		return this.clienteDAO.obterQtdeClientesNoAnoMes(ano, mes);
 	}
 
 	@Override
-	@Transactional(readOnly=true)
-	public List<QtdePeriodoDTO> obterQtdesClientesNosPeriodos(
-			List<QtdePeriodoDTO> periodos) {
-		
-		for(QtdePeriodoDTO periodo : periodos) {
+	@Transactional(readOnly = true)
+	public List<QtdePeriodoDTO> obterQtdesClientesNosPeriodos(List<QtdePeriodoDTO> periodos) {
+
+		for (QtdePeriodoDTO periodo : periodos) {
 			Long qtde = this.obterQtdeClientesNoAnoMes(periodo.getAno(), periodo.getMes());
 			periodo.setQtde(qtde.doubleValue());
 		}
-				
+
 		return periodos;
 	}
 }

@@ -36,9 +36,9 @@
 						<h:outputText value="#{produto.nome}" />
 					</p:column>
 					
-					<p:column id="precocusto" filterBy="#{produto.precoCusto}"
+					<p:column id="custo" filterBy="#{produto.custo}"
 						filterStyle="max-width: 130px; min-width: 130px;"  headerText="Preco de Custo" width="135">
-						<h:outputText value="#{produto.precoCusto}">
+						<h:outputText value="#{produto.custo}">
 							<f:convertNumber  type="currency" currencySymbol=""/>
 						</h:outputText>
 					</p:column>

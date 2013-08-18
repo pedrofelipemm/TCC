@@ -4,71 +4,69 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 
 import br.com.mendes.model.Cliente;
 import br.com.mendes.model.Pedido;
 import br.com.mendes.service.ClienteService;
 import br.com.mendes.service.PedidoService;
 
-@Scope(value="request")
-@Controller("consultaPedidoMB")
-public class ConsultaPedidoMB implements Serializable{
-	
+@ManagedBean(name = "consultaPedidoMB")
+@ViewScoped
+public class ConsultaPedidoMB implements Serializable {
+
 	private static final long serialVersionUID = -7865310445122139826L;
 
 	private List<Pedido> pedidos;
+
 	private List<Cliente> clientes;
-	
+
 	private Long codCliente;
-	
-	
-	@Autowired 
+
+	@ManagedProperty(name = "clienteService", value = "#{clienteService}")
 	private ClienteService clienteService;
-	
-	@Autowired
+
+	@ManagedProperty(name = "pedidoService", value = "#{pedidoService}")
 	private PedidoService pedidoService;
-	
+
 	@PostConstruct
-	public void iniciar() {	
-		
-		pedidos = pedidoService.obterTodosPedidos();
-		
-		clientes = clienteService.obterTodosCliente();
-				
-	}    
-	
-	public void atualizarDados()  {
-		pedidos = pedidoService.obterPedidoPorCliente(codCliente);
-	}
-	
-	public ConsultaPedidoMB() {
-		
-	}
-	
-	public String iniciarEdicao(Long codCliente) {
-		
-		this.codCliente = codCliente;
-		
-		atualizarDados();
-		
-		return "/paginas/consultaPedidos.xhtml";
-	}
-	
-	public List<Cliente> getClientes() {
-		return clientes;
+	public void iniciar() {
+
+		this.pedidos = this.pedidoService.obterTodosPedidos();
+
+		this.clientes = this.clienteService.obterTodosCliente();
+
 	}
 
+	public void atualizarDados() {
+		this.pedidos = this.pedidoService.obterPedidoPorCliente(this.codCliente);
+	}
+
+	public ConsultaPedidoMB() {
+
+	}
+
+	public String iniciarEdicao(Long codCliente) {
+
+		this.codCliente = codCliente;
+
+		atualizarDados();
+
+		return "/paginas/consultaPedidos.xhtml";
+	}
+
+	public List<Cliente> getClientes() {
+		return this.clientes;
+	}
 
 	public void setClientes(List<Cliente> clientes) {
 		this.clientes = clientes;
 	}
 
 	public List<Pedido> getPedidos() {
-		return pedidos;
+		return this.pedidos;
 	}
 
 	public void setPedidos(List<Pedido> pedidos) {
@@ -76,10 +74,27 @@ public class ConsultaPedidoMB implements Serializable{
 	}
 
 	public Long getCodCliente() {
-		return codCliente;
+		return this.codCliente;
 	}
 
 	public void setCodCliente(Long codCliente) {
 		this.codCliente = codCliente;
-	}  
+	}
+
+	public ClienteService getClienteService() {
+		return this.clienteService;
+	}
+
+	public void setClienteService(ClienteService clienteService) {
+		this.clienteService = clienteService;
+	}
+
+	public PedidoService getPedidoService() {
+		return this.pedidoService;
+	}
+
+	public void setPedidoService(PedidoService pedidoService) {
+		this.pedidoService = pedidoService;
+	}
+
 }

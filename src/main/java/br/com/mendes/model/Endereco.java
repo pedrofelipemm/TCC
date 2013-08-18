@@ -2,184 +2,216 @@ package br.com.mendes.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
-/**
- *
- * @author Pedro
- */
 @Entity
 public class Endereco implements Serializable {
 
 	private static final long serialVersionUID = 8013789718232084977L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codEndereco;
-    
-    private String logradouro;
-    
-    private Integer numero;
-    
-    private String bairro;
-    
-    private String cidade;
-    
-    private String cep;
-    
-    private String estado;
-    
-    private String pais;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long codEndereco;
 
-    public Endereco() {
-    }
+	@NotNull
+	@Column(nullable = false)
+	private String logradouro;
 
-    public Endereco(Long codEndereco, String logradouro, Integer numero, String bairro, String cidade, String cep, String estado, String pais) {
-        this.codEndereco = codEndereco;
-        this.logradouro = logradouro;
-        this.numero = numero;
-        this.bairro = bairro;
-        this.cidade = cidade;
-        this.cep = cep;
-        this.estado = estado;
-        this.pais = pais;
-    }
+	@NotNull
+	@Column(nullable = false)
+	private Integer numero;
 
-    public Long getCodEndereco() {
-        return codEndereco;
-    }
+	@NotNull
+	@Column(nullable = false)
+	private String bairro;
 
-    public void setCodEndereco(Long codEndereco) {
-        this.codEndereco = codEndereco;
-    }
+	@NotNull
+	@Column(nullable = false)
+	private String cidade;
 
-    public String getLogradouro() {
-        return logradouro;
-    }
+	@NotNull
+	@Column(nullable = false)
+	private String cep;
 
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
-    }
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private Estado estado;
 
-    public Integer getNumero() {
-        return numero;
-    }
+	@NotNull
+	@Column(nullable = false)
+	private String pais;
 
-    public void setNumero(Integer numero) {
-        this.numero = numero;
-    }
+	public Endereco() {
+	}
 
-    public String getBairro() {
-        return bairro;
-    }
+	public Endereco(String logradouro, Integer numero, String bairro, String cidade, String cep, Estado estado, String pais) {
+		this.logradouro = logradouro;
+		this.numero = numero;
+		this.bairro = bairro;
+		this.cidade = cidade;
+		this.cep = cep;
+		this.estado = estado;
+		this.pais = pais;
+	}
 
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
+	public Long getCodEndereco() {
+		return this.codEndereco;
+	}
 
-    public String getCidade() {
-        return cidade;
-    }
+	public void setCodEndereco(Long codEndereco) {
+		this.codEndereco = codEndereco;
+	}
 
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
+	public String getLogradouro() {
+		return this.logradouro;
+	}
 
-    public String getCep() {
-        return cep;
-    }
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
+	}
 
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
+	public Integer getNumero() {
+		return this.numero;
+	}
 
-    public String getEstado() {
-        return estado;
-    }
+	public void setNumero(Integer numero) {
+		this.numero = numero;
+	}
 
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
+	public String getBairro() {
+		return this.bairro;
+	}
 
-    public String getPais() {
-        return pais;
-    }
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
 
-    public void setPais(String pais) {
-        this.pais = pais;
-    }
+	public String getCidade() {
+		return this.cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	public String getCep() {
+		return this.cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	public Estado getEstado() {
+		return this.estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+
+	public String getPais() {
+		return this.pais;
+	}
+
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((bairro == null) ? 0 : bairro.hashCode());
-		result = prime * result + ((cep == null) ? 0 : cep.hashCode());
-		result = prime * result + ((cidade == null) ? 0 : cidade.hashCode());
-		result = prime * result
-				+ ((codEndereco == null) ? 0 : codEndereco.hashCode());
-		result = prime * result + ((estado == null) ? 0 : estado.hashCode());
-		result = prime * result
-				+ ((logradouro == null) ? 0 : logradouro.hashCode());
-		result = prime * result + ((numero == null) ? 0 : numero.hashCode());
-		result = prime * result + ((pais == null) ? 0 : pais.hashCode());
+		result = (prime * result) + ((this.bairro == null) ? 0 : this.bairro.hashCode());
+		result = (prime * result) + ((this.cep == null) ? 0 : this.cep.hashCode());
+		result = (prime * result) + ((this.cidade == null) ? 0 : this.cidade.hashCode());
+		result = (prime * result)
+				+ ((this.codEndereco == null) ? 0 : this.codEndereco.hashCode());
+		result = (prime * result) + ((this.estado == null) ? 0 : this.estado.hashCode());
+		result = (prime * result)
+				+ ((this.logradouro == null) ? 0 : this.logradouro.hashCode());
+		result = (prime * result) + ((this.numero == null) ? 0 : this.numero.hashCode());
+		result = (prime * result) + ((this.pais == null) ? 0 : this.pais.hashCode());
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Endereco other = (Endereco) obj;
-		if (bairro == null) {
-			if (other.bairro != null)
+		if (this.bairro == null) {
+			if (other.bairro != null) {
 				return false;
-		} else if (!bairro.equals(other.bairro))
+			}
+		} else if (!this.bairro.equals(other.bairro)) {
 			return false;
-		if (cep == null) {
-			if (other.cep != null)
+		}
+		if (this.cep == null) {
+			if (other.cep != null) {
 				return false;
-		} else if (!cep.equals(other.cep))
+			}
+		} else if (!this.cep.equals(other.cep)) {
 			return false;
-		if (cidade == null) {
-			if (other.cidade != null)
+		}
+		if (this.cidade == null) {
+			if (other.cidade != null) {
 				return false;
-		} else if (!cidade.equals(other.cidade))
+			}
+		} else if (!this.cidade.equals(other.cidade)) {
 			return false;
-		if (codEndereco == null) {
-			if (other.codEndereco != null)
+		}
+		if (this.codEndereco == null) {
+			if (other.codEndereco != null) {
 				return false;
-		} else if (!codEndereco.equals(other.codEndereco))
+			}
+		} else if (!this.codEndereco.equals(other.codEndereco)) {
 			return false;
-		if (estado == null) {
-			if (other.estado != null)
+		}
+		if (this.estado == null) {
+			if (other.estado != null) {
 				return false;
-		} else if (!estado.equals(other.estado))
+			}
+		} else if (!this.estado.equals(other.estado)) {
 			return false;
-		if (logradouro == null) {
-			if (other.logradouro != null)
+		}
+		if (this.logradouro == null) {
+			if (other.logradouro != null) {
 				return false;
-		} else if (!logradouro.equals(other.logradouro))
+			}
+		} else if (!this.logradouro.equals(other.logradouro)) {
 			return false;
-		if (numero == null) {
-			if (other.numero != null)
+		}
+		if (this.numero == null) {
+			if (other.numero != null) {
 				return false;
-		} else if (!numero.equals(other.numero))
+			}
+		} else if (!this.numero.equals(other.numero)) {
 			return false;
-		if (pais == null) {
-			if (other.pais != null)
+		}
+		if (this.pais == null) {
+			if (other.pais != null) {
 				return false;
-		} else if (!pais.equals(other.pais))
+			}
+		} else if (!this.pais.equals(other.pais)) {
 			return false;
+		}
 		return true;
 	}
-    
-    
+
+
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,11 +13,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
-/**
- * 
- * @author Pedro
- */
+import org.hibernate.validator.constraints.br.CPF;
+
 @Entity
 public class Cliente implements Serializable {
 
@@ -26,8 +26,12 @@ public class Cliente implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codCliente;
 
+	@NotNull
+	@Column(nullable = false)
 	private String nome;
 
+	@NotNull
+	@Column(nullable = false)
 	private String sobrenome;
 
 	@OneToOne
@@ -37,10 +41,15 @@ public class Cliente implements Serializable {
 
 	private String celular;
 
+	@NotNull
+	@Column(nullable = false, unique = true)
 	private String rg;
 
+	@CPF
+	@NotNull
+	@Column(nullable = false, unique = true)
 	private String cpf;
-	
+
 	@OneToMany(mappedBy = "cliente")
 	private List<Feedback> feedbacks;
 
@@ -56,10 +65,18 @@ public class Cliente implements Serializable {
 	public Cliente() {
 	}
 
+	public Cliente(String nome, String sobrenome, String rg, String cpf, Date dataCadastro) {
+		this.nome = nome;
+		this.sobrenome = sobrenome;
+		this.rg = rg;
+		this.cpf = cpf;
+		this.dataCadastro = dataCadastro;
+	}
+
 	public Cliente(Long codCliente) {
 		this.codCliente = codCliente;
 	}
-	
+
 	public Cliente(Long codCliente, String nome, String sobrenome,
 			Endereco endereco, String telefone, String celular, String rg,
 			String cpf,  Date dataNascimento, Date dataCadastro) {
@@ -83,7 +100,7 @@ public class Cliente implements Serializable {
 	}
 
 	public Long getCodCliente() {
-		return codCliente;
+		return this.codCliente;
 	}
 
 	public void setCodCliente(Long codCliente) {
@@ -91,7 +108,7 @@ public class Cliente implements Serializable {
 	}
 
 	public String getNome() {
-		return nome;
+		return this.nome;
 	}
 
 	public void setNome(String nome) {
@@ -99,7 +116,7 @@ public class Cliente implements Serializable {
 	}
 
 	public String getSobrenome() {
-		return sobrenome;
+		return this.sobrenome;
 	}
 
 	public void setSobrenome(String sobrenome) {
@@ -107,7 +124,7 @@ public class Cliente implements Serializable {
 	}
 
 	public String getTelefone() {
-		return telefone;
+		return this.telefone;
 	}
 
 	public void setTelefone(String telefone) {
@@ -115,7 +132,7 @@ public class Cliente implements Serializable {
 	}
 
 	public String getCelular() {
-		return celular;
+		return this.celular;
 	}
 
 	public void setCelular(String celular) {
@@ -123,7 +140,7 @@ public class Cliente implements Serializable {
 	}
 
 	public String getRg() {
-		return rg;
+		return this.rg;
 	}
 
 	public void setRg(String rg) {
@@ -131,7 +148,7 @@ public class Cliente implements Serializable {
 	}
 
 	public String getCpf() {
-		return cpf;
+		return this.cpf;
 	}
 
 	public void setCpf(String cpf) {
@@ -139,7 +156,7 @@ public class Cliente implements Serializable {
 	}
 
 	public List<Feedback> getFeedbacks() {
-		return feedbacks;
+		return this.feedbacks;
 	}
 
 	public void setFeedbacks(List<Feedback> feedbacks) {
@@ -147,7 +164,7 @@ public class Cliente implements Serializable {
 	}
 
 	public Date getDataNascimento() {
-		return dataNascimento;
+		return this.dataNascimento;
 	}
 
 	public void setDataNascimento(Date dataNascimento) {
@@ -155,7 +172,7 @@ public class Cliente implements Serializable {
 	}
 
 	public Date getDataCadastro() {
-		return dataCadastro;
+		return this.dataCadastro;
 	}
 
 	public void setDataCadastro(Date dataCadastro) {
@@ -163,7 +180,7 @@ public class Cliente implements Serializable {
 	}
 
 	public Endereco getEndereco() {
-		return endereco;
+		return this.endereco;
 	}
 
 	public void setEndereco(Endereco endereco) {
@@ -171,7 +188,7 @@ public class Cliente implements Serializable {
 	}
 
 	public List<Pedido> getPedidos() {
-		return pedidos;
+		return this.pedidos;
 	}
 
 	public void setPedidos(List<Pedido> pedidos) {
@@ -182,99 +199,31 @@ public class Cliente implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((celular == null) ? 0 : celular.hashCode());
-		result = prime * result
-				+ ((codCliente == null) ? 0 : codCliente.hashCode());
-		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
-		result = prime * result
-				+ ((dataCadastro == null) ? 0 : dataCadastro.hashCode());
-		result = prime * result
-				+ ((dataNascimento == null) ? 0 : dataNascimento.hashCode());
-		result = prime * result
-				+ ((endereco == null) ? 0 : endereco.hashCode());
-		result = prime * result
-				+ ((feedbacks == null) ? 0 : feedbacks.hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		result = prime * result + ((pedidos == null) ? 0 : pedidos.hashCode());
-		result = prime * result + ((rg == null) ? 0 : rg.hashCode());
-		result = prime * result
-				+ ((sobrenome == null) ? 0 : sobrenome.hashCode());
-		result = prime * result
-				+ ((telefone == null) ? 0 : telefone.hashCode());
+		result = (prime * result)
+				+ ((this.codCliente == null) ? 0 : this.codCliente.hashCode());
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Cliente other = (Cliente) obj;
-		if (celular == null) {
-			if (other.celular != null)
+		if (this.codCliente == null) {
+			if (other.codCliente != null) {
 				return false;
-		} else if (!celular.equals(other.celular))
+			}
+		} else if (!this.codCliente.equals(other.codCliente)) {
 			return false;
-		if (codCliente == null) {
-			if (other.codCliente != null)
-				return false;
-		} else if (!codCliente.equals(other.codCliente))
-			return false;
-		if (cpf == null) {
-			if (other.cpf != null)
-				return false;
-		} else if (!cpf.equals(other.cpf))
-			return false;
-		if (dataCadastro == null) {
-			if (other.dataCadastro != null)
-				return false;
-		} else if (!dataCadastro.equals(other.dataCadastro))
-			return false;
-		if (dataNascimento == null) {
-			if (other.dataNascimento != null)
-				return false;
-		} else if (!dataNascimento.equals(other.dataNascimento))
-			return false;
-		if (endereco == null) {
-			if (other.endereco != null)
-				return false;
-		} else if (!endereco.equals(other.endereco))
-			return false;
-		if (feedbacks == null) {
-			if (other.feedbacks != null)
-				return false;
-		} else if (!feedbacks.equals(other.feedbacks))
-			return false;
-		if (nome == null) {
-			if (other.nome != null)
-				return false;
-		} else if (!nome.equals(other.nome))
-			return false;
-		if (pedidos == null) {
-			if (other.pedidos != null)
-				return false;
-		} else if (!pedidos.equals(other.pedidos))
-			return false;
-		if (rg == null) {
-			if (other.rg != null)
-				return false;
-		} else if (!rg.equals(other.rg))
-			return false;
-		if (sobrenome == null) {
-			if (other.sobrenome != null)
-				return false;
-		} else if (!sobrenome.equals(other.sobrenome))
-			return false;
-		if (telefone == null) {
-			if (other.telefone != null)
-				return false;
-		} else if (!telefone.equals(other.telefone))
-			return false;
+		}
 		return true;
 	}
 
-	
 }

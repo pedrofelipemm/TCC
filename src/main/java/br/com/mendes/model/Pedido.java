@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 /**
  * 
@@ -19,22 +20,24 @@ import javax.persistence.TemporalType;
  */
 @Entity
 public class Pedido implements Serializable {
-	
+
 	private static final long serialVersionUID = 1962890005427364591L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long cod;
 
+	@NotNull
 	@ManyToOne
 	private Cliente cliente;
 
 	@Temporal(TemporalType.DATE)
 	private Date dataEmissao;
 
-	@OneToMany(mappedBy="pedido")
+	@OneToMany(mappedBy = "pedido")
 	private List<ItemPedido> itensPedido;
 
+	@NotNull
 	private Double valorTotal;
 
 	private StatusPedido status;
@@ -42,10 +45,8 @@ public class Pedido implements Serializable {
 	public Pedido() {
 	}
 
-
-
 	public Cliente getCliente() {
-		return cliente;
+		return this.cliente;
 	}
 
 	public void setCliente(Cliente cliente) {
@@ -53,7 +54,7 @@ public class Pedido implements Serializable {
 	}
 
 	public Date getDataEmissao() {
-		return dataEmissao;
+		return this.dataEmissao;
 	}
 
 	public void setDataEmissao(Date dataEmissao) {
@@ -61,16 +62,15 @@ public class Pedido implements Serializable {
 	}
 
 	public Double getValorTotal() {
-		return valorTotal;
+		return this.valorTotal;
 	}
 
 	public void setValorTotal(Double valorTotal) {
 		this.valorTotal = valorTotal;
 	}
 
-
 	public List<ItemPedido> getItensPedido() {
-		return itensPedido;
+		return this.itensPedido;
 	}
 
 	public void setItensPedido(List<ItemPedido> itensPedido) {
@@ -78,32 +78,25 @@ public class Pedido implements Serializable {
 	}
 
 	public Long getCod() {
-		return cod;
+		return this.cod;
 	}
 
 	public void setCod(Long cod) {
 		this.cod = cod;
 	}
 
-
-
 	public StatusPedido getStatus() {
-		return status;
+		return this.status;
 	}
-
-
 
 	public void setStatus(StatusPedido status) {
 		this.status = status;
 	}
 
-
-
 	@Override
 	public String toString() {
-		return "Pedido [cod=" + cod + ", cliente=" + cliente + ", dataEmissao="
-				+ dataEmissao + ", valorTotal=" + valorTotal + ", status=" + status + "]";
+		return "Pedido [cod=" + this.cod + ", cliente=" + this.cliente + ", dataEmissao="
+				+ this.dataEmissao + ", valorTotal=" + this.valorTotal + ", status=" + this.status + "]";
 	}
 
-	
 }

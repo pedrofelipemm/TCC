@@ -6,9 +6,9 @@ import br.com.mendes.model.Produto;
 
 public interface ProdutoService {
 
-    Produto obterProdutoPorCod(Long codProduto);
-    
-    List<Produto> obterTodosProduto();
-    
-    Produto criarProduto(Produto produto);
+	public abstract Produto obterProdutoPorCod(Long codProduto);
+
+	public abstract List<Produto> obterTodosProduto();
+
+	public abstract void criarProduto(Produto produto);
 }

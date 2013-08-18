@@ -8,14 +8,14 @@ import br.com.mendes.model.Cliente;
 
 public interface ClienteService extends Serializable {
 
-    Cliente obterClientePorCod(Long codCliente);
-    
-    List<Cliente> obterTodosCliente();
-    
-    Cliente criarCliente(Cliente cliente);
+	public abstract Cliente obterClientePorCod(Long codCliente);
 
-	Long obterQtdeClientesNoAnoMes(Integer ano, Integer mes);
+	public abstract List<Cliente> obterTodosCliente();
 
-	List<QtdePeriodoDTO> obterQtdesClientesNosPeriodos(
+	public abstract void criarCliente(Cliente cliente);
+
+	public abstract Long obterQtdeClientesNoAnoMes(Integer ano, Integer mes);
+
+	public abstract List<QtdePeriodoDTO> obterQtdesClientesNosPeriodos(
 			List<QtdePeriodoDTO> periodos);
 }
