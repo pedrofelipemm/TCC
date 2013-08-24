@@ -25,7 +25,7 @@ public class ServicoServiceImpl implements ServicoService {
 	@Override
 	@Transactional
 	public List<Servico> obterTodosServicos() {
-		return this.servicoDAO.getAll();
+		return this.servicoDAO.getAllSorted();
 	}
 
 	@Override

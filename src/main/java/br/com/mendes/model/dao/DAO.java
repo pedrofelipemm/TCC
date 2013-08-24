@@ -6,9 +6,11 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 
-public interface DAO<T, K extends Serializable>  extends Serializable  {
+public interface DAO<T, K extends Serializable> extends Serializable {
 
 	public abstract Session getSession();
+
+	public abstract Long countBy();
 
 	public abstract void add(T entity);
 

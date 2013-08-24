@@ -45,6 +45,14 @@ public class Pedido implements Serializable {
 	public Pedido() {
 	}
 
+	public Pedido(Cliente cliente, Date dataEmissao, List<ItemPedido> itensPedido, Double valorTotal, StatusPedido status) {
+		this.cliente = cliente;
+		this.dataEmissao = dataEmissao;
+		this.itensPedido = itensPedido;
+		this.valorTotal = valorTotal;
+		this.status = status;
+	}
+
 	public Cliente getCliente() {
 		return this.cliente;
 	}

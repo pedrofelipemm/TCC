@@ -15,7 +15,7 @@ import br.com.mendes.service.MetaService;
 
 @ManagedBean(name = "metaMB")
 @ViewScoped
-public class MetaMB implements Serializable{
+public class MetaMB implements Serializable {
 
 	private static final long serialVersionUID = 8057294283144563153L;
 
@@ -39,22 +39,22 @@ public class MetaMB implements Serializable{
 		this.metaFeedBackEmail = this.metaService.obterMetaGeralAtual(TipoMetaGeral.FEEDBACK_EMAIL);
 		this.metaFeedBackPessoal = this.metaService.obterMetaGeralAtual(TipoMetaGeral.FEEDBACK_PESSOAL);
 
-		if(this.metaCliente==null) {
+		if (this.metaCliente == null) {
 			this.metaCliente = new MetaGeral(TipoMetaGeral.CLIENTE);
 		}
-		if(this.metaProduto==null) {
+		if (this.metaProduto == null) {
 			this.metaProduto = new MetaGeral(TipoMetaGeral.PRODUTO);
 		}
-		if(this.metaServico==null) {
+		if (this.metaServico == null) {
 			this.metaServico = new MetaGeral(TipoMetaGeral.SERVICO);
 		}
-		if(this.metaFeedBackEmail==null) {
+		if (this.metaFeedBackEmail == null) {
 			this.metaFeedBackEmail = new MetaGeral(TipoMetaGeral.FEEDBACK_EMAIL);
 		}
-		if(this.metaFeedBackTelefone==null) {
+		if (this.metaFeedBackTelefone == null) {
 			this.metaFeedBackTelefone = new MetaGeral(TipoMetaGeral.FEEDBACK_TELEFONE);
 		}
-		if(this.metaFeedBackPessoal==null) {
+		if (this.metaFeedBackPessoal == null) {
 			this.metaFeedBackPessoal = new MetaGeral(TipoMetaGeral.FEEDBACK_PESSOAL);
 		}
 	}
@@ -70,15 +70,19 @@ public class MetaMB implements Serializable{
 
 	public void salvarMeta() {
 
+		criarMetas();
+
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Cadastrado com sucesso."));
+	}
+
+	private void criarMetas() {
 		this.metaService.criarMetaGeral(this.metaCliente);
 		this.metaService.criarMetaGeral(this.metaProduto);
 		this.metaService.criarMetaGeral(this.metaServico);
 		this.metaService.criarMetaGeral(this.metaFeedBackEmail);
 		this.metaService.criarMetaGeral(this.metaFeedBackTelefone);
 		this.metaService.criarMetaGeral(this.metaFeedBackPessoal);
-
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso" , "Cadastrado com sucesso."));
 	}
 
 	public MetaGeral getMetaCliente() {
@@ -129,6 +133,12 @@ public class MetaMB implements Serializable{
 		this.metaFeedBackPessoal = metaFeedBackPessoal;
 	}
 
+	public MetaService getMetaService() {
+		return this.metaService;
+	}
 
+	public void setMetaService(MetaService metaService) {
+		this.metaService = metaService;
+	}
 
 }

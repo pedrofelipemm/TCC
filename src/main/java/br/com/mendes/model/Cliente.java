@@ -79,7 +79,7 @@ public class Cliente implements Serializable {
 
 	public Cliente(Long codCliente, String nome, String sobrenome,
 			Endereco endereco, String telefone, String celular, String rg,
-			String cpf,  Date dataNascimento, Date dataCadastro) {
+			String cpf, Date dataNascimento, Date dataCadastro) {
 		this.codCliente = codCliente;
 		this.nome = nome;
 		this.sobrenome = sobrenome;
@@ -93,10 +93,21 @@ public class Cliente implements Serializable {
 	}
 
 	public Cliente(Long codCliente, String nome, String sobrenome) {
-
 		this.codCliente = codCliente;
 		this.nome = nome;
 		this.sobrenome = sobrenome;
+	}
+
+	public Cliente(String nome, String sobrenome, String telefone, String celular, String rg, String cpf,
+			Date dataNascimento, Date dataCadastro) {
+		this.nome = nome;
+		this.sobrenome = sobrenome;
+		this.telefone = telefone;
+		this.celular = celular;
+		this.rg = rg;
+		this.cpf = cpf;
+		this.dataNascimento = dataNascimento;
+		this.dataCadastro = dataCadastro;
 	}
 
 	public Long getCodCliente() {

@@ -9,11 +9,12 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.mendes.model.dao.DAO;
 
-public abstract class DAOImpl<T, K extends Serializable> implements DAO<T, K>{
+public abstract class DAOImpl<T, K extends Serializable> implements DAO<T, K> {
 
 	private static final long serialVersionUID = -7793329376577351690L;
 
@@ -36,7 +37,6 @@ public abstract class DAOImpl<T, K extends Serializable> implements DAO<T, K>{
 				.getActualTypeArguments()[0];
 	}
 
-
 	@Override
 	public void add(T entity) {
 		getSession().save(entity);
@@ -49,9 +49,18 @@ public abstract class DAOImpl<T, K extends Serializable> implements DAO<T, K>{
 	}
 
 	@Override
+	public Long countBy() {
+		Criteria criteria = getSession().createCriteria(this.entityClass);
+
+		criteria.setProjection(Projections.rowCount());
+
+		return (Long) criteria.uniqueResult();
+	}
+
+	@Override
 	@SuppressWarnings("unchecked")
 	public void removeByCod(K... cod) {
-		String hql  = "DELETE FROM "+ this.entityClass.getCanonicalName() + " WHERE id in (:cods)" ;
+		String hql = "DELETE FROM " + this.entityClass.getCanonicalName() + " WHERE id in (:cods)";
 
 		Query query = getSession().createQuery(hql);
 		query.setParameterList("cods", cod);

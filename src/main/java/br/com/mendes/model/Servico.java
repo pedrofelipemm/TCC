@@ -18,6 +18,14 @@ public class Servico extends Item implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private TipoServico tipoServico;
 
+	public Servico() {
+	}
+
+	public Servico(String nome, Double custo, Double precoVenda, TipoServico tipoServico) {
+		super(nome, custo, precoVenda);
+		this.tipoServico = tipoServico;
+	}
+
 	public TipoServico getTipoServico() {
 		return this.tipoServico;
 	}

@@ -58,7 +58,7 @@
 						<p:commandButton value="Adicionar" action="#{pedidoMB.adicionarProduto}" ajax="true" process="@this, itemVendido, quantidade" update="tabela total" style="margin: 0" />
 	
 						<p:spacer width="10px" />
-						<p:commandButton value="Limpar Lista" action="#" style="margin: 0" />
+						<p:commandButton value="Limpar Lista" action="#{pedidoMB.limparLista}" update="@all" style="margin: 0" />
 
 					</p:panel>
 					
@@ -100,7 +100,7 @@
 
 					<p:spacer width="10px" />
 					<p:commandButton value="Limpar" process="@this" update="@all" style="margin: 0" >
-						<p:resetInput target="panel panelEndereco" />
+						<p:resetInput target="panel" />
 					</p:commandButton>
 
 					<p:spacer width="10px" />

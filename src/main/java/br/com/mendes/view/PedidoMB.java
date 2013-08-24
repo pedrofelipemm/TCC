@@ -86,9 +86,9 @@ public class PedidoMB implements Serializable {
 		this.itens = this.itemService.buscarTodos(this.tipoItem);
 	}
 
-	public String abrirTela() {
-		resetDados();
-		return "/paginas/realizarPedido.xhtml";
+	public void limparLista() {
+		this.itensPedido = new ArrayList<ItemPedido>();
+		this.total = 0D;
 	}
 
 	public PedidoMB() {

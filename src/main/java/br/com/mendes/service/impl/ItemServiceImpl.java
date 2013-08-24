@@ -1,11 +1,13 @@
 package br.com.mendes.service.impl;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.mendes.comparator.ItemComparator;
 import br.com.mendes.dto.QtdePeriodoDTO;
 import br.com.mendes.model.Item;
 import br.com.mendes.model.TipoItem;
@@ -14,7 +16,6 @@ import br.com.mendes.service.ItemService;
 
 @Service("itemService")
 public class ItemServiceImpl implements ItemService {
-
 
 	private static final long serialVersionUID = 2705497057114522401L;
 
@@ -36,7 +37,11 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	@Transactional
 	public List<Item> buscarTodos(TipoItem tipoItem) {
-		return this.itemDAO.buscarTodos(tipoItem);
+		List<Item> itens = this.itemDAO.buscarTodos(tipoItem);
+
+		Collections.sort(itens, new ItemComparator());
+
+		return itens;
 	}
 
 	@Override
@@ -50,8 +55,7 @@ public class ItemServiceImpl implements ItemService {
 	public List<QtdePeriodoDTO> obterQtdesItensEspecificosNosPeriodos(
 			Long codItem, List<QtdePeriodoDTO> periodos) {
 
-
-		for(QtdePeriodoDTO periodo : periodos) {
+		for (QtdePeriodoDTO periodo : periodos) {
 			Long qtde = this.obterQtdeItensEspecificosNoMesAno(codItem, periodo.getAno(), periodo.getMes());
 			periodo.setQtde(qtde.doubleValue());
 		}
@@ -72,7 +76,7 @@ public class ItemServiceImpl implements ItemService {
 	public List<QtdePeriodoDTO> obterQtdesItensGeralNosPeriodos(
 			TipoItem tipoItem, List<QtdePeriodoDTO> periodos) {
 
-		for(QtdePeriodoDTO periodo : periodos) {
+		for (QtdePeriodoDTO periodo : periodos) {
 			Long qtde = this.obterQtdeItensGeralNoMesAno(tipoItem, periodo.getAno(), periodo.getMes());
 			periodo.setQtde(qtde.doubleValue());
 		}
@@ -93,7 +97,7 @@ public class ItemServiceImpl implements ItemService {
 	public List<QtdePeriodoDTO> obterQtdesItensGeralValorNosPeriodos(
 			TipoItem tipoItem, List<QtdePeriodoDTO> periodos) {
 
-		for(QtdePeriodoDTO periodo : periodos) {
+		for (QtdePeriodoDTO periodo : periodos) {
 			Double qtde = this.obterQtdeItensGeralValorNoMesAno(tipoItem, periodo.getAno(), periodo.getMes());
 			periodo.setQtde(qtde);
 		}

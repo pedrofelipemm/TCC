@@ -28,7 +28,13 @@ public class ClienteServiceImpl implements ClienteService {
 	@Override
 	@Transactional
 	public List<Cliente> obterTodosCliente() {
-		return this.clienteDAO.getAll();
+		return this.clienteDAO.getAllSorted();
+	}
+
+	@Override
+	@Transactional
+	public List<Cliente> obterTodosClientesPaginados(String filter, Integer first, Integer pageSize) {
+		return this.clienteDAO.obterTodosClientesPaginados(filter, first, pageSize);
 	}
 
 	@Override
@@ -53,5 +59,10 @@ public class ClienteServiceImpl implements ClienteService {
 		}
 
 		return periodos;
+	}
+
+	@Override
+	public Long countBy(String filter) {
+		return this.clienteDAO.countBy(filter);
 	}
 }

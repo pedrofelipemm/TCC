@@ -11,10 +11,6 @@
 
 		<h:form id="form1" style="text-align: left ">
 			
-			<p:messages id="mensagem" autoUpdate="true">
-				<p:effect type="drop" event="load" delay="2000" speed="1000" />
-			</p:messages>
-
 			<p:panel id="panel" style="font-size: 14px; border: 0; ">
 
 				<h2>Cadastro de Metas Globais</h2>
@@ -27,8 +23,8 @@
 				<h:panelGrid align="center" columns="2" width="745"
 					style="text-align: left" border="0">
 
-					<p:outputLabel for="_clientesEsperados" value="Clientes Conquistados " />
-					<p:inputText id="_clientesEsperados" value="#{metaMB.metaCliente.valor}">
+					<p:outputLabel for="clientesEsperados" value="Clientes Conquistados " />
+					<p:inputText id="clientesEsperados" value="#{metaMB.metaCliente.valor}">
 						<f:convertNumber  maxFractionDigits="0"/>
 					</p:inputText>
 					
@@ -39,8 +35,8 @@
 				<h:panelGrid align="center" columns="2" width="580"
 					style="text-align: left" border="0">
 					
-					<p:outputLabel for="_servicosPrestados" value="Quantidade total de Serviços Prestados: " />
-					<p:inputText id="_servicosPrestados" value="#{metaMB.metaServico.valor}">
+					<p:outputLabel for="servicosPrestados" value="Quantidade total de Serviços Prestados: " />
+					<p:inputText id="servicosPrestados" value="#{metaMB.metaServico.valor}">
 						<f:convertNumber  maxFractionDigits="0"/>
 					</p:inputText>
 					
@@ -50,30 +46,29 @@
 				<h:panelGrid align="center" columns="2" width="580"
 					style="text-align: left" border="0">
 						
-					<p:outputLabel for="_produtosVendidos" value="Quantidade total de Produtos Vendidos: " />
-					<p:inputText id="_produtosVendidos" value="#{metaMB.metaProduto.valor}">
+					<p:outputLabel for="produtosVendidos" value="Quantidade total de Produtos Vendidos: " />
+					<p:inputText id="produtosVendidos" value="#{metaMB.metaProduto.valor}">
 						<f:convertNumber  maxFractionDigits="0"/>
 					</p:inputText>
 					
 				</h:panelGrid>	
 				
-				
 				<h3>Feedback</h3>	
 				<h:panelGrid align="center" columns="2" width="550"
 					style="text-align: left" border="0">	
 						
-					<p:outputLabel for="_atendimentosEmail" value="Quantidade total de Atendimento por Email: " />
-					<p:inputText id="_atendimentosEmail" value="#{metaMB.metaFeedBackEmail.valor}">
+					<p:outputLabel for="atendimentosEmail" value="Quantidade total de Atendimento por Email: " />
+					<p:inputText id="atendimentosEmail" value="#{metaMB.metaFeedBackEmail.valor}">
 						<f:convertNumber  maxFractionDigits="0"/>
 					</p:inputText>
 
-					<p:outputLabel for="_atendimentosTelefone" value="Quantidade total de Atendimento por Telefone: " />
-					<p:inputText id="_atendimentosTelefone" value="#{metaMB.metaFeedBackTelefone.valor}">
+					<p:outputLabel for="atendimentosTelefone" value="Quantidade total de Atendimento por Telefone: " />
+					<p:inputText id="atendimentosTelefone" value="#{metaMB.metaFeedBackTelefone.valor}">
 						<f:convertNumber  maxFractionDigits="0"/>
 					</p:inputText>
 						
-					<p:outputLabel for="_atendimentosPessoal" value="Quantidade total de Atendimento Pessoalmente: " />
-					<p:inputText id="_atendimentosPessoal" value="#{metaMB.metaFeedBackPessoal.valor}">
+					<p:outputLabel for="atendimentosPessoal" value="Quantidade total de Atendimento Pessoalmente: " />
+					<p:inputText id="atendimentosPessoal" value="#{metaMB.metaFeedBackPessoal.valor}">
 						<f:convertNumber  maxFractionDigits="0"/>
 					</p:inputText>
 						

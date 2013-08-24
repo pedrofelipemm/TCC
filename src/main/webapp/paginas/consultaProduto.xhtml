@@ -39,14 +39,14 @@
 					<p:column id="custo" filterBy="#{produto.custo}"
 						filterStyle="max-width: 130px; min-width: 130px;"  headerText="Preco de Custo" width="135">
 						<h:outputText value="#{produto.custo}">
-							<f:convertNumber  type="currency" currencySymbol=""/>
+							<f:convertNumber  type="currency" currencySymbol="R$"/>
 						</h:outputText>
 					</p:column>
 					
 					<p:column id="precoVenda" filterBy="#{produto.precoVenda}"
 						filterStyle="max-width: 130px; min-width: 130px;"  headerText="Preco de Venda" width="135">
 						<h:outputText value="#{produto.precoVenda}">
-							<f:convertNumber  type="currency" currencySymbol=""/>
+							<f:convertNumber  type="currency" currencySymbol="R$"/>
 						</h:outputText>
 					</p:column>
 					

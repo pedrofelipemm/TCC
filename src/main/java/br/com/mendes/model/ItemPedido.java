@@ -9,46 +9,51 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 /**
- *
+ * 
  * @author Pedro
  */
 @Entity
 public class ItemPedido implements Serializable {
-	
+
 	private static final long serialVersionUID = -6324851405792712125L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cod;
-    
-    @ManyToOne
-    private Item item;
-    
-    @ManyToOne
-    private Pedido pedido;
-    
-    private int quantidade;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long cod;
 
-    public ItemPedido() {
-    }
+	@ManyToOne
+	private Item item;
 
-    public ItemPedido(Long cod, Item item, Pedido pedido, int quantidade) {
-        this.cod=cod;
-        this.item=item;
-        this.pedido=pedido;
-        this.quantidade = quantidade;
-    }
+	@ManyToOne
+	private Pedido pedido;
 
-    public int getQuantidade() {
-        return quantidade;
-    }
+	private int quantidade;
 
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-    }
+	public ItemPedido() {
+	}
+
+	public ItemPedido(Long cod, Item item, Pedido pedido, int quantidade) {
+		this.cod = cod;
+		this.item = item;
+		this.pedido = pedido;
+		this.quantidade = quantidade;
+	}
+
+	public ItemPedido(Item item, int quantidade) {
+		this.item = item;
+		this.quantidade = quantidade;
+	}
+
+	public int getQuantidade() {
+		return this.quantidade;
+	}
+
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
+	}
 
 	public Pedido getPedido() {
-		return pedido;
+		return this.pedido;
 	}
 
 	public void setPedido(Pedido pedido) {
@@ -56,7 +61,7 @@ public class ItemPedido implements Serializable {
 	}
 
 	public Item getItem() {
-		return item;
+		return this.item;
 	}
 
 	public void setItem(Item item) {
@@ -64,7 +69,7 @@ public class ItemPedido implements Serializable {
 	}
 
 	public Long getCod() {
-		return cod;
+		return this.cod;
 	}
 
 	public void setCod(Long cod) {
@@ -73,10 +78,8 @@ public class ItemPedido implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ItemPedido [cod=" + cod + ", item=" + item + ", pedido="
-				+ pedido + ", quantidade=" + quantidade + "]";
+		return "ItemPedido [cod=" + this.cod + ", item=" + this.item + ", pedido="
+				+ this.pedido + ", quantidade=" + this.quantidade + "]";
 	}
-    
-    
-}
 
+}

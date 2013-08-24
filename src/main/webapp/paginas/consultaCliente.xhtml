@@ -13,8 +13,17 @@
 		<h:form >
 
 				<h3>Consulta de Clientes</h3>
-				<p:dataTable id="tabelaCliente" var="cliente" value="#{clienteMB.clientes}" widgetVar="tabelaCliente" 
-					emptyMessage="Não há clientes com essa especificação"  resizableColumns="true" style="width: 900px; margin-left: 6%;">
+				
+				<p:outputLabel for="clientes" value="Clientes: " />
+				<p:inputText  id="clientes" value="#{clienteMB.clientesLazyDataModel.filter}">
+					<p:ajax event="keyup" listener="#{clienteMB.pesquisa}" update="tabelaCliente" />
+				</p:inputText>
+				
+				<p:dataTable id="tabelaCliente" var="cliente" value="#{clienteMB.clientesLazyDataModel}" widgetVar="tabelaCliente" 
+					emptyMessage="Não há clientes com essa especificação" paginator="true" rows="10" lazy="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
+						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"  
+					resizableColumns="true" style="width: 1100px;margin-top:30px">
 
 					<f:facet name="header">
 						<p:outputPanel>
@@ -22,42 +31,32 @@
 						</p:outputPanel>
 					</f:facet>
 					
-					<p:column id="codCliente" filterBy="#{cliente.codCliente}" 
-						filterStyle="max-width: 50px; min-width: 50px; "  headerText="Código" width="100">
-						<h:outputText value="#{cliente.codCliente}"/>
+					<p:column id="nome" filterStyle="max-width: 130px; min-width: 130px;"  headerText="Nome" width="150"> 
+						<h:outputText value="#{cliente.nome} #{cliente.sobrenome}" /> 
 					</p:column>
 					
-					<p:column id="nome" filterBy="#{cliente.nome}"
-						filterStyle="max-width: 130px; min-width: 130px;"  headerText="Nome" width="150"> 
-						<h:outputText value="#{cliente.nome}" /> 
-					</p:column>
-					
-					<p:column id="sobrenome" filterBy="#{cliente.sobrenome}"
-						filterStyle="max-width: 130px; min-width: 130px;"  headerText="Sobrenome" width="150">
-						<h:outputText value="#{cliente.sobrenome}" />
-					</p:column>
-					
-					<p:column id="telefone" filterBy="#{cliente.telefone}" filterMatchMode="contains"
-						filterStyle="max-width: 130px; min-width: 130px;"  headerText="Telefone" width="150">
+					<p:column id="telefone" filterStyle="max-width: 130px; min-width: 130px;"  headerText="Telefone" width="150">
 						<h:outputText value="#{cliente.telefone}" />
 					</p:column>
 					
-					<p:column id="celular" filterBy="#{cliente.celular}" filterMatchMode="contains"
-						filterStyle="max-width: 130px; min-width: 130px;"  headerText="Celular" width="150">
+					<p:column id="celular" filterStyle="max-width: 130px; min-width: 130px;"  headerText="Celular" width="150">
 						<h:outputText value="#{cliente.celular}" />
 					</p:column>
-									
-					<p:column>
-						<p:commandButton icon="ui-icon-pencil" title="Editar" action="#{clienteMB.iniciarEdicao(cliente.codCliente)}" ajax="false"
-								style="width:25px; height:25px;vertical-align: middle;margin-bottom: 3px;"/>
-								
+					
+					<p:column id="rg" filterStyle="max-width: 130px; min-width: 130px;"  headerText="RG" width="150">
+						<h:outputText value="#{cliente.rg}" />
 					</p:column>
 					
+					<p:column id="cpf" filterStyle="max-width: 130px; min-width: 130px;"  headerText="CPF" width="150">
+						<h:outputText value="#{cliente.cpf}" />
+					</p:column>
 					
-					
-				</p:dataTable>
+					<p:column>
+						<p:commandButton icon="ui-icon-pencil" title="Editar" action="#{clienteMB.iniciarEdicao(cliente.codCliente)}" 
+							ajax="false" style="width:25px; height:25px;vertical-align: middle;margin-bottom: 3px;"/>
+					</p:column>
 
-		
+				</p:dataTable>
 
 		</h:form>
 		</p:panel>

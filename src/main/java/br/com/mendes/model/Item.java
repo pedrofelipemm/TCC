@@ -48,7 +48,12 @@ public class Item implements Serializable {
 	private List<ItemPedido> itensPedido;
 
 	public Item() {
+	}
 
+	public Item(String nome, Double custo, Double precoVenda) {
+		this.nome = nome;
+		this.custo = custo;
+		this.precoVenda = precoVenda;
 	}
 
 	public Item(Long codItem) {

@@ -18,64 +18,41 @@
 		<div id="topo">
 			<h1 class="logo"><img src="/Mendes/img/logo-site.png" width="200" /></h1>
 			<h:form>
-			<div class="main-menu">
-				<ul class="nav">
-					<li class="list-item">
-						<p:commandLink action="#{pedidoMB.abrirTela}" process="@this">Pedido</p:commandLink>
-					</li>
-					<li class="list-item">
-					<a href="#">Cadastro</a>
-						<ul class="sub-nav">
-							<li class="sub-list-item"><a href="/Mendes/paginas/cadastroCliente.xhtml">Cliente</a></li>
-							<li class="sub-list-item"><a href="/Mendes/paginas/cadastroProduto.xhtml">Produto</a></li>
-							<li class="sub-list-item"><a href="/Mendes/paginas/cadastroServico.xhtml">Serviço</a></li>
-							
-							<li class="sub-list-item">
-								<p:commandLink action="#{feedbackMB.abrirTela}" process="@this">Feedback</p:commandLink>
-							</li>
-							
-							<li class="sub-list-item"><a href="/Mendes/paginas/cadastroMetasGlobais.xhtml">Cadastro Metas Globais</a></li>
-							
-						</ul>
-					</li>
-					<li class="list-item">
-					<a href="#">Consulta</a>
-						<ul class="sub-nav">
-							<li class="sub-list-item"><a href="/Mendes/paginas/consultaCliente.xhtml">Clientes</a></li>
-							<li class="sub-list-item"><a href="/Mendes/paginas/consultaProduto.xhtml">Produtos</a></li>
-							<li class="sub-list-item"><a href="/Mendes/paginas/consultaServico.xhtml">Serviços</a></li>
-							<li class="sub-list-item"><a href="/Mendes/paginas/consultaPedido.xhtml">Pedidos</a></li>
-						</ul>
-					</li>
-					<li class="list-item">
-					<a href="#">Estatisticas</a>
-						<ul class="sub-nav">
-							
-							<li class="sub-list-item">
-								<p:commandLink action="#{graficoMB.carregarGraficoCliente}" ajax="false">Clientes Conquistados</p:commandLink>
-							</li>
-							
-							<li class="sub-list-item">
-								<p:commandLink action="#{graficoMB.carregarGraficoFeedback}" ajax="false">Atendimentos Realizados</p:commandLink>
-							</li>
-							
-							<li class="sub-list-item">
-								<p:commandLink action="#{graficoMB.carregarGraficoMetaEspecifica}" ajax="false">Produtos/Serviços Específicos</p:commandLink>
-							</li>
-							
-							<li class="sub-list-item">
-								<p:commandLink action="#{graficoMB.carregarGraficoProdutoServicoGeral}"  ajax="false">Produtos/Serviços Metas Globais</p:commandLink>
-							</li>
-							
-						</ul>
-					</li>
-				</ul>
-			</div>
+				<div class="main-menu">
+					<ul class="nav">
+						<li class="list-item"><a href="/Mendes/paginas/realizarPedido.xhtml">Pedido</a></li>
+						<li class="list-item">
+							<a href="#">Cadastro</a>
+							<ul class="sub-nav">
+								<li class="sub-list-item"><a href="/Mendes/paginas/cadastroCliente.xhtml">Cliente</a></li>
+								<li class="sub-list-item"><a href="/Mendes/paginas/cadastroProduto.xhtml">Produto</a></li>
+								<li class="sub-list-item"><a href="/Mendes/paginas/cadastroServico.xhtml">Serviço</a></li>
+								<li class="sub-list-item"><a href="/Mendes/paginas/cadastroFeedback.xhtml">Feedback</a></li>
+								<li class="sub-list-item"><a href="/Mendes/paginas/cadastroMetasGlobais.xhtml">Cadastro Metas Globais</a></li>
+							</ul>
+						</li>
+						<li class="list-item">
+							<a href="#">Consulta</a>
+							<ul class="sub-nav">
+								<li class="sub-list-item"><a href="/Mendes/paginas/consultaCliente.xhtml">Clientes</a></li>
+								<li class="sub-list-item"><a href="/Mendes/paginas/consultaProduto.xhtml">Produtos</a></li>
+								<li class="sub-list-item"><a href="/Mendes/paginas/consultaServico.xhtml">Serviços</a></li>
+								<li class="sub-list-item"><a href="/Mendes/paginas/consultaPedido.xhtml">Pedidos</a></li>
+							</ul>
+						</li>
+						<li class="list-item">
+							<a href="#">Estatisticas</a>
+							<ul class="sub-nav">
+								<li class="sub-list-item"><a href="/Mendes/paginas/graficoClientesConquistados.xhtml">Clientes Conquistados</a></li>
+								<li class="sub-list-item"><a href="/Mendes/paginas/graficoAtendimentosRealizados.xhtml">Atendimentos Realizados</a></li>
+								<li class="sub-list-item"><a href="/Mendes/paginas/graficoMetasEspecificas.xhtml">Produtos/Servicos Específicos</a></li>
+								<li class="sub-list-item"><a href="/Mendes/paginas/graficoProdutoServicoGeral.xhtml">Produtos/Servicos Metas Globais</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
 			</h:form>
-
 		</div>
-
-
 		<div id="margin-content">
 			<div id="content">
 				<p:messages id="mensagem" globalOnly="true" autoUpdate="true">
@@ -88,9 +65,7 @@
 			</div>
 		</div>
 
-
 	</div>
-
 
 </h:body>
 

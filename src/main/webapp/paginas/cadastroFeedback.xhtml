@@ -1,17 +1,17 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <ui:composition template="template.xhtml"
-	xmlns="http://www.w3.org/1999/xhtml" xmlns:p="http://primefaces.org/ui"
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:p="http://primefaces.org/ui"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-
+ 	
 	<ui:define name="conteudo">
 
-		<h:form id="form1"  style="text-align: left ">
-
-			<p:messages id="mensagem" autoUpdate="true">
-				<p:effect type="drop" event="load" delay="2000" speed="1000" />
-			</p:messages>
-
+		<h:form id="form1" style="text-align: left ">
+			
 			<p:panel id="panel" style="font-size: 14px; border: 0;  ">
 
 				<h2>Cadastro de Feedback</h2>
@@ -20,66 +20,65 @@
 
 				<p:focus context="panel" />
 
-				<h:panelGrid align="center" columns="4" width="950"
+				<h:panelGrid align="center" columns="6" width="900"
 					style="text-align: left" border="0">
 
-					<p:outputLabel for="_tipoAtendimento" value="Tipo de Atendimento: " />
+					<p:outputLabel for="tipoAtendimento" value="Tipo de Atendimento: " />
+					<p:selectOneMenu widgetVar="tipoAtendimento" id="tipoAtendimento" value="#{feedbackMB.feedback.tipoAtendimento}" 
+						converter="entityConverter" style="width:165px">
+						<f:selectItem itemLabel="Selecione"/>
+						<f:selectItems value="#{feedbackMB.tipoAtendimentos}" var="tipoAtendimento" itemLabel="#{tipoAtendimento.descricao}" itemValue="#{tipoAtendimento}" />
+					</p:selectOneMenu>
+					<p:message for="tipoAtendimento" />
 					
-					<p:selectOneMenu  id="_tipoAtendimento" effect="clip" value="#{feedbackMB.feedback.tipoAtendimento}" style="width:165px"  >
-						<f:selectItems value="#{feedbackMB.tiposAtendimento}"
-			            			 	var="tipo" itemLabel="#{tipo.descricao}"  itemValue="#{tipo}"/>
-        			</p:selectOneMenu>
-        			
-        			<p:outputLabel for="_cliente" value="Cliente: " />
-					<p:selectOneMenu  widgetVar="cliente" id="_cliente" effect="clip" value="#{feedbackMB.feedback.cliente.codCliente}" style="width:165px"  >
-						<f:selectItem itemLabel="Selecione" />
-						<f:selectItems value="#{clienteMB.clientes}" var="cliente" itemLabel="#{cliente.nome}" 
-            				itemValue="#{cliente.codCliente}"/>  
-            			<p:ajax event="change" listener="#{feedbackMB.escolherTipoItem}" process="@this,_tipoItem" update="_itemVendido"/>
-        			</p:selectOneMenu>
-        			
-        			<p:outputLabel for="_tipoItem" value="Tipo de Item: "  />
-					<p:selectOneMenu   id="_tipoItem" effect="clip" value="#{feedbackMB.tipoItem}" style="width:165px"  >						
+					<p:outputLabel for="cliente" value="Clientes: " />
+					<p:selectOneMenu widgetVar="cliente" id="cliente" value="#{feedbackMB.feedback.cliente}" 
+						converter="entityConverter" style="width:165px">
+						<f:selectItem itemLabel="Selecione"/>
+						<f:selectItems value="#{feedbackMB.clientes}" var="cliente" itemLabel="#{cliente.nome}" itemValue="#{cliente}" />
+						<f:ajax event="change" render="tipoItem"/>
+					</p:selectOneMenu>
+					<p:message for="cliente" />
+					
+					<p:outputLabel for="tipoItem" value="Tipo de Item: "  />
+					<p:selectOneMenu widgetVar="tipoItem" id="tipoItem" value="#{feedbackMB.tipoItem}" 
+						style="width:165px" converter="entityConverter" disabled="#{feedbackMB.feedback.cliente.nome eq null}">			
 	            		<f:selectItem itemLabel="Selecione" />
-	            		<f:selectItems value="#{feedbackMB.tiposItem}"
-				            			 	var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}"/>
-				        <p:ajax event="change" listener="#{feedbackMB.escolherTipoItem}" process="@this,_cliente" update="_itemVendido"/>	
+	            		<f:selectItems value="#{feedbackMB.tiposItem}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}"/>
+				        <f:ajax event="change" listener="#{feedbackMB.escolherTipoItem}" render="itemVendido" />
         			</p:selectOneMenu>
+        			<p:message for="tipoItem"/>
         			
-        			<p:outputLabel for="_itemVendido" value="Item Vendido: "  />        			
-					<p:selectOneMenu disabled="#{empty feedbackMB.itens}" id="_itemVendido" effect="clip"  style="width:165px"  value="#{feedbackMB.feedback.item.cod}">
+					<p:outputLabel for="itemVendido" value="Item Vendido: "  />        			
+					<p:selectOneMenu disabled="#{empty feedbackMB.itens}" id="itemVendido" style="width:165px" 
+						converter="entityConverter" value="#{feedbackMB.feedback.item.cod}">
 	            		<f:selectItems value="#{feedbackMB.itens}" var="obj" itemLabel="#{obj.nome}" itemValue="#{obj.cod}"/>
-				    </p:selectOneMenu>        	
+				    </p:selectOneMenu>        
+				    <p:message for="itemVendido"/>	
         			
-			 		<p:outputLabel for="_nota" value="Nota: " />
-					<p:inputText id="_nota" value="#{feedbackMB.feedback.nota}"
-						
-						size="20" />
+			 		<p:outputLabel for="nota" value="Nota: " />
+					<p:inputText id="nota" value="#{feedbackMB.feedback.nota}" style="width:165px" size="20" />
+					<p:message for="nota"/>
 
-					<p:outputLabel for="_dataFeedback" value="Data do Feedback: " />
-					<p:calendar value="#{feedbackMB.feedback.dataFeedback}" id="_dataFeedback"  pattern="dd/MM/yyyy" locale="pt" />
+					<p:outputLabel for="observacao" value="Observação: " />
+					<p:inputTextarea id="observacao" value="#{feedbackMB.feedback.observacao}" style="width:165px" rows="2"  cols="35"/>
+					<p:message for="observacao"/>
 
-					<p:outputLabel for="_observacao" value="Observação: " />
-					
-					<p:inputTextarea id="_observacao" value="#{feedbackMB.feedback.observacao}" 
-						rows="2"  cols="35"/>
-				</h:panelGrid>
+				</h:panelGrid>					
 			</p:panel>
+			
 			<p:panel style="float: center; border: 0;">
 
 				<p:spacer width="10px" />
-				<p:commandButton value="Salvar" action="#{feedbackMB.salvarFeedback}" process="@all" ajax="false" style="margin: 0" />
+				<p:commandButton value="Salvar" action="#{feedbackMB.salvarFeedback}" process="@this, form1" update="@all" style="margin: 0" />
 
 				<p:spacer width="10px" />
-				<p:commandButton value="Limpar" action="#{feedbackMB.resetDados}" process="@this" update="@all" style="margin: 0" />
-
-				<p:spacer width="10px" />
-
+				<p:commandButton value="Limpar" process="@this" update="@all" style="margin: 0" >
+					<p:resetInput target="panel" />
+				</p:commandButton>
 
 			</p:panel>
-			
 		</h:form>
-
 
 	</ui:define>
 </ui:composition>

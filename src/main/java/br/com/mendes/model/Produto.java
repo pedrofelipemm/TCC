@@ -18,6 +18,14 @@ public class Produto extends Item implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private CategoriaProduto categoria;
 
+	public Produto() {
+	}
+
+	public Produto(CategoriaProduto categoria, String nome, Double custo, Double precoVenda) {
+		super(nome, custo, precoVenda);
+		this.categoria = categoria;
+	}
+
 	public CategoriaProduto getCategoria() {
 		return this.categoria;
 	}

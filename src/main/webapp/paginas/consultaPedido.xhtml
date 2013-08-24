@@ -12,20 +12,7 @@
 		<h:form id="form1">
 			<p:panel>
 				
-				<h:panelGrid align="left" columns="3" width="450">
-				
-					<p:outputLabel for="cliente" value="Cliente: " />
-					<p:selectOneMenu  widgetVar="cliente" id="cliente" effect="clip" value="#{consultaPedidoMB.codCliente}" style="width:165px"  >
-						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
-						<f:selectItems value="#{consultaPedidoMB.clientes}" var="cliente" itemLabel="#{cliente.nome}" itemValue="#{cliente.codCliente}"/>  
-	           			<p:ajax event="change" listener="#{consultaPedidoMB.atualizarDados}" process="@this" update="tabelaProduto"/>
-	       			</p:selectOneMenu>
-	       			<p:message for="cliente"/>
-	       			
-       			</h:panelGrid>
-       			
-       			<p:spacer height="15" width="800"/>
-
+				<h3>Consulta de Pedidos</h3>
 				<p:dataTable id="tabelaProduto" var="pedido" value="#{consultaPedidoMB.pedidos}" widgetVar="tabelaProduto" 
 					emptyMessage="Não há produtos com essa especificação" scrollable="true" resizableColumns="true" style="width: 900px;">
 
@@ -42,7 +29,7 @@
 					
 					<p:column id="cliente" filterBy="#{pedido.cliente.nome.concat(' ').concat(pedido.cliente.sobrenome)}"
 						sortBy="#{pedido.cliente.nome.concat(' ').concat(pedido.cliente.sobrenome)}"
-						filterStyle="max-width: 300px; min-width: 300px;"  headerText="Cliente" width="350"> 
+						filterStyle="max-width: 300px; min-width: 300px;"  headerText="Cliente" width="300"> 
 						<h:outputText value="#{pedido.cliente.nome.concat(' ').concat(pedido.cliente.sobrenome)}" /> 
 					</p:column>
 					
@@ -52,9 +39,9 @@
 						</h:outputText>
 					</p:column>
 					
-					<p:column sortBy="#{pedido.valorTotal}" id="total" headerText="Total" width="100">
+					<p:column sortBy="#{pedido.valorTotal}" id="total" headerText="Total" width="150">
 						<h:outputText value="#{pedido.valorTotal}">
-							<f:convertNumber  type="currency" currencySymbol=""/>
+							<f:convertNumber  type="currency" currencySymbol="R$"/>
 						</h:outputText>
 					</p:column>
 					

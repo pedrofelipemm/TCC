@@ -52,6 +52,15 @@ public class Feedback implements Serializable {
 		this.dataFeedback = dataFeedback;
 	}
 
+	public Feedback(Cliente cliente, Item item, TipoAtendimento tipoAtendimento, Double nota, String observacao, Date dataFeedback) {
+		this.cliente = cliente;
+		this.item = item;
+		this.tipoAtendimento = tipoAtendimento;
+		this.nota = nota;
+		this.observacao = observacao;
+		this.dataFeedback = dataFeedback;
+	}
+
 	public Long getCodFeedback() {
 		return this.codFeedback;
 	}

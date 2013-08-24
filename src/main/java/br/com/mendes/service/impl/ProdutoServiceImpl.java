@@ -25,7 +25,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 	@Override
 	@Transactional
 	public List<Produto> obterTodosProduto() {
-		return this.produtoDAO.getAll();
+		return this.produtoDAO.getAllSorted();
 	}
 
 	@Override

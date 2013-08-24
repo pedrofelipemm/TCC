@@ -21,7 +21,6 @@ public class PedidoServiceImpl implements PedidoService {
 	@Autowired
 	private ItemPedidoDAO itemPedidoDAO;
 
-
 	@Override
 	@Transactional
 	public Pedido obterPedidoPorCod(Long codPedido) {
@@ -31,7 +30,7 @@ public class PedidoServiceImpl implements PedidoService {
 	@Override
 	@Transactional
 	public List<Pedido> obterTodosPedidos() {
-		return this.pedidoDAO.getAll();
+		return this.pedidoDAO.getAllSorted();
 	}
 
 	@Override
