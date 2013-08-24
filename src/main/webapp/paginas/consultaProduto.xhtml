@@ -12,8 +12,17 @@
 		<p:panel>
 		<h:form>
 				<h3>Consulta de Produtos</h3>
-				<p:dataTable id="tabelaProduto" var="produto" value="#{produtoMB.produtos}" widgetVar="tabelaProduto" 
-					emptyMessage="Não há produtos com essa especificação" scrollable="true" resizableColumns="true" style="width: 900px; ">
+				
+				<p:outputLabel for="produtos" value="Clientes: " />
+				<p:inputText id="produtos" value="#{produtoMB.produtosLazyDataModel.filter}">
+					<p:ajax event="keyup" listener="#{produtoMB.pesquisa}" update="tabelaProduto" />
+				</p:inputText>
+				
+				<p:dataTable id="tabelaProduto" var="produto" value="#{produtoMB.produtosLazyDataModel}" widgetVar="tabelaProduto" 
+					emptyMessage="Não há produtos com essa especificação" paginator="true" rows="5" lazy="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
+						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"  
+					resizableColumns="true" style="width: 1100px;margin-top:30px">
 
 					<f:facet name="header">
 						<p:outputPanel>
@@ -21,30 +30,25 @@
 						</p:outputPanel>
 					</f:facet>
 					
-					<p:column id="codProduto" filterBy="#{produto.cod}" 
-						filterStyle="max-width: 50px; min-width: 50px;" headerText="Código" width="100">
+					<p:column id="codProduto" filterStyle="max-width: 50px; min-width: 50px;" headerText="Código" width="100">
 						<h:outputText value="#{produto.cod}"/>
 					</p:column>
 					
-					<p:column id="categoria" filterBy="#{produto.categoria.descricao}"
-						filterStyle="max-width: 130px; min-width: 130px;"  headerText="Categoria" width="150"> 
+					<p:column id="categoria" filterStyle="max-width: 130px; min-width: 130px;"  headerText="Categoria" width="150"> 
 						<h:outputText value="#{produto.categoria.descricao}" /> 
 					</p:column>
 					
-					<p:column id="nome" filterBy="#{produto.nome}"
-						filterStyle="max-width: 130px; min-width: 130px;"  headerText="Nome" width="150">
+					<p:column id="nome" filterStyle="max-width: 130px; min-width: 130px;"  headerText="Nome" width="150">
 						<h:outputText value="#{produto.nome}" />
 					</p:column>
 					
-					<p:column id="custo" filterBy="#{produto.custo}"
-						filterStyle="max-width: 130px; min-width: 130px;"  headerText="Preco de Custo" width="135">
+					<p:column id="custo" filterStyle="max-width: 130px; min-width: 130px;"  headerText="Preco de Custo" width="135">
 						<h:outputText value="#{produto.custo}">
 							<f:convertNumber  type="currency" currencySymbol="R$"/>
 						</h:outputText>
 					</p:column>
 					
-					<p:column id="precoVenda" filterBy="#{produto.precoVenda}"
-						filterStyle="max-width: 130px; min-width: 130px;"  headerText="Preco de Venda" width="135">
+					<p:column id="precoVenda" filterStyle="max-width: 130px; min-width: 130px;"  headerText="Preco de Venda" width="135">
 						<h:outputText value="#{produto.precoVenda}">
 							<f:convertNumber  type="currency" currencySymbol="R$"/>
 						</h:outputText>

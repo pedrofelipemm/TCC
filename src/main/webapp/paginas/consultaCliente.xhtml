@@ -20,7 +20,7 @@
 				</p:inputText>
 				
 				<p:dataTable id="tabelaCliente" var="cliente" value="#{clienteMB.clientesLazyDataModel}" widgetVar="tabelaCliente" 
-					emptyMessage="Não há clientes com essa especificação" paginator="true" rows="10" lazy="true"
+					emptyMessage="Não há clientes com essa especificação" paginator="true" rows="5" lazy="true"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
 						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"  
 					resizableColumns="true" style="width: 1100px;margin-top:30px">
@@ -31,7 +31,7 @@
 						</p:outputPanel>
 					</f:facet>
 					
-					<p:column id="nome" filterStyle="max-width: 130px; min-width: 130px;"  headerText="Nome" width="150"> 
+					<p:column id="nome" filterStyle="max-width: 130px; min-width: 130px;" headerText="Nome" width="150"> 
 						<h:outputText value="#{cliente.nome} #{cliente.sobrenome}" /> 
 					</p:column>
 					

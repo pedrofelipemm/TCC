@@ -8,6 +8,8 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 
 import br.com.mendes.model.CategoriaProduto;
 import br.com.mendes.model.Meta;
@@ -15,6 +17,7 @@ import br.com.mendes.model.Produto;
 import br.com.mendes.service.MetaService;
 import br.com.mendes.service.ProdutoService;
 import br.com.mendes.utils.MBUtil;
+import br.com.mendes.view.lazy.ProdutosLazyDataModel;
 
 @ManagedBean(name = "produtoMB")
 @ViewScoped
@@ -25,6 +28,8 @@ public class ProdutoMB implements Serializable {
 	private Produto produto;
 
 	private List<Produto> produtos;
+
+	private ProdutosLazyDataModel produtosLazyDataModel;
 
 	private List<CategoriaProduto> categoriasProduto;
 
@@ -39,10 +44,18 @@ public class ProdutoMB implements Serializable {
 	@PostConstruct
 	public void iniciar() {
 		this.produtos = this.produtoService.obterTodosProduto();
-
+		this.produtosLazyDataModel = new ProdutosLazyDataModel(this.produtoService);
 		this.categoriasProduto = Arrays.asList(CategoriaProduto.values());
 
-		resetDados();
+		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+
+		if (flash.isEmpty()) {
+			resetDados();
+		} else {
+			this.produto = (Produto) flash.get("produto");
+			this.valorMeta = (Double) flash.get("valorMeta");
+		}
+
 	}
 
 	public void resetDados() {
@@ -60,6 +73,11 @@ public class ProdutoMB implements Serializable {
 			this.valorMeta = meta.getValor();
 		}
 
+		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+
+		flash.put("produto", this.produto);
+		flash.put("valorMeta", this.valorMeta);
+
 		return "/paginas/cadastroProduto.xhtml";
 	}
 
@@ -74,6 +92,10 @@ public class ProdutoMB implements Serializable {
 		MBUtil.addInfo("Cadastrado com sucesso.");
 
 		resetDados();
+	}
+
+	public void pesquisa() {
+		this.produtosLazyDataModel.setRowIndex(-1);
 	}
 
 	public Produto getProduto() {
@@ -114,6 +136,14 @@ public class ProdutoMB implements Serializable {
 
 	public void setProdutoService(ProdutoService produtoService) {
 		this.produtoService = produtoService;
+	}
+
+	public ProdutosLazyDataModel getProdutosLazyDataModel() {
+		return this.produtosLazyDataModel;
+	}
+
+	public void setProdutosLazyDataModel(ProdutosLazyDataModel produtosLazyDataModel) {
+		this.produtosLazyDataModel = produtosLazyDataModel;
 	}
 
 	public MetaService getMetaService() {

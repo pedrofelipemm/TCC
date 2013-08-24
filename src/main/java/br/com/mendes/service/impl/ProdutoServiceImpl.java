@@ -33,4 +33,14 @@ public class ProdutoServiceImpl implements ProdutoService {
 	public void criarProduto(Produto produto) {
 		this.produtoDAO.saveUpdateGetEntity(produto);
 	}
+
+	@Override
+	public List<Produto> obterTodosProdutosPaginados(String filter, int first, int pageSize) {
+		return this.produtoDAO.obterTodosProdutosPaginados(filter, first, pageSize);
+	}
+
+	@Override
+	public Long countBy(String filter) {
+		return this.produtoDAO.countBy(filter);
+	}
 }

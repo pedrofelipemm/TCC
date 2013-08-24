@@ -11,4 +11,8 @@ public interface ProdutoService {
 	public abstract List<Produto> obterTodosProduto();
 
 	public abstract void criarProduto(Produto produto);
+
+	public abstract List<Produto> obterTodosProdutosPaginados(String filter, int first, int pageSize);
+
+	public abstract Long countBy(String filter);
 }

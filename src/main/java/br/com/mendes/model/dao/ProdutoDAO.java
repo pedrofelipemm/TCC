@@ -8,4 +8,8 @@ public interface ProdutoDAO extends DAO<Produto, Long> {
 
 	List<Produto> getAllSorted();
 
+	List<Produto> obterTodosProdutosPaginados(String filter, Integer first, Integer pageSize);
+
+	Long countBy(String filter);
+
 }
