@@ -13,11 +13,10 @@
 		
 		<h:form>
 		
-		<h:panelGrid align="left" columns="3" width="450"
-						style="text-align: left; margin-left: 8%;" border="0"   >
+		<h:panelGrid align="left" columns="3" width="450" style="text-align: left; margin-left: 8%;" border="0"   >
 					
-			<p:outputLabel for="_meses" value="Analise dos ultimos:"/>
-			<p:selectOneMenu id="_meses" effect="clip" value="#{graficoMB.qtdePeriodos}" style="width:165px"  >
+			<p:outputLabel for="meses" value="Analise dos ultimos:"/>
+			<p:selectOneMenu id="meses" effect="clip" value="#{graficoMB.qtdePeriodos}" style="width:165px"  >
 				<f:selectItem itemValue="3" itemLabel="3 meses"/>
 				<f:selectItem itemValue="6" itemLabel="6 meses"/>
 				<f:selectItem itemValue="12" itemLabel="12 meses"/>

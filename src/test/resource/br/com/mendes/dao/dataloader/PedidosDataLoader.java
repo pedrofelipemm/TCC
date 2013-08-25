@@ -20,8 +20,8 @@ public abstract class PedidosDataLoader {
 			Double valorTotal = 0.0;
 
 			for (int j = 0; j < 3; j++) {
-				itensPedido.add(new ItemPedido(produtos.get(j), j));
-				valorTotal += ((Produto) produtos.get(j)).getPrecoVenda() * j;
+				itensPedido.add(new ItemPedido(produtos.get(j), (j + 1)));
+				valorTotal += ((Produto) produtos.get(j)).getPrecoVenda() * (j + 1);
 			}
 
 			pedidos.add(new Pedido(clientes.get(i), new Date(), itensPedido, valorTotal, StatusPedido.PAGO));

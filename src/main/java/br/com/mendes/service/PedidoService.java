@@ -16,4 +16,8 @@ public interface PedidoService {
 	public abstract void criarAlterarItemPedido(ItemPedido itemPedido);
 
 	public abstract List<Pedido> obterPedidoPorCliente(Long codCliente);
+
+	public abstract List<Pedido> obterTodosPedidosPaginados(String filter, Integer first, Integer pageSize);
+
+	public abstract Long countBy(String filter);
 }

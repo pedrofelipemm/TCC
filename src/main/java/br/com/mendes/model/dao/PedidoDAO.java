@@ -8,4 +8,8 @@ public interface PedidoDAO extends DAO<Pedido, Long> {
 
 	List<Pedido> getAllSorted();
 
+	List<Pedido> obterTodosPedidosPaginados(String filter, Integer first, Integer pageSize);
+
+	Long countBy(String filter);
+
 }

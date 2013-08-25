@@ -13,8 +13,17 @@
 			<p:panel>
 				
 				<h3>Consulta de Pedidos</h3>
-				<p:dataTable id="tabelaProduto" var="pedido" value="#{consultaPedidoMB.pedidos}" widgetVar="tabelaProduto" 
-					emptyMessage="Não há produtos com essa especificação" scrollable="true" resizableColumns="true" style="width: 900px;">
+				
+				<p:outputLabel for="cliente" value="Cliente: " />
+				<p:inputText id="cliente" value="#{pedidoMB.pedidosLazyDataModel.filter}">
+					<p:ajax event="keyup" listener="#{pedidoMB.pesquisa}" update="tabelaPedido" />
+				</p:inputText>
+				
+				<p:dataTable id="tabelaPedido" var="pedido" value="#{pedidoMB.pedidosLazyDataModel}" widgetVar="tabelaPedido" 
+					emptyMessage="Não há pedidos com essa especificação" paginator="true" rows="5" lazy="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
+						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"  
+					resizableColumns="true" style="width: 1100px;margin-top:30px">
 
 					<f:facet name="header">
 						<p:outputPanel>
@@ -22,34 +31,55 @@
 						</p:outputPanel>
 					</f:facet>
 					
-					<p:column id="cod" filterBy="#{pedido.cod}" sortBy="#{pedido.cod}" 
-						filterStyle="max-width: 80px; min-width: 80px;" headerText="Código" width="90">
-						<h:outputText value="#{pedido.cod}"/>
-					</p:column>
-					
-					<p:column id="cliente" filterBy="#{pedido.cliente.nome.concat(' ').concat(pedido.cliente.sobrenome)}"
-						sortBy="#{pedido.cliente.nome.concat(' ').concat(pedido.cliente.sobrenome)}"
-						filterStyle="max-width: 300px; min-width: 300px;"  headerText="Cliente" width="300"> 
+					<p:column id="cliente" filterStyle="max-width: 300px; min-width: 300px;"  headerText="Cliente" width="300"> 
 						<h:outputText value="#{pedido.cliente.nome.concat(' ').concat(pedido.cliente.sobrenome)}" /> 
 					</p:column>
 					
-					<p:column id="data" headerText="Data" width="100" sortBy="#{pedido.dataEmissao}" > 
+					<p:column id="data" headerText="Data" width="100" > 
 						<h:outputText value="#{pedido.dataEmissao}" >
-							<f:convertDateTime pattern="MM/dd/yyyy" />
+							<f:convertDateTime pattern="dd/MM/yyyy" />
 						</h:outputText>
 					</p:column>
 					
-					<p:column sortBy="#{pedido.valorTotal}" id="total" headerText="Total" width="150">
+					<p:column id="total" headerText="Total" width="150">
 						<h:outputText value="#{pedido.valorTotal}">
 							<f:convertNumber  type="currency" currencySymbol="R$"/>
 						</h:outputText>
 					</p:column>
 					
+					<p:column style="width:50">  
+		                <p:commandButton id="selectButton" icon="ui-icon-search" update=":form1:gridPedidos" oncomplete="pedidosDialog.show()" 
+		                	action="#{pedidoMB.loadItensDialog}" style="width:25px; height:25px;vertical-align: middle;margin-bottom: 3px;">  
+		                <f:setPropertyActionListener value="#{pedido}" target="#{pedidoMB.selectedPedido}" />  
+		            </p:commandButton>  
+		        </p:column>  
 				</p:dataTable>
+				
+				<p:dialog header="Itens do Pedido" widgetVar="pedidosDialog" resizable="false" id="pedidoDialog"  
+                	showEffect="fade" hideEffect="explode" modal="true">  
+  
+			       <p:dataTable id="gridPedidos" value="#{pedidoMB.selectedPedido.itensPedido}" var="itemPedido" style="text-align:center">
+						
+						<p:column headerText="Item" style="width:40%;text-align:left" >
+							<h:outputText value="#{itemPedido.item.nome}"/>
+						</p:column>
+						
+						<p:column headerText="Valor">
+							<h:outputText value="#{itemPedido.item.precoVenda}">
+								 <f:convertNumber  type="currency" currencySymbol="R$"/>
+							</h:outputText>
+						</p:column>
+						
+						<p:column headerText="Quantidade">
+							<h:outputText value="#{itemPedido.quantidade}"/>
+						</p:column>
+						
+					</p:dataTable>
+			  
+			    </p:dialog>
 
-	</p:panel>
-		
 
+		</p:panel>
 		</h:form>
 	</ui:define>
 </ui:composition>

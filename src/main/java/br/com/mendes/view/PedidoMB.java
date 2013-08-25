@@ -32,30 +32,6 @@ public class PedidoMB implements Serializable {
 
 	private static final long serialVersionUID = -2031182511996672906L;
 
-	private TipoItem tipoItem;
-
-	private Long codCliente;
-
-	private Long codItem;
-
-	private Integer quantidade;
-
-	private Double total;
-
-	private List<Pedido> pedidos;
-
-	private List<Cliente> clientes;
-
-	private List<Produto> produtos;
-
-	private List<Servico> servicos;
-
-	private List<TipoItem> tiposItem;
-
-	private List<Item> itens;
-
-	private List<ItemPedido> itensPedido;
-
 	@ManagedProperty(name = "pedidoService", value = "#{pedidoService}")
 	private PedidoService pedidoService;
 
@@ -71,6 +47,27 @@ public class PedidoMB implements Serializable {
 	@ManagedProperty(name = "itemService", value = "#{itemService}")
 	private ItemService itemService;
 
+	private Long codCliente;
+	private Long codItem;
+
+	private TipoItem tipoItem;
+
+	private Pedido selectedPedido;
+
+	private Integer quantidade;
+
+	private Double total;
+
+	private List<Pedido> pedidos;
+	private List<Cliente> clientes;
+	private List<Produto> produtos;
+	private List<Servico> servicos;
+	private List<TipoItem> tiposItem;
+	private List<Item> itens;
+	private List<ItemPedido> itensPedido;
+
+	private PedidosLazyDataModel pedidosLazyDataModel;
+
 	@PostConstruct
 	public void iniciar() {
 
@@ -82,13 +79,22 @@ public class PedidoMB implements Serializable {
 
 		resetDados();
 
+		this.pedidosLazyDataModel = new PedidosLazyDataModel(this.pedidoService);
 		this.tipoItem = TipoItem.PRODUTO;
 		this.itens = this.itemService.buscarTodos(this.tipoItem);
+	}
+
+	public void loadItensDialog() {
+		this.selectedPedido = this.pedidoService.obterPedidoPorCod(this.selectedPedido.getCod());
 	}
 
 	public void limparLista() {
 		this.itensPedido = new ArrayList<ItemPedido>();
 		this.total = 0D;
+	}
+
+	public void pesquisa() {
+		this.pedidosLazyDataModel.setRowIndex(-1);
 	}
 
 	public PedidoMB() {
@@ -157,6 +163,19 @@ public class PedidoMB implements Serializable {
 
 	public void escolherTipoItem() {
 		this.itens = this.itemService.buscarTodos(this.tipoItem);
+	}
+
+	public void atualizarDados() {
+		this.pedidos = this.pedidoService.obterPedidoPorCliente(this.codCliente);
+	}
+
+	public String iniciarEdicao(Long codCliente) {
+
+		this.codCliente = codCliente;
+
+		atualizarDados();
+
+		return "/paginas/consultaPedidos.xhtml";
 	}
 
 	public void salvarPedido() {
@@ -300,6 +319,14 @@ public class PedidoMB implements Serializable {
 		this.produtoService = produtoService;
 	}
 
+	public Pedido getSelectedPedido() {
+		return this.selectedPedido;
+	}
+
+	public void setSelectedPedido(Pedido selectedPedido) {
+		this.selectedPedido = selectedPedido;
+	}
+
 	public ServicoService getServicoService() {
 		return this.servicoService;
 	}
@@ -318,6 +345,14 @@ public class PedidoMB implements Serializable {
 
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
+	}
+
+	public PedidosLazyDataModel getPedidosLazyDataModel() {
+		return this.pedidosLazyDataModel;
+	}
+
+	public void setPedidosLazyDataModel(PedidosLazyDataModel pedidosLazyDataModel) {
+		this.pedidosLazyDataModel = pedidosLazyDataModel;
 	}
 
 }

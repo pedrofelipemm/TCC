@@ -11,4 +11,8 @@ public interface ServicoService {
 	public abstract List<Servico> obterTodosServicos();
 
 	public abstract void criarServico(Servico servico);
+
+	public abstract Long countBy(String filter);
+
+	public abstract List<Servico> obterTodosServicosPaginados(String filter, Integer first, Integer pageSize);
 }

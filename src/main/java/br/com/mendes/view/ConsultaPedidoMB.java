@@ -40,12 +40,12 @@ public class ConsultaPedidoMB implements Serializable {
 
 	}
 
-	public void atualizarDados() {
-		this.pedidos = this.pedidoService.obterPedidoPorCliente(this.codCliente);
-	}
-
 	public ConsultaPedidoMB() {
 
+	}
+
+	public void atualizarDados() {
+		this.pedidos = this.pedidoService.obterPedidoPorCliente(this.codCliente);
 	}
 
 	public String iniciarEdicao(Long codCliente) {

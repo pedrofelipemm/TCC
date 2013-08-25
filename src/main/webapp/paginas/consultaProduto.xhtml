@@ -13,7 +13,7 @@
 		<h:form>
 				<h3>Consulta de Produtos</h3>
 				
-				<p:outputLabel for="produtos" value="Clientes: " />
+				<p:outputLabel for="produtos" value="Produtos: " />
 				<p:inputText id="produtos" value="#{produtoMB.produtosLazyDataModel.filter}">
 					<p:ajax event="keyup" listener="#{produtoMB.pesquisa}" update="tabelaProduto" />
 				</p:inputText>
@@ -42,7 +42,7 @@
 						<h:outputText value="#{produto.nome}" />
 					</p:column>
 					
-					<p:column id="custo" filterStyle="max-width: 130px; min-width: 130px;"  headerText="Preco de Custo" width="135">
+					<p:column id="custo" filterStyle="max-width: 130px; min-width: 130px;"  headerText="Custo" width="135">
 						<h:outputText value="#{produto.custo}">
 							<f:convertNumber  type="currency" currencySymbol="R$"/>
 						</h:outputText>

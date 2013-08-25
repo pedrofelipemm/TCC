@@ -11,8 +11,17 @@
 		<p:panel>
 		<h:form>
 				<h3>Consulta de Serviços</h3>
-				<p:dataTable id="tabelaProduto" var="servico" value="#{servicoMB.servicos}" 
-					emptyMessage="Não serviços pra os filtros especificados." scrollable="true" resizableColumns="true" style="width: 900px; ">
+				
+				<p:outputLabel for="servicos" value="Servicos: " />
+				<p:inputText id="servicos" value="#{servicoMB.servicosLazyDataModel.filter}">
+					<p:ajax event="keyup" listener="#{servicoMB.pesquisa}" update="tabelaServico" />
+				</p:inputText>
+				
+				<p:dataTable id="tabelaServico" var="servico" value="#{servicoMB.servicosLazyDataModel}" widgetVar="tabelaServico" 
+					emptyMessage="Não há servicos com essa especificação" paginator="true" rows="5" lazy="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
+						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"  
+					resizableColumns="true" style="width: 1100px;margin-top:30px">
 
 					<f:facet name="header">
 						<p:outputPanel>
@@ -20,30 +29,25 @@
 						</p:outputPanel>
 					</f:facet>
 					
-					<p:column id="codServico" filterBy="#{servico.cod}" 
-						filterStyle="max-width: 50px; min-width: 50px;" headerText="Código" width="100">
+					<p:column id="codServico" filterStyle="max-width: 50px; min-width: 50px;" headerText="Código" width="100">
 						<h:outputText value="#{servico.cod}"/>
 					</p:column>
 					
-					<p:column id="categoria" filterBy="#{servico.tipoServico.descricao}"
-						filterStyle="max-width: 130px; min-width: 130px;"  headerText="Tipo" width="150"> 
+					<p:column id="categoria" filterStyle="max-width: 130px; min-width: 130px;"  headerText="Tipo" width="150"> 
 						<h:outputText value="#{servico.tipoServico.descricao}" /> 
 					</p:column>
 					
-					<p:column id="nome" filterBy="#{servico.nome}"
-						filterStyle="max-width: 130px; min-width: 130px;"  headerText="Descrição" width="150">
+					<p:column id="nome" filterStyle="max-width: 130px; min-width: 130px;"  headerText="Descrição" width="150">
 						<h:outputText value="#{servico.nome}" />
 					</p:column>
 					
-					<p:column id="custo" filterBy="#{servico.custo}"
-						filterStyle="max-width: 130px; min-width: 130px;"  headerText="Preco de Custo" width="135">
+					<p:column id="custo" filterStyle="max-width: 130px; min-width: 130px;"  headerText="Custo" width="135">
 						<h:outputText value="#{servico.custo}">
 							<f:convertNumber  type="currency" currencySymbol="R$"/>
 						</h:outputText>
 					</p:column>
 					
-					<p:column id="precoVenda" filterBy="#{servico.precoVenda}"
-						filterStyle="max-width: 130px; min-width: 130px;"  headerText="Preco de Venda" width="135">
+					<p:column id="precoVenda" filterStyle="max-width: 130px; min-width: 130px;"  headerText="Preco de Venda" width="135">
 						<h:outputText value="#{servico.precoVenda}">
 							<f:convertNumber  type="currency" currencySymbol="R$"/>
 						</h:outputText>
@@ -54,10 +58,7 @@
 								style="width:25px; height:25px;vertical-align: middle;margin-bottom: 3px;"/>			
 					</p:column>
 					
-					
 				</p:dataTable>
-
-		
 
 		</h:form>
 		</p:panel>

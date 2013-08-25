@@ -8,6 +8,8 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 
 import br.com.mendes.model.Meta;
 import br.com.mendes.model.Servico;
@@ -15,6 +17,7 @@ import br.com.mendes.model.TipoServico;
 import br.com.mendes.service.MetaService;
 import br.com.mendes.service.ServicoService;
 import br.com.mendes.utils.MBUtil;
+import br.com.mendes.view.lazy.ServicosLazyDataModel;
 
 @ManagedBean(name = "servicoMB")
 @ViewScoped
@@ -25,6 +28,8 @@ public class ServicoMB implements Serializable {
 	private Servico servico;
 
 	private List<Servico> servicos;
+
+	private ServicosLazyDataModel servicosLazyDataModel;
 
 	private List<TipoServico> tiposServico;
 
@@ -40,10 +45,17 @@ public class ServicoMB implements Serializable {
 	public void iniciar() {
 
 		this.servicos = this.servicoService.obterTodosServicos();
-
+		this.servicosLazyDataModel = new ServicosLazyDataModel(this.servicoService);
 		this.tiposServico = Arrays.asList(TipoServico.values());
 
-		resetDados();
+		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+
+		if (flash.isEmpty()) {
+			resetDados();
+		} else {
+			this.servico = (Servico) flash.get("servico");
+			this.valorMeta = (Double) flash.get("valorMeta");
+		}
 	}
 
 	public void resetDados() {
@@ -61,7 +73,16 @@ public class ServicoMB implements Serializable {
 			this.valorMeta = meta.getValor();
 		}
 
+		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+
+		flash.put("servico", this.servico);
+		flash.put("valorMeta", this.valorMeta);
+
 		return "/paginas/cadastroServico.xhtml";
+	}
+
+	public void pesquisa() {
+		this.servicosLazyDataModel.setRowIndex(-1);
 	}
 
 	public void salvarServico() {
@@ -124,6 +145,14 @@ public class ServicoMB implements Serializable {
 
 	public void setMetaService(MetaService metaService) {
 		this.metaService = metaService;
+	}
+
+	public ServicosLazyDataModel getServicosLazyDataModel() {
+		return this.servicosLazyDataModel;
+	}
+
+	public void setServicosLazyDataModel(ServicosLazyDataModel servicosLazyDataModel) {
+		this.servicosLazyDataModel = servicosLazyDataModel;
 	}
 
 }

@@ -50,4 +50,14 @@ public class PedidoServiceImpl implements PedidoService {
 	public List<Pedido> obterPedidoPorCliente(Long codCliente) {
 		return this.itemPedidoDAO.obterPedidoPorCliente(codCliente);
 	}
+
+	@Override
+	public List<Pedido> obterTodosPedidosPaginados(String filter, Integer first, Integer pageSize) {
+		return this.pedidoDAO.obterTodosPedidosPaginados(filter, first, pageSize);
+	}
+
+	@Override
+	public Long countBy(String filter) {
+		return this.pedidoDAO.countBy(filter);
+	}
 }

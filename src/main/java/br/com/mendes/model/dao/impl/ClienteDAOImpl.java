@@ -53,8 +53,7 @@ public class ClienteDAOImpl extends DAOImpl<Cliente, Long> implements ClienteDAO
 		Criteria criteria = getSession().createCriteria(Cliente.class);
 
 		if (!StringUtils.isBlank(filter)) {
-			criteria.add(Restrictions.ilike("nome", filter,
-					MatchMode.ANYWHERE));
+			criteria.add(Restrictions.ilike("nome", filter, MatchMode.ANYWHERE));
 		}
 
 		criteria.setProjection(Projections.rowCount());
@@ -73,7 +72,7 @@ public class ClienteDAOImpl extends DAOImpl<Cliente, Long> implements ClienteDAO
 		}
 
 		/*
-		 * RODA NO POST select * from cliente c left outer join endereco e on
+		 * select * from cliente c left outer join endereco e on
 		 * c.endereco_codEndereco = e.codEndereco where( nome ilike 'm%' or
 		 * sobrenome ilike 'm%') order by c.nome
 		 */

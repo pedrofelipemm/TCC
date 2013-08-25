@@ -33,4 +33,14 @@ public class ServicoServiceImpl implements ServicoService {
 	public void criarServico(Servico servico) {
 		this.servicoDAO.saveUpdateGetEntity(servico);
 	}
+
+	@Override
+	public Long countBy(String filter) {
+		return this.servicoDAO.countBy(filter);
+	}
+
+	@Override
+	public List<Servico> obterTodosServicosPaginados(String filter, Integer first, Integer pageSize) {
+		return this.servicoDAO.obterTodosServicosPaginados(filter, first, pageSize);
+	}
 }
