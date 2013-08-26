@@ -1,6 +1,7 @@
 package br.com.mendes.view;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -72,12 +73,13 @@ public class ClienteMB implements Serializable {
 
 		this.cliente.setEndereco(this.endereco);
 
+		if (this.cliente.getDataCadastro() == null) {
+			this.cliente.setDataCadastro(new Date());
+		}
+
 		try {
 			this.clienteService.criarCliente(this.cliente);
 			MBUtil.addInfo("Cadastrado com sucesso.");
-
-			// this.clientesLazyDataModel =
-			// this.clienteService.obterTodosCliente();
 
 			limparDados();
 		} catch (DataIntegrityViolationException exception) {
