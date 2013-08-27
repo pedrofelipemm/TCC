@@ -57,7 +57,10 @@
 				    <p:message for="itemVendido"/>	
         			
 			 		<p:outputLabel for="nota" value="Nota: " />
-					<p:inputText id="nota" value="#{feedbackMB.feedback.nota}" style="width:165px" size="20" />
+					<p:inputText id="nota" value="#{feedbackMB.feedback.nota}" style="width:165px" size="20" 
+						validatorMessage="Nota deve ser um valor entre 0 e 10!">
+						<f:validateLongRange minimum="0" maximum="10" />
+					</p:inputText>
 					<p:message for="nota"/>
 
 					<p:outputLabel for="observacao" value="Observação: " />

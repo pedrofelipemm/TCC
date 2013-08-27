@@ -59,7 +59,7 @@ public class GraficoMB implements Serializable {
 	public void iniciar() {
 		this.linearModel = new CartesianChartModel();
 		this.qtdePeriodos = 3;
-		this.maxY = 0;
+		this.maxY = 5;
 
 		switch (FacesContext.getCurrentInstance().getViewRoot().getViewId()) {
 			case "/paginas/graficoClientesConquistados.xhtml":
@@ -105,6 +105,7 @@ public class GraficoMB implements Serializable {
 		gerarLinha("Atendimentos", periodos);
 
 	}
+
 	public void carregarGraficoCliente() {
 		this.linearModel = new CartesianChartModel();
 		criarLinhaQtdeClientes();
@@ -157,6 +158,7 @@ public class GraficoMB implements Serializable {
 		}
 
 	}
+
 	private List<QtdePeriodoDTO> gerarPeriodos() {
 
 		List<QtdePeriodoDTO> periodos = new ArrayList<QtdePeriodoDTO>();

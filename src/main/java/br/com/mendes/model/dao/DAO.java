@@ -34,4 +34,6 @@ public interface DAO<T, K extends Serializable> extends Serializable {
 	public abstract List<T> getListByFilter(T entity);
 
 	public abstract T getByFilter(T entity);
+
+	public void merge(T entity);
 }

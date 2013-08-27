@@ -53,7 +53,8 @@ public class ClienteDAOImpl extends DAOImpl<Cliente, Long> implements ClienteDAO
 		Criteria criteria = getSession().createCriteria(Cliente.class);
 
 		if (!StringUtils.isBlank(filter)) {
-			criteria.add(Restrictions.ilike("nome", filter, MatchMode.ANYWHERE));
+			criteria.add(Restrictions.or(Restrictions.ilike("nome", filter + "%", MatchMode.ANYWHERE),
+					Restrictions.ilike("sobrenome", filter + "%", MatchMode.ANYWHERE)));
 		}
 
 		criteria.setProjection(Projections.rowCount());

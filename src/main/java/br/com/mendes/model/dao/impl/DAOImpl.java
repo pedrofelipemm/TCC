@@ -43,6 +43,12 @@ public abstract class DAOImpl<T, K extends Serializable> implements DAO<T, K> {
 	}
 
 	@Override
+	public void merge(T entity) {
+		getSession().merge(entity);
+		getSession().flush();
+	}
+
+	@Override
 	public void remove(T entity) {
 		getSession().delete(entity);
 		getSession().flush();

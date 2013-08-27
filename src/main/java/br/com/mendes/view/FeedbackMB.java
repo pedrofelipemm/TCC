@@ -10,16 +10,21 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 
 import br.com.mendes.model.Cliente;
 import br.com.mendes.model.Feedback;
 import br.com.mendes.model.Item;
+import br.com.mendes.model.Produto;
+import br.com.mendes.model.Servico;
 import br.com.mendes.model.TipoAtendimento;
 import br.com.mendes.model.TipoItem;
 import br.com.mendes.service.ClienteService;
 import br.com.mendes.service.FeedbackService;
 import br.com.mendes.service.ItemService;
 import br.com.mendes.utils.MBUtil;
+import br.com.mendes.view.lazy.FeedbacksLazyDataModel;
 
 @ManagedBean(name = "feedbackMB")
 @ViewScoped
@@ -40,6 +45,7 @@ public class FeedbackMB implements Serializable {
 	private Cliente cliente;
 	private Item item;
 	private TipoItem tipoItem;
+	private FeedbacksLazyDataModel feedbacksLazyDataModel;
 
 	private List<TipoItem> tiposItem;
 	private List<TipoAtendimento> tipoAtendimentos;
@@ -49,6 +55,7 @@ public class FeedbackMB implements Serializable {
 
 	@PostConstruct
 	public void iniciar() {
+		this.feedbacksLazyDataModel = new FeedbacksLazyDataModel(this.feedbackService);
 
 		this.cliente = new Cliente();
 		this.clientes = this.clienteService.obterTodosCliente();
@@ -59,10 +66,40 @@ public class FeedbackMB implements Serializable {
 		this.tiposItem = Arrays.asList(TipoItem.values());
 		this.itens = new ArrayList<Item>();
 
-		resetDados();
+		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+
+		if (!flash.isEmpty()) {
+			this.feedback = (Feedback) flash.get("feedback");
+
+			if (this.feedback.getItem() instanceof Produto) {
+				this.tipoItem = TipoItem.PRODUTO;
+			}
+
+			if (this.feedback.getItem() instanceof Servico) {
+				this.tipoItem = TipoItem.SERVICO;
+			}
+
+			escolherTipoItem();
+		} else {
+			resetDados();
+		}
 	}
 
 	public FeedbackMB() {
+	}
+
+	public void pesquisa() {
+		this.feedbacksLazyDataModel.setRowIndex(-1);
+	}
+
+	public String iniciarEdicao(Long codFeedback) {
+
+		this.feedback = this.feedbackService.obterFeedbackPorCod(codFeedback);
+
+		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+		flash.put("feedback", this.feedback);
+
+		return "/paginas/cadastroFeedback.xhtml";
 	}
 
 	public void resetDados() {
@@ -84,11 +121,12 @@ public class FeedbackMB implements Serializable {
 
 		if (feedbackAtual != null) {
 			this.feedback.setCodFeedback(feedbackAtual.getCodFeedback());
+			this.feedbackService.criarAtualizarFeedback(this.feedback);
+			MBUtil.addInfo("feedback já existe para esse item, atualizado com sucesso.");
+		} else {
+			this.feedbackService.criarFeedback(this.feedback);
+			MBUtil.addInfo("Cadastrado com sucesso.");
 		}
-
-		this.feedbackService.criarFeedback(this.feedback);
-
-		MBUtil.addInfo("Cadastrado com sucesso.");
 
 		resetDados();
 
@@ -150,6 +188,14 @@ public class FeedbackMB implements Serializable {
 
 	public List<Feedback> getFeedbacks() {
 		return this.feedbacks;
+	}
+
+	public FeedbacksLazyDataModel getFeedbacksLazyDataModel() {
+		return this.feedbacksLazyDataModel;
+	}
+
+	public void setFeedbacksLazyDataModel(FeedbacksLazyDataModel feedbacksLazyDataModel) {
+		this.feedbacksLazyDataModel = feedbacksLazyDataModel;
 	}
 
 	public void setFeedbacks(List<Feedback> feedbacks) {

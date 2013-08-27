@@ -45,12 +45,12 @@ public class FeedbackServiceImpl implements FeedbackService {
 	}
 
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public List<QtdePeriodoDTO> obterQtdesFeedbackNosPeriodos(TipoAtendimento tipoAtendimento,
 			List<QtdePeriodoDTO> periodos) {
 
-		for(QtdePeriodoDTO periodo : periodos) {
-			Long qtde = this.obterQtdeFeedbackNoMesAno(tipoAtendimento,periodo.getAno(), periodo.getMes());
+		for (QtdePeriodoDTO periodo : periodos) {
+			Long qtde = this.obterQtdeFeedbackNoMesAno(tipoAtendimento, periodo.getAno(), periodo.getMes());
 			periodo.setQtde(qtde.doubleValue());
 		}
 
@@ -61,5 +61,20 @@ public class FeedbackServiceImpl implements FeedbackService {
 			Integer ano, Integer mes) {
 
 		return this.feedbackDAO.obterQtdeFeedbackNoMesAno(tipoAtendimento, ano, mes);
+	}
+
+	@Override
+	public List<Feedback> obterTodosFeedbacksPaginados(String filter, Integer first, Integer pageSize) {
+		return this.feedbackDAO.obterTodosFeedbacksPaginados(filter, first, pageSize);
+	}
+
+	@Override
+	public Long countBy(String filter) {
+		return this.feedbackDAO.countBy(filter);
+	}
+
+	@Override
+	public void criarAtualizarFeedback(Feedback feedback) {
+		this.feedbackDAO.merge(feedback);
 	}
 }

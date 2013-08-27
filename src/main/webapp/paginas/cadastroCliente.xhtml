@@ -48,7 +48,8 @@
 					<p:message for="cpf" />
 
 					<p:outputLabel for="dataNascimento" value="Data Nascimento:  " />
-					<p:calendar value="#{clienteMB.cliente.dataNascimento}" readonlyInput="true" id="dataNascimento" pattern="dd/MM/yyyy" locale="pt">
+					<p:calendar value="#{clienteMB.cliente.dataNascimento}" readonlyInput="true" id="dataNascimento" 
+						pattern="dd/MM/yyyy" locale="pt" >
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</p:calendar>
 					<span/>
@@ -133,7 +134,7 @@
 				<p:commandButton value="Salvar" action="#{clienteMB.salvarCliente}" ajax="false" update="@all" style="margin: 0" />
 
 				<p:spacer width="10px" />
-				<p:commandButton value="Limpar" process="@this" update="@all" style="margin: 0" >
+				<p:commandButton value="Limpar" process="@this" update="form1" style="margin: 0" >
 					<p:resetInput target="panel panelEndereco" />
 				</p:commandButton>
 

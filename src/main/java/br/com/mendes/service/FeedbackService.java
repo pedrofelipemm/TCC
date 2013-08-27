@@ -19,4 +19,10 @@ public interface FeedbackService extends Serializable {
 
 	public abstract List<QtdePeriodoDTO> obterQtdesFeedbackNosPeriodos(
 			TipoAtendimento tipoAtendimento, List<QtdePeriodoDTO> periodos);
+
+	public abstract List<Feedback> obterTodosFeedbacksPaginados(String filter, Integer first, Integer pageSize);
+
+	public abstract Long countBy(String filter);
+
+	public abstract void criarAtualizarFeedback(Feedback feedback);
 }
