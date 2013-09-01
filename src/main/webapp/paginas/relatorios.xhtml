@@ -1,0 +1,252 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:of="http://omnifaces.org/functions">
+
+<h:head>
+</h:head>
+<body>
+	<ui:decorate template="template.xhtml">
+		<ui:define name="conteudo">
+	
+		<h:form>	
+		<p:tabView id="tabView" dynamic="true">  
+  
+        	<p:tab id="metasGlobais" title="Metas Globais">
+        	
+        	<p:panelGrid style="margin-top:20px; width:700px">  
+				    <f:facet name="header">  
+				        <p:row>  
+				            <p:column colspan="7">Comparação entre Produtos e Serviços nos Últimos:</p:column>  
+				        </p:row>  
+				        <p:row>
+				        	<p:column styleClass="ui-widget-header"/>  
+				            <p:column>3 Meses</p:column>  
+				            <p:column>6 Meses</p:column>  
+				            <p:column>12 Meses</p:column>
+				        </p:row>  
+				    </f:facet>  
+				    
+				    <p:row>
+				    	<p:column styleClass="ui-widget-header">Produtos Vendidos</p:column>  
+						<p:column>
+							<h:outputText value="#{relatorioMB.produtosVendidos[0]}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{relatorioMB.produtosVendidos[1]}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{relatorioMB.produtosVendidos[2]}" />
+						</p:column>
+				    </p:row>
+				    
+				    <p:row>
+				    	<p:column styleClass="ui-widget-header">Serviços Prestados</p:column>  
+						<p:column>
+							<h:outputText value="#{relatorioMB.servicosPrestados[0]}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{relatorioMB.servicosPrestados[1]}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{relatorioMB.servicosPrestados[2]}" />
+						</p:column>
+				    </p:row>
+				    
+			        <p:row>  
+			            <p:column styleClass="ui-widget-header" colspan="6"></p:column>  
+			        </p:row>
+				 	 
+				 	 <p:row>
+				    	<p:column styleClass="ui-widget-header">Receita com Produtos Vendidos</p:column>  
+						<p:column>
+							<h:outputText value="#{relatorioMB.receitaProdutos[0]}" >
+								<f:convertNumber type="currency" currencySymbol="R$"/>
+							</h:outputText>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{relatorioMB.receitaProdutos[1]}" >
+								<f:convertNumber type="currency" currencySymbol="R$"/>
+							</h:outputText>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{relatorioMB.receitaProdutos[2]}" >
+								<f:convertNumber type="currency" currencySymbol="R$"/>
+							</h:outputText>
+						</p:column>
+				    </p:row>
+				    
+				    <p:row>
+				    	<p:column styleClass="ui-widget-header">Receita com Serviços Prestados</p:column>  
+						<p:column>
+							<h:outputText value="#{relatorioMB.receitaServicos[0]}" >
+								<f:convertNumber type="currency" currencySymbol="R$"/>
+							</h:outputText>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{relatorioMB.receitaServicos[1]}" >
+								<f:convertNumber type="currency" currencySymbol="R$"/>
+							</h:outputText>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{relatorioMB.receitaServicos[2]}" >
+								<f:convertNumber type="currency" currencySymbol="R$"/>
+							</h:outputText>
+						</p:column>
+				    </p:row>
+				    
+				   </p:panelGrid>
+				    
+				   <p:panelGrid style="margin-top:20px; width:700px">  
+				    <f:facet name="header">  
+				        <p:row>  
+				            <p:column colspan="7">Número de Feedbacks Realizados nos Últimos:</p:column>  
+				        </p:row>  
+				        <p:row>
+				        	 <p:column styleClass="ui-widget-header"/>  
+				            <p:column>3 Meses</p:column>  
+				            <p:column>6 Meses</p:column>  
+				            <p:column>12 Meses</p:column>
+				            <p:column>Meta Atual</p:column>  
+				        </p:row>  
+				    </f:facet>  
+				    
+				    <p:row>
+				    	<p:column styleClass="ui-widget-header">EmailL</p:column>  
+						<p:column>
+							<h:outputText value="#{relatorioMB.atendimentosRealizados[0]}"/>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{relatorioMB.atendimentosRealizados[1]}"/>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{relatorioMB.atendimentosRealizados[2]}"/>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{relatorioMB.atendimentosRealizados[3]}"/>
+						</p:column>
+				    </p:row>
+				    
+				    <p:row>
+				    	<p:column styleClass="ui-widget-header">Pessoalmente</p:column>  
+						<p:column>
+							<h:outputText value="#{relatorioMB.atendimentosRealizados[4]}"/>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{relatorioMB.atendimentosRealizados[5]}"/>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{relatorioMB.atendimentosRealizados[6]}"/>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{relatorioMB.atendimentosRealizados[7]}"/>
+						</p:column>
+				    </p:row>
+				    
+				    <p:row>
+				    	<p:column styleClass="ui-widget-header">Telefone</p:column>  
+						<p:column>
+							<h:outputText value="#{relatorioMB.atendimentosRealizados[8]}"/>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{relatorioMB.atendimentosRealizados[9]}"/>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{relatorioMB.atendimentosRealizados[10]}"/>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{relatorioMB.atendimentosRealizados[11]}"/>
+						</p:column>
+				    </p:row>
+				   </p:panelGrid>
+				   
+				   <p:panelGrid style="margin-top:20px; width:700px">  
+				    <f:facet name="header">  
+				        <p:row>  
+				            <p:column colspan="7">Número de Clientes Conquistados nos Últimos:</p:column>  
+				        </p:row>  
+				        <p:row>  
+				            <p:column>3 Meses</p:column>  
+				            <p:column>6 Meses</p:column>  
+				            <p:column>12 Meses</p:column>
+				            <p:column>Meta Atual</p:column>  
+				        </p:row>  
+				    </f:facet>  
+				  
+				    <p:row>  
+						<p:column>
+							<h:outputText value="#{relatorioMB.clientesConquistados[0]}"/>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{relatorioMB.clientesConquistados[1]}"/>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{relatorioMB.clientesConquistados[2]}"/>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{relatorioMB.clientesConquistados[3]}"/>
+						</p:column>
+				    </p:row>
+				   </p:panelGrid>
+				     
+			</p:tab>
+			 
+        	<p:tab id="metasEspecificas" title="Metas Específicas">
+        		<p:dataTable id="produtos" value="#{relatorioMB.produtoDTO}" var="dto" style="width:700px">
+        			
+        			<f:facet name="header">  
+			            Quantidades de Produtos Vendidos nos Últimos:  
+			        </f:facet>
+        	
+        			<p:column headerText="Produto">  
+  	 	  				<h:outputText value="#{dto.descricao}" />  
+        			</p:column>
+        		  	<p:column headerText="3 meses">  
+  	 	  				<h:outputText value="#{dto.valores[0]}" />  
+        			</p:column>
+        			<p:column headerText="6 meses">  
+  	 	  				<h:outputText value="#{dto.valores[1]}" />  
+        			</p:column>
+        			<p:column headerText="12 meses">  
+  	 	  				<h:outputText value="#{dto.valores[2]}" />  
+        			</p:column>
+        			<p:column headerText="Meta">  
+  	 	  				<h:outputText value="#{dto.meta}" />  
+        			</p:column>
+        		</p:dataTable>
+        		
+        		<p:dataTable id="servicos" value="#{relatorioMB.servicoDTO}" var="dto" style="margin-top:50px; width:700px">
+        			
+        			<f:facet name="header">  
+			            Quantidades de Serviços Prestados nos Últimos:  
+			        </f:facet>
+        	
+        			<p:column headerText="Serviço">  
+  	 	  				<h:outputText value="#{dto.descricao}" />  
+        			</p:column>
+        		  	<p:column headerText="3 meses">  
+  	 	  				<h:outputText value="#{dto.valores[0]}" />  
+        			</p:column>
+        			<p:column headerText="6 meses">  
+  	 	  				<h:outputText value="#{dto.valores[1]}" />  
+        			</p:column>
+        			<p:column headerText="12 meses">  
+  	 	  				<h:outputText value="#{dto.valores[2]}" />  
+        			</p:column>
+        			<p:column headerText="Meta">  
+  	 	  				<h:outputText value="#{dto.meta}" />  
+        			</p:column>
+        		</p:dataTable> 
+			</p:tab>
+				
+		</p:tabView>
+		</h:form>
+		</ui:define>
+	</ui:decorate>
+</body>
+</html>

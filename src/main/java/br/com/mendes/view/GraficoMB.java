@@ -17,7 +17,9 @@ import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 
 import br.com.mendes.dto.QtdePeriodoDTO;
+import br.com.mendes.model.Item;
 import br.com.mendes.model.TipoAtendimento;
+import br.com.mendes.model.TipoItem;
 import br.com.mendes.model.TipoMetaGeral;
 import br.com.mendes.service.ClienteService;
 import br.com.mendes.service.FeedbackService;
@@ -46,13 +48,24 @@ public class GraficoMB implements Serializable {
 
 	private TipoAtendimento tipoAtendimento;
 
+	private TipoItem tipoItem;
+
+	private String tipo;
+
 	private List<TipoAtendimento> tiposAtendimento;
+
+	private List<TipoItem> tiposItem;
+
+	private List<Item> itens;
 
 	private Integer qtdePeriodos;
 	private Integer maxY;
 
-	public GraficoMB() {
+	private Integer tipoGrafico;
 
+	private Long codItem;
+
+	public GraficoMB() {
 	}
 
 	@PostConstruct
@@ -60,6 +73,7 @@ public class GraficoMB implements Serializable {
 		this.linearModel = new CartesianChartModel();
 		this.qtdePeriodos = 3;
 		this.maxY = 5;
+		this.tipoGrafico = 1;
 
 		switch (FacesContext.getCurrentInstance().getViewRoot().getViewId()) {
 			case "/paginas/graficoClientesConquistados.xhtml":
@@ -67,6 +81,12 @@ public class GraficoMB implements Serializable {
 				break;
 			case "/paginas/graficoAtendimentosRealizados.xhtml":
 				carregarGraficoFeedback();
+				break;
+			case "/paginas/graficoMetasEspecificas.xhtml":
+				carregarGraficoMetaEspecifica();
+				break;
+			case "/paginas/graficoProdutoServicoGeral.xhtml":
+				carregarGraficoProdutoServicoGeral();
 				break;
 		}
 
@@ -94,6 +114,98 @@ public class GraficoMB implements Serializable {
 				criarLinhaMetaGeral(TipoMetaGeral.FEEDBACK_TELEFONE);
 				break;
 		}
+	}
+
+	public void limparItem() {
+		this.codItem = null;
+	}
+
+	public void carregarGraficoMetaEspecifica() {
+		this.linearModel = new CartesianChartModel();
+		this.tiposItem = Arrays.asList(TipoItem.values());
+
+		if (this.tipoItem == null) {
+			this.tipoItem = TipoItem.PRODUTO;
+			this.tipo = this.tipoItem.name();
+		}
+
+		if (this.tipoItem.name() != this.tipo) {
+			this.codItem = null;
+			this.tipo = this.tipoItem.name();
+		}
+
+		this.itens = this.itemService.buscarTodos(this.tipoItem);
+
+		if (this.codItem == null) {
+			this.codItem = this.itemService.buscarTodos(this.tipoItem).get(0).getCod();
+		}
+
+		criarLinhaQtdeItemEspecifico(this.codItem);
+		criarLinhaMetaEspecifica(this.codItem);
+	}
+
+	private void criarLinhaMetaEspecifica(Long codItem) {
+
+		List<QtdePeriodoDTO> periodos = gerarPeriodos();
+
+		periodos = this.metaService.obterMetasEspecificasNoPeriodo(codItem, periodos);
+
+		gerarLinha("Metas", periodos);
+
+	}
+
+	public void carregarGraficoProdutoServicoGeral() {
+		this.linearModel = new CartesianChartModel();
+
+		switch (this.tipoGrafico) {
+			case 1:
+				criarLinhaItemGeral(TipoItem.SERVICO, "Qtde Serviços Prestados");
+				criarLinhaItemGeral(TipoItem.PRODUTO, "Qtde Produtos Vendidos");
+				break;
+			case 2:
+				criarLinhaItemGeralValor(TipoItem.SERVICO, "Serviços Prestados");
+				criarLinhaItemGeralValor(TipoItem.PRODUTO, "Produtos Vendidos");
+				break;
+			case 3:
+				criarLinhaItemGeral(TipoItem.PRODUTO, "Produtos Vendidos");
+				criarLinhaMetaGeral(TipoMetaGeral.PRODUTO);
+				break;
+			case 4:
+				criarLinhaItemGeral(TipoItem.SERVICO, "Serviços Prestados");
+				criarLinhaMetaGeral(TipoMetaGeral.SERVICO);
+				break;
+		}
+
+	}
+
+	private void criarLinhaItemGeral(TipoItem tipoItem, String descricao) {
+
+		List<QtdePeriodoDTO> periodos = gerarPeriodos();
+
+		periodos = this.itemService.obterQtdesItensGeralNosPeriodos(tipoItem, periodos);
+
+		gerarLinha(descricao, periodos);
+
+	}
+
+	private void criarLinhaItemGeralValor(TipoItem tipoItem, String descricao) {
+
+		List<QtdePeriodoDTO> periodos = gerarPeriodos();
+
+		periodos = this.itemService.obterQtdesItensGeralValorNosPeriodos(tipoItem, periodos);
+
+		gerarLinha(descricao, periodos);
+
+	}
+
+	private void criarLinhaQtdeItemEspecifico(Long codItem) {
+
+		List<QtdePeriodoDTO> periodos = gerarPeriodos();
+
+		periodos = this.itemService.obterQtdesItensEspecificosNosPeriodos(codItem, periodos);
+
+		gerarLinha("Produto", periodos);
+
 	}
 
 	private void criarLinhaQtdeFeedback(TipoAtendimento tipoAtendimento) {
@@ -253,6 +365,54 @@ public class GraficoMB implements Serializable {
 
 	public void setTipoAtendimento(TipoAtendimento tipoAtendimento) {
 		this.tipoAtendimento = tipoAtendimento;
+	}
+
+	public TipoItem getTipoItem() {
+		return this.tipoItem;
+	}
+
+	public void setTipoItem(TipoItem tipoItem) {
+		this.tipoItem = tipoItem;
+	}
+
+	public List<TipoItem> getTiposItem() {
+		return this.tiposItem;
+	}
+
+	public void setTiposItem(List<TipoItem> tiposItem) {
+		this.tiposItem = tiposItem;
+	}
+
+	public List<Item> getItens() {
+		return this.itens;
+	}
+
+	public void setItens(List<Item> itens) {
+		this.itens = itens;
+	}
+
+	public Long getCodItem() {
+		return this.codItem;
+	}
+
+	public void setCodItem(Long codItem) {
+		this.codItem = codItem;
+	}
+
+	public String getTipo() {
+		return this.tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public Integer getTipoGrafico() {
+		return this.tipoGrafico;
+	}
+
+	public void setTipoGrafico(Integer tipoGrafico) {
+		this.tipoGrafico = tipoGrafico;
 	}
 
 }
