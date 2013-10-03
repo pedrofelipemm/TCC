@@ -20,7 +20,7 @@
 
 				<p:focus context="panel" />
 
-				<h:panelGrid align="center" columns="6" width="900"
+				<h:panelGrid id="panelFeedback" align="center" columns="6" width="900"
 					style="text-align: left" border="0">
 
 					<p:outputLabel for="tipoAtendimento" value="Tipo de Atendimento: " />
@@ -73,11 +73,11 @@
 			<p:panel style="float: center; border: 0;">
 
 				<p:spacer width="10px" />
-				<p:commandButton value="Salvar" action="#{feedbackMB.salvarFeedback}" process="@this, form1" update="@all" style="margin: 0" />
+				<p:commandButton value="Salvar" action="#{feedbackMB.salvarFeedback}" ajax="false" update="panelFeedback" style="margin: 0" />
 
 				<p:spacer width="10px" />
-				<p:commandButton value="Limpar" process="@this" update="@all" style="margin: 0" >
-					<p:resetInput target="panel" />
+				<p:commandButton value="Limpar" action="#{feedbackMB.resetDados}" process="@this" update="panelFeedback" style="margin: 0" >
+					<p:resetInput target="panelFeedback" />
 				</p:commandButton>
 
 			</p:panel>

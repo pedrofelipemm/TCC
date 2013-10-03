@@ -20,7 +20,7 @@
 
 				<p:focus context="panel" />
 
-				<h:panelGrid align="center" columns="6" width="900"
+				<h:panelGrid align="center" columns="6" width="900" id="panelClienteDados"
 					style="text-align: left" border="0">
 
 					<p:outputLabel for="nome" value="Nome: " />
@@ -66,7 +66,7 @@
 				<h2>Endereço</h2>
 				<p:spacer height="10px"></p:spacer>
 				
-				<h:panelGrid align="left" columns="6" width="1000"
+				<h:panelGrid align="left" columns="6" width="1000" id="panelEnderecoDados"
 					style="text-align: left" border="0" >
 
 					<p:outputLabel for="logradouro" value="Logradouro: " />
@@ -134,8 +134,8 @@
 				<p:commandButton value="Salvar" action="#{clienteMB.salvarCliente}" ajax="false" update="@all" style="margin: 0" />
 
 				<p:spacer width="10px" />
-				<p:commandButton value="Limpar" process="@this" update="form1" style="margin: 0" >
-					<p:resetInput target="panel panelEndereco" />
+				<p:commandButton value="Limpar" process="@this" update="panelClienteDados panelEnderecoDados" style="margin: 0" >
+					<p:resetInput target="panelClienteDados panelEnderecoDados" />
 				</p:commandButton>
 
 			</p:panel>

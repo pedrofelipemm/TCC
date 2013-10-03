@@ -186,17 +186,20 @@ public class PedidoMB implements Serializable {
 		pedido.setCliente(new Cliente(this.codCliente));
 		pedido.setValorTotal(calcularTotal());
 
-		this.pedidoService.criarPedido(pedido);
+		if (!this.itensPedido.isEmpty() && this.itensPedido != null) {
+			this.pedidoService.criarPedido(pedido);
 
-		for (ItemPedido ip : this.itensPedido) {
-			ip.setPedido(pedido);
-			this.pedidoService.criarAlterarItemPedido(ip);
+			for (ItemPedido ip : this.itensPedido) {
+				ip.setPedido(pedido);
+				this.pedidoService.criarAlterarItemPedido(ip);
+			}
+
+			MBUtil.addInfo("Cadastrado com sucesso.");
+		} else {
+			MBUtil.addError("Lista de pedidos está vazia!");
 		}
 
-		MBUtil.addInfo("Cadastrado com sucesso.");
-
 		resetDados();
-
 	}
 
 	public List<Pedido> getPedidos() {

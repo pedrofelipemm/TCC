@@ -31,7 +31,10 @@ public class MetaMB implements Serializable {
 
 	@PostConstruct
 	public void iniciar() {
+		init();
+	}
 
+	private void init() {
 		this.metaCliente = this.metaService.obterMetaGeralAtual(TipoMetaGeral.CLIENTE);
 		this.metaProduto = this.metaService.obterMetaGeralAtual(TipoMetaGeral.PRODUTO);
 		this.metaServico = this.metaService.obterMetaGeralAtual(TipoMetaGeral.SERVICO);
@@ -69,8 +72,8 @@ public class MetaMB implements Serializable {
 	}
 
 	public void salvarMeta() {
-
 		criarMetas();
+		init();
 
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Cadastrado com sucesso."));

@@ -84,8 +84,12 @@ public class RelatorioMB implements Serializable {
 			periodos = this.itemService.obterQtdesItensEspecificosNosPeriodos(item.getCod(), periodos);
 			lista = geraValores(lista, periodos);
 
-			this.produtoDTO.add(new ItemValorDTO(item.getNome(), lista,
-					item.getMetas().get(item.getMetas().size() - 1).getValor().intValue()));
+			if (item.getMetas() != null && !item.getMetas().isEmpty()) {
+				this.produtoDTO.add(new ItemValorDTO(item.getNome(), lista,
+						item.getMetas().get(item.getMetas().size() - 1).getValor().intValue()));
+			} else {
+				this.produtoDTO.add(new ItemValorDTO(item.getNome(), lista, 0));
+			}
 		}
 	}
 

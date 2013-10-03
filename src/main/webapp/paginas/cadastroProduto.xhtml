@@ -19,7 +19,7 @@
 				
 				<p:focus context="panel" />
 				
-				<h:panelGrid align="left" columns="6" width="950"
+				<h:panelGrid align="left" columns="6" width="950" id="panelDados"
 					style="text-align: left" border="0" >
 					
 								<p:outputLabel for="nome" value="Nome: " />
@@ -56,8 +56,8 @@
 				<p:commandButton value="Salvar" action="#{produtoMB.salvarProduto}" ajax="false" update="@all" style="margin: 0" />
 
 				<p:spacer width="10px" />
-				<p:commandButton value="Limpar" process="@this" update="@all" style="margin: 0" >
-					<p:resetInput target="panel" />
+				<p:commandButton value="Limpar" process="@this" update="panel" style="margin: 0" >
+					<p:resetInput target="panelDados"/>
 				</p:commandButton>
 
 			</p:panel>

@@ -21,7 +21,7 @@
 					
 					<p:focus context="panel" />
 				
-					<h:panelGrid align="left" columns="6" width="950" style="text-align: left" border="0" >
+					<h:panelGrid id="panelDados" align="left" columns="6" width="950" style="text-align: left" border="0" >
 							
 						<p:outputLabel for="cliente" value="Clientes: " />
 						<p:selectOneMenu  id="cliente" effect="clip" value="#{pedidoMB.codCliente}" style="width:165px" >
@@ -58,7 +58,10 @@
 						<p:commandButton value="Adicionar" action="#{pedidoMB.adicionarProduto}" ajax="true" process="@this, itemVendido, quantidade" update="tabela total" style="margin: 0" />
 	
 						<p:spacer width="10px" />
-						<p:commandButton value="Limpar Lista" action="#{pedidoMB.limparLista}" update="@all" style="margin: 0" />
+						<p:commandButton value="Limpar Lista" action="#{pedidoMB.limparLista}" 
+							process="@this" update="tabela total" style="margin: 0" >
+								<p:resetInput target="tabela total"/>
+						</p:commandButton>
 
 					</p:panel>
 					
@@ -99,8 +102,9 @@
 					<p:commandButton value="Salvar" action="#{pedidoMB.salvarPedido}" ajax="false" process="@this, cliente" style="margin: 0" />
 
 					<p:spacer width="10px" />
-					<p:commandButton value="Limpar" process="@this" update="@all" style="margin: 0" >
-						<p:resetInput target="panel" />
+					<p:commandButton value="Limpar" action="#{pedidoMB.resetDados}" 
+						process="@this" update="panelDados tabela total" style="margin: 0" >
+							<p:resetInput target="panelDados tabela total" />
 					</p:commandButton>
 
 					<p:spacer width="10px" />

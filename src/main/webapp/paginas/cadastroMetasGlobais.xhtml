@@ -20,7 +20,7 @@
 				<p:focus context="panel" />
 
 				<h3>Clientes</h3>
-				<h:panelGrid align="center" columns="2" width="745"
+				<h:panelGrid align="center" columns="2" width="745" id="panelMetas"
 					style="text-align: left" border="0">
 
 					<p:outputLabel for="clientesEsperados" value="Clientes Conquistados " />
@@ -79,11 +79,14 @@
 
 				<p:spacer width="10px" />
 
-				<p:commandButton value="Salvar" action="#{metaMB.salvarMeta}" style="margin: 0" />
+				<p:commandButton value="Salvar" action="#{metaMB.salvarMeta}" ajax="false" update="panel" style="margin: 0" />
 				
 				<p:spacer width="10px" />
 				
-				<p:commandButton value="Limpar" action="#{metaMB.limparDados}" process="@this" update="@all" style="margin: 0" />
+				<p:commandButton value="Limpar" action="#{metaMB.limparDados}" 
+					process="@this" update="panel" style="margin: 0" >
+						<p:resetInput target="panel"/>
+				</p:commandButton>
 
 				
 			</p:panel>
