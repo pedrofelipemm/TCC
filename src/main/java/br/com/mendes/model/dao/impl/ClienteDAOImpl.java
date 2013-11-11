@@ -65,18 +65,13 @@ public class ClienteDAOImpl extends DAOImpl<Cliente, Long> implements ClienteDAO
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Cliente> obterTodosClientesPaginados(String filter, Integer first, Integer pageSize) {
-		Criteria criteria = getSession().createCriteria(Cliente.class);
+		Criteria criteria = getSession().createCriteria(Cliente.class, "cliente");
+		criteria.createAlias("cliente.endereco", "endereco");
 
 		if (!StringUtils.isBlank(filter)) {
-			criteria.add(Restrictions.or(Restrictions.ilike("nome", filter + "%", MatchMode.ANYWHERE),
+			criteria.add(Restrictions.or(Restrictions.ilike("cliente.nome", filter + "%", MatchMode.ANYWHERE),
 					Restrictions.ilike("sobrenome", filter + "%", MatchMode.ANYWHERE)));
 		}
-
-		/*
-		 * select * from cliente c left outer join endereco e on
-		 * c.endereco_codEndereco = e.codEndereco where( nome ilike 'm%' or
-		 * sobrenome ilike 'm%') order by c.nome
-		 */
 
 		if (first != null) {
 			criteria.setFirstResult(first);

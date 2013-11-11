@@ -29,6 +29,14 @@ public class ItemPedido implements Serializable {
 
 	private int quantidade;
 
+	public Double getTotal() {
+		if (this.item == null || this.item.getPrecoVenda() == null || this.quantidade <= 0) {
+			return null;
+		}
+
+		return this.item.getPrecoVenda() * this.quantidade;
+	}
+
 	public ItemPedido() {
 	}
 

@@ -3,6 +3,7 @@ package br.com.mendes.view;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -181,6 +182,49 @@ public class RelatorioMB implements Serializable {
 		this.atendimentosRealizados = geraValores(this.atendimentosRealizados, periodos);
 	}
 
+	// ##################################################
+
+	public List<Integer> getAtendimentoA() {
+		// Map<String, Integer> coco = new HashMap<String, Integer>();
+		//
+		List<QtdePeriodoDTO> periodos = gerarPeriodos(12);
+		periodos = this.feedbackService.obterQtdesFeedbackNosPeriodos(TipoAtendimento.EMAIL, periodos);
+		Collections.reverse(periodos);
+
+		//
+		List<Integer> valores = new ArrayList<Integer>();
+		int total3Meses = 0;
+		int total6Meses = 0;
+		int total12Meses = 0;
+
+		for (int i = 0; i < periodos.size(); i++) {
+			if (i < 3) {
+				total3Meses += periodos.get(i).getQtde().intValue();
+			} else if (i < 6) {
+				total6Meses += periodos.get(i).getQtde().intValue();
+			} else if (i < 12) {
+				total12Meses += periodos.get(i).getQtde().intValue();
+			}
+		}
+
+		valores.add(total3Meses);
+		valores.add(total6Meses);
+		valores.add(total12Meses);
+		//
+
+		// for (QtdePeriodoDTO dto : periodos) {
+		// coco.put("3 Meses", dto.getQtde().intValue());
+		// }
+		//
+		// Set<Map.Entry<String, Integer>> email = coco.entrySet();
+		// ArrayList<Map.Entry<String, Integer>> a = new
+		// ArrayList<Map.Entry<String, Integer>>(email);
+
+		return valores;
+	}
+
+	// ##################################################
+
 	private void montaAtendimentosRealizadosPessoalmente() {
 		List<QtdePeriodoDTO> periodos = gerarPeriodos(12);
 		periodos = this.feedbackService.obterQtdesFeedbackNosPeriodos(TipoAtendimento.PESSOAL, periodos);
@@ -196,7 +240,7 @@ public class RelatorioMB implements Serializable {
 		periodos = this.feedbackService.obterQtdesFeedbackNosPeriodos(TipoAtendimento.TELEFONE, periodos);
 
 		List<Integer> temp = geraValores(new ArrayList<Integer>(), periodos);
-		for (int i = 8; i <= 10; i++) {
+		for (int i = 7; i <= 10; i++) {
 			this.atendimentosRealizados.add(i, temp.remove(0));
 		}
 	}

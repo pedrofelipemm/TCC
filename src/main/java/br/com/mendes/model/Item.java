@@ -56,6 +56,13 @@ public class Item implements Serializable {
 		this.precoVenda = precoVenda;
 	}
 
+	public Item(String nome, Double custo, Double precoVenda, List<MetaEspecifica> metas) {
+		this.nome = nome;
+		this.custo = custo;
+		this.precoVenda = precoVenda;
+		this.metas = metas;
+	}
+
 	public Item(Long codItem) {
 		this.cod = codItem;
 	}

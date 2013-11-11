@@ -26,8 +26,8 @@ public class ClienteMB implements Serializable {
 	private static final long serialVersionUID = 7948132687109359178L;
 
 	private Cliente cliente;
-
 	private Endereco endereco;
+	private Boolean fisica;
 
 	private ClientesLazyDataModel clientesLazyDataModel;
 
@@ -40,6 +40,8 @@ public class ClienteMB implements Serializable {
 	@PostConstruct
 	public void iniciar() {
 		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+
+		this.fisica = true;
 
 		if (!flash.isEmpty()) {
 			this.cliente = (Cliente) flash.get("cliente");
@@ -75,6 +77,12 @@ public class ClienteMB implements Serializable {
 
 		if (this.cliente.getDataCadastro() == null) {
 			this.cliente.setDataCadastro(new Date());
+		}
+
+		if (this.fisica) {
+			this.cliente.setCnpj(null);
+		} else {
+			this.cliente.setCpf(null);
 		}
 
 		try {
@@ -140,6 +148,14 @@ public class ClienteMB implements Serializable {
 
 	public void setClientesLazyDataModel(ClientesLazyDataModel clientesLazyDataModel) {
 		this.clientesLazyDataModel = clientesLazyDataModel;
+	}
+
+	public Boolean getFisica() {
+		return this.fisica;
+	}
+
+	public void setFisica(Boolean fisica) {
+		this.fisica = fisica;
 	}
 
 }

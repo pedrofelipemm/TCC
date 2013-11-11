@@ -6,15 +6,16 @@ public enum TipoServico {
 	TRASTE("Traste"),
 	ESCALOPAGEM("Escalopagem"),
 	TROCACORA("Troca de Corda"),
-	COLAGEM("Colagem");
-	
+	COLAGEM("Colagem"),
+	ENCORDAMENTO("Encordamento");
+
 	private String descricao;
-	
+
 	private TipoServico(String descricao) {
 		this.descricao = descricao;
 	}
 
 	public String getDescricao() {
-		return descricao;
+		return this.descricao;
 	}
 }

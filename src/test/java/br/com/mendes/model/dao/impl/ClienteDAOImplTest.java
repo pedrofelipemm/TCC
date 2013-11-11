@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import br.com.mendes.model.Cliente;
 import br.com.mendes.model.dao.ClienteDAO;
 
-public class ClienteDAOImplTest extends DAOImplTest{
+public class ClienteDAOImplTest extends DAOImplTest {
 
 	@Autowired
 	ClienteDAO clienteDAO;
@@ -20,7 +20,7 @@ public class ClienteDAOImplTest extends DAOImplTest{
 
 	@Before
 	public void setUp() throws Exception {
-		this.cliente = new Cliente("Pedro", "Marques", "11.111.111-1", "11111111111", new Date());
+		this.cliente = new Cliente("Pedro", "Marques", "11.111.111-1", "11111111111", null, new Date());
 
 		save(this.cliente);
 	}

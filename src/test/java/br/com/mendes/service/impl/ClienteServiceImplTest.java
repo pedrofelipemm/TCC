@@ -14,7 +14,7 @@ import br.com.mendes.model.Cliente;
 import br.com.mendes.model.dao.impl.DAOImplTest;
 import br.com.mendes.service.ClienteService;
 
-public class ClienteServiceImplTest extends DAOImplTest{
+public class ClienteServiceImplTest extends DAOImplTest {
 
 	@Autowired
 	ClienteService clienteService;
@@ -27,8 +27,8 @@ public class ClienteServiceImplTest extends DAOImplTest{
 	public void setUp() throws Exception {
 		Calendar dataCadastro = new GregorianCalendar(2013, 0, 1);
 
-		this.cliente = new Cliente("Felipe", "Marques", "481761482", "38188173835", dataCadastro.getTime());
-		this.cliente2 = new Cliente("Pedro", "Marques", "481761485", "11111111111", dataCadastro.getTime());
+		this.cliente = new Cliente("Felipe", "Marques", "481761482", "38188173835", null, dataCadastro.getTime());
+		this.cliente2 = new Cliente("Pedro", "Marques", "481761485", "11111111111", null, dataCadastro.getTime());
 
 		this.clientes = new ArrayList<Cliente>();
 		this.clientes.add(this.cliente);
@@ -57,7 +57,7 @@ public class ClienteServiceImplTest extends DAOImplTest{
 
 	@Test
 	public void testObterQtdeClientesNoAnoMes() {
-		Long quantidade =  this.clienteService.obterQtdeClientesNoAnoMes(2013, 1);
+		Long quantidade = this.clienteService.obterQtdeClientesNoAnoMes(2013, 1);
 
 		Assert.assertEquals(new Long(this.clientes.size()), quantidade);
 	}

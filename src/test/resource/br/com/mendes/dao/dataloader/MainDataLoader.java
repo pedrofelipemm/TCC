@@ -93,21 +93,23 @@ public class MainDataLoader {
 			createMetaGeral(session);
 		}
 
-		if (session.createCriteria(Feedback.class).list().isEmpty()) {
-			createFeedback(session);
-		}
-
 		if (session.createCriteria(Pedido.class).list().isEmpty()) {
 			createPedidoEItens(session);
 		}
 
-		System.out.println("\n\n Operação finalizada!");
+		if (session.createCriteria(Feedback.class).list().isEmpty()) {
+			createFeedback(session);
+		}
+
+		System.out.println("\n\n ");
+		System.out.println("###############################");
+		System.out.println("# The data has been inserted! #");
+		System.out.println("###############################");
 	}
 
 	@SuppressWarnings("unchecked")
 	private static void createFeedback(Session session) {
-		feedbacks = FeedbackDataLoader.createFeedbacks(session.createCriteria(Cliente.class).list(),
-				session.createCriteria(Produto.class).list());
+		feedbacks = FeedbackDataLoader.createFeedbacks(session.createCriteria(Pedido.class).list());
 
 		for (Feedback feedback : feedbacks) {
 			session.save(feedback);
@@ -173,7 +175,7 @@ public class MainDataLoader {
 	@SuppressWarnings("unchecked")
 	public static void createPedidoEItens(Session session) {
 		pedidos = PedidosDataLoader.createPedidos(session.createCriteria(Cliente.class).list(),
-				session.createCriteria(Produto.class).list());
+				session.createCriteria(Produto.class).list(), session.createCriteria(Servico.class).list());
 
 		for (Pedido pedido : pedidos) {
 			session.save(pedido);

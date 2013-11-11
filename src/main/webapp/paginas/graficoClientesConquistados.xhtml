@@ -27,11 +27,14 @@
 		
 		<p:spacer height="20"/>
 		
-			<p:barChart id="linearID" value="#{graficoMB.linearModel}" legendPosition="ne"  
-                title="Clientes Conquistados!" min="0" max="#{graficoMB.maxY}" style="width:800px" animate="true"
-                axisLabel="Periodo" yaxisLabel="Quantidade de Pessoas" />
+			<p:lineChart id="linearID" value="#{graficoMB.linearModel}" legendPosition="ne"  
+                title="Clientes Conquistados!" min="0" max="#{graficoMB.maxY}" style="width:800px" 
+                animate="true" axisLabel="Periodo" yaxisLabel="Quantidade de Pessoas" extender="ext"
+                seriesColors="4bb2c5, eaa228, eaa228, eaa228, eaa228, eaa228, eaa228, eaa228, 
+                			eaa228, eaa228, eaa228, eaa228, eaa228,"/>
 
 		</p:panel>
+		
 		</h:form>
 	</ui:define>
 </ui:decorate>

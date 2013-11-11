@@ -11,12 +11,12 @@ public class ProdutosDataLoader {
 	public static List<Produto> createProdutos() {
 		List<Produto> produtos = new ArrayList<Produto>();
 
-		produtos.add(new Produto(CategoriaProduto.INSTRUMENTO, "Violao Mendes 1", 1000D, 2000D));
-		produtos.add(new Produto(CategoriaProduto.INSTRUMENTO, "Violao Mendes 2", 2000D, 3000D));
-		produtos.add(new Produto(CategoriaProduto.INSTRUMENTO, "Violao Mendes 3", 3000D, 4000D));
-		produtos.add(new Produto(CategoriaProduto.INSTRUMENTO, "Violao Mendes 4", 4000D, 5000D));
-		produtos.add(new Produto(CategoriaProduto.INSTRUMENTO, "Violao Mendes 5", 5000D, 6000D));
-		produtos.add(new Produto(CategoriaProduto.INSTRUMENTO, "Violao Mendes 6", 6000D, 7000D));
+		produtos.add(new Produto(CategoriaProduto.INSTRUMENTO, "Violao Mendes S", 1000D, 1200D));
+		produtos.add(new Produto(CategoriaProduto.INSTRUMENTO, "Violao Mendes GT", 2000D, 2400D));
+		produtos.add(new Produto(CategoriaProduto.INSTRUMENTO, "Guitarra Mendes M", 3000D, 3900D));
+		produtos.add(new Produto(CategoriaProduto.INSTRUMENTO, "Guitarra Mendes RX", 4000D, 5200D));
+		produtos.add(new Produto(CategoriaProduto.INSTRUMENTO, "Baixo Mendes Y4", 5000D, 5400D));
+		produtos.add(new Produto(CategoriaProduto.INSTRUMENTO, "Baixo Mendes GT6", 6000D, 7800D));
 
 		return produtos;
 	}

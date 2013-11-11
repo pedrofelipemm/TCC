@@ -40,20 +40,20 @@
 						<p:column>
 							<h:outputText value="#{relatorioMB.produtosVendidos[1]}" />
 						</p:column>
-						<p:column>
+						<p:column styleClass="even">
 							<h:outputText value="#{relatorioMB.produtosVendidos[2]}" />
 						</p:column>
 				    </p:row>
 				    
 				    <p:row>
 				    	<p:column styleClass="ui-widget-header">Serviços Prestados</p:column>  
-						<p:column>
+						<p:column styleClass="odd">
 							<h:outputText value="#{relatorioMB.servicosPrestados[0]}" />
 						</p:column>
-						<p:column>
+						<p:column styleClass="odd">
 							<h:outputText value="#{relatorioMB.servicosPrestados[1]}" />
 						</p:column>
-						<p:column>
+						<p:column styleClass="odd">
 							<h:outputText value="#{relatorioMB.servicosPrestados[2]}" />
 						</p:column>
 				    </p:row>
@@ -64,17 +64,17 @@
 				 	 
 				 	 <p:row>
 				    	<p:column styleClass="ui-widget-header">Receita com Produtos Vendidos</p:column>  
-						<p:column>
+						<p:column style="width: 120px">
 							<h:outputText value="#{relatorioMB.receitaProdutos[0]}" >
 								<f:convertNumber type="currency" currencySymbol="R$"/>
 							</h:outputText>
 						</p:column>
-						<p:column>
+						<p:column style="width: 120px">
 							<h:outputText value="#{relatorioMB.receitaProdutos[1]}" >
 								<f:convertNumber type="currency" currencySymbol="R$"/>
 							</h:outputText>
 						</p:column>
-						<p:column>
+						<p:column styleClass="even" style="width: 120px;">
 							<h:outputText value="#{relatorioMB.receitaProdutos[2]}" >
 								<f:convertNumber type="currency" currencySymbol="R$"/>
 							</h:outputText>
@@ -83,17 +83,17 @@
 				    
 				    <p:row>
 				    	<p:column styleClass="ui-widget-header">Receita com Serviços Prestados</p:column>  
-						<p:column>
+						<p:column styleClass="odd">
 							<h:outputText value="#{relatorioMB.receitaServicos[0]}" >
 								<f:convertNumber type="currency" currencySymbol="R$"/>
 							</h:outputText>
 						</p:column>
-						<p:column>
+						<p:column styleClass="odd">
 							<h:outputText value="#{relatorioMB.receitaServicos[1]}" >
 								<f:convertNumber type="currency" currencySymbol="R$"/>
 							</h:outputText>
 						</p:column>
-						<p:column>
+						<p:column styleClass="odd">
 							<h:outputText value="#{relatorioMB.receitaServicos[2]}" >
 								<f:convertNumber type="currency" currencySymbol="R$"/>
 							</h:outputText>
@@ -127,23 +127,23 @@
 						<p:column>
 							<h:outputText value="#{relatorioMB.atendimentosRealizados[2]}"/>
 						</p:column>
-						<p:column>
+						<p:column styleClass="evenMeta">
 							<h:outputText value="#{relatorioMB.atendimentosRealizados[3]}"/>
 						</p:column>
 				    </p:row>
 				    
 				    <p:row>
 				    	<p:column styleClass="ui-widget-header">Pessoalmente</p:column>  
-						<p:column>
+						<p:column styleClass="odd">
 							<h:outputText value="#{relatorioMB.atendimentosRealizados[4]}"/>
 						</p:column>
-						<p:column>
+						<p:column styleClass="odd">
 							<h:outputText value="#{relatorioMB.atendimentosRealizados[5]}"/>
 						</p:column>
-						<p:column>
+						<p:column styleClass="odd">
 							<h:outputText value="#{relatorioMB.atendimentosRealizados[6]}"/>
 						</p:column>
-						<p:column>
+						<p:column styleClass="oddMeta">
 							<h:outputText value="#{relatorioMB.atendimentosRealizados[7]}"/>
 						</p:column>
 				    </p:row>
@@ -159,12 +159,12 @@
 						<p:column>
 							<h:outputText value="#{relatorioMB.atendimentosRealizados[10]}"/>
 						</p:column>
-						<p:column>
+						<p:column styleClass="evenMeta">
 							<h:outputText value="#{relatorioMB.atendimentosRealizados[11]}"/>
 						</p:column>
 				    </p:row>
 				   </p:panelGrid>
-				   
+
 				   <p:panelGrid style="margin-top:20px; width:700px">  
 				    <f:facet name="header">  
 				        <p:row>  
@@ -188,7 +188,7 @@
 						<p:column>
 							<h:outputText value="#{relatorioMB.clientesConquistados[2]}"/>
 						</p:column>
-						<p:column>
+						<p:column styleClass="evenMeta">
 							<h:outputText value="#{relatorioMB.clientesConquistados[3]}"/>
 						</p:column>
 				    </p:row>
@@ -197,7 +197,8 @@
 			</p:tab>
 			 
         	<p:tab id="metasEspecificas" title="Metas Específicas">
-        		<p:dataTable id="produtos" value="#{relatorioMB.produtoDTO}" var="dto" style="width:700px">
+        		<p:dataTable id="produtos" value="#{relatorioMB.produtoDTO}" var="dto" style="width:700px"  
+        				rowIndexVar="key" rowStyleClass="#{key mod 2 eq 0 ? 'colunaMeta' : 'colunaMetaZebra'}">
         			
         			<f:facet name="header">  
 			            Quantidades de Produtos Vendidos nos Últimos:  
@@ -215,12 +216,13 @@
         			<p:column headerText="12 meses">  
   	 	  				<h:outputText value="#{dto.valores[2]}" />  
         			</p:column>
-        			<p:column headerText="Meta">  
+        			<p:column headerText="Meta Atual">  
   	 	  				<h:outputText value="#{dto.meta}" />  
         			</p:column>
         		</p:dataTable>
         		
-        		<p:dataTable id="servicos" value="#{relatorioMB.servicoDTO}" var="dto" style="margin-top:50px; width:700px">
+        		<p:dataTable id="servicos" value="#{relatorioMB.servicoDTO}" var="dto" style="margin-top:50px; width:700px"
+        					rowIndexVar="key" rowStyleClass="#{key mod 2 eq 0 ? 'colunaMeta' : 'colunaMetaZebra'}">
         			
         			<f:facet name="header">  
 			            Quantidades de Serviços Prestados nos Últimos:  
@@ -238,7 +240,7 @@
         			<p:column headerText="12 meses">  
   	 	  				<h:outputText value="#{dto.valores[2]}" />  
         			</p:column>
-        			<p:column headerText="Meta">  
+        			<p:column headerText="Meta Atual">  
   	 	  				<h:outputText value="#{dto.meta}" />  
         			</p:column>
         		</p:dataTable> 

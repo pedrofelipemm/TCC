@@ -20,9 +20,17 @@
 
 				<p:focus context="panel" />
 
+				<p:outputLabel for="pessoa" value="Tipo de Pessoa: " styleClass="tipoPessoa" style="padding-top: 7px"/>  
+			    <p:selectOneRadio id="pessoa" value="#{clienteMB.fisica}" styleClass="tipoPessoa"
+			    				style="padding-left: 80px; padding-bottom: 20px;">
+			    	<f:selectItem itemLabel="Física: " itemValue="#{true}" />
+			    	<f:selectItem itemLabel="Jurídica: " itemValue="#{false}" />
+			    	<f:ajax execute="@this" render="cpf cpfLabel cnpj cnpjLabel" />
+			    </p:selectOneRadio>
+		
 				<h:panelGrid align="center" columns="6" width="900" id="panelClienteDados"
 					style="text-align: left" border="0">
-
+					
 					<p:outputLabel for="nome" value="Nome: " />
 					<p:inputText id="nome" value="#{clienteMB.cliente.nome}"/>
 					<p:message for="nome" />
@@ -42,10 +50,14 @@
 					<p:outputLabel for="rg" value="RG: "  />
 					<p:inputMask id="rg" value="#{clienteMB.cliente.rg}" mask="99.999.999-9" />
 					<p:message for="rg" />
+
+					<p:outputLabel id="cpfLabel" for="cpf" value="CPF: " />
+					<p:inputMask id="cpf" value="#{clienteMB.cliente.cpf}" mask="999.999.999-99" disabled="#{!clienteMB.fisica}"/>
+					<p:message for="cpf"/>
 					
-					<p:outputLabel for="cpf" value="CPF: "  />
-					<p:inputMask id="cpf" value="#{clienteMB.cliente.cpf}" mask="999.999.999-99" />
-					<p:message for="cpf" />
+					<p:outputLabel id="cnpjLabel" for="cnpj" value="CNPJ: " />
+					<p:inputMask id="cnpj" value="#{clienteMB.cliente.cnpj}" mask="99.999.999/9999-99" disabled="#{clienteMB.fisica}"/>
+					<p:message for="cnpj"/>
 
 					<p:outputLabel for="dataNascimento" value="Data Nascimento:  " />
 					<p:calendar value="#{clienteMB.cliente.dataNascimento}" readonlyInput="true" id="dataNascimento" 

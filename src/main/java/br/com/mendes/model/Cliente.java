@@ -15,6 +15,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
@@ -30,8 +31,6 @@ public class Cliente implements Serializable {
 	@Column(nullable = false)
 	private String nome;
 
-	@NotNull
-	@Column(nullable = false)
 	private String sobrenome;
 
 	@OneToOne
@@ -41,14 +40,16 @@ public class Cliente implements Serializable {
 
 	private String celular;
 
-	@NotNull
-	@Column(nullable = false, unique = true)
+	@Column(unique = true)
 	private String rg;
 
 	@CPF
-	@NotNull
-	@Column(nullable = false, unique = true)
+	@Column(unique = true)
 	private String cpf;
+
+	@CNPJ
+	@Column(unique = true)
+	private String cnpj;
 
 	@OneToMany(mappedBy = "cliente")
 	private List<Feedback> feedbacks;
@@ -65,11 +66,12 @@ public class Cliente implements Serializable {
 	public Cliente() {
 	}
 
-	public Cliente(String nome, String sobrenome, String rg, String cpf, Date dataCadastro) {
+	public Cliente(String nome, String sobrenome, String rg, String cpf, String cnpj, Date dataCadastro) {
 		this.nome = nome;
 		this.sobrenome = sobrenome;
 		this.rg = rg;
 		this.cpf = cpf;
+		this.cnpj = cnpj;
 		this.dataCadastro = dataCadastro;
 	}
 
@@ -168,6 +170,14 @@ public class Cliente implements Serializable {
 
 	public List<Feedback> getFeedbacks() {
 		return this.feedbacks;
+	}
+
+	public String getCnpj() {
+		return this.cnpj;
+	}
+
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
 	}
 
 	public void setFeedbacks(List<Feedback> feedbacks) {

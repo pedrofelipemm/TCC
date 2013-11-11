@@ -84,10 +84,34 @@
 	
 }
 
+.colunaMetaZebra td:last-child{
+	background: none repeat scroll 0 0 #C0DBFF;
+}
 
+/* .colunaMeta th:last-child{ */
+/* 	background: none repeat scroll 0 0 #ffffff; */
+/* } */
 
+.colunaMeta td:last-child{
+	background: none repeat scroll 0 0 #D8D8D8;
+}
 
+.odd {
+	background: none repeat scroll 0 0 #F2F5F9;
+}
 
+.oddMeta{
+	background: none repeat scroll 0 0 #C0DBFF;
+}
 
+.evenMeta {
+	background: none repeat scroll 0 0 #D8D8D8;
+}
 
+.tipoPessoa {
+	float: left;
+}
 
+.esconder {
+	display: none;
+}

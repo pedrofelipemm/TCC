@@ -38,7 +38,7 @@
 				
 			<p:spacer width="500"  height="30" />
 			
-				<p:barChart id="linear"  value="#{graficoMB.linearModel}" 
+				<p:lineChart id="linear" value="#{graficoMB.linearModel}"  extender="ext" 
 					legendPosition="w" title="Meta Gerais"  minY="0" maxY="#{graficoMB.maxY}" xaxisLabel="Periodo"
 	          		yaxisLabel="Qtde/Valor" animate="true" style="height:400px"  />
 

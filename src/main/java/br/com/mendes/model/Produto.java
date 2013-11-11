@@ -1,6 +1,7 @@
 package br.com.mendes.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -23,6 +24,11 @@ public class Produto extends Item implements Serializable {
 
 	public Produto(CategoriaProduto categoria, String nome, Double custo, Double precoVenda) {
 		super(nome, custo, precoVenda);
+		this.categoria = categoria;
+	}
+
+	public Produto(CategoriaProduto categoria, String nome, Double custo, Double precoVenda, List<MetaEspecifica> metas) {
+		super(nome, custo, precoVenda, metas);
 		this.categoria = categoria;
 	}
 

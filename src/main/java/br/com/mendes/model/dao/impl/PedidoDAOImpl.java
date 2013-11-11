@@ -39,8 +39,8 @@ public class PedidoDAOImpl extends DAOImpl<Pedido, Long> implements
 		criteria.createAlias("pedido.cliente", "cliente");
 
 		if (!StringUtils.isBlank(filter)) {
-			criteria.add(Restrictions.or(Restrictions.ilike("nome", filter + "%", MatchMode.ANYWHERE),
-					Restrictions.ilike("sobrenome", filter + "%", MatchMode.ANYWHERE)));
+			criteria.add(Restrictions.or(Restrictions.ilike("cliente.nome", filter + "%", MatchMode.ANYWHERE),
+					Restrictions.ilike("cliente.sobrenome", filter + "%", MatchMode.ANYWHERE)));
 		}
 
 		if (first != null) {
@@ -63,8 +63,8 @@ public class PedidoDAOImpl extends DAOImpl<Pedido, Long> implements
 		criteria.createAlias("pedido.cliente", "cliente");
 
 		if (!StringUtils.isBlank(filter)) {
-			criteria.add(Restrictions.or(Restrictions.ilike("nome", filter + "%", MatchMode.ANYWHERE),
-					Restrictions.ilike("sobrenome", filter + "%", MatchMode.ANYWHERE)));
+			criteria.add(Restrictions.or(Restrictions.ilike("cliente.nome", filter + "%", MatchMode.ANYWHERE),
+					Restrictions.ilike("cliente.sobrenome", filter + "%", MatchMode.ANYWHERE)));
 		}
 
 		criteria.setProjection(Projections.rowCount());

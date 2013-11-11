@@ -9,7 +9,7 @@
 
 	<ui:define name="conteudo">
 		
-		<p:panel>
+		<p:panel style="width: 1120px">
 		<h:form >
 
 				<h3>Consulta de Clientes</h3>
@@ -19,11 +19,16 @@
 					<p:ajax event="keyup" listener="#{clienteMB.pesquisa}" update="tabelaCliente" />
 				</p:inputText>
 				
+				<p:outputLabel for="cidades" value="Cidade: " style="padding-left: 50px;" />
+				<p:inputText id="cidades" value="#{clienteMB.clientesLazyDataModel.filter}">
+					<p:ajax event="keyup" listener="#{clienteMB.pesquisa}" update="tabelaCliente" />
+				</p:inputText>
+				
 				<p:dataTable id="tabelaCliente" var="cliente" value="#{clienteMB.clientesLazyDataModel}" widgetVar="tabelaCliente" 
 					emptyMessage="Não há clientes com essa especificação" paginator="true" rows="5" lazy="true"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
 						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"  
-					resizableColumns="true" style="width: 1100px;margin-top:30px">
+					resizableColumns="true" style="width: 1120px;margin-top:30px">
 
 					<f:facet name="header">
 						<p:outputPanel>
@@ -31,11 +36,11 @@
 						</p:outputPanel>
 					</f:facet>
 					
-					<p:column id="nome" filterStyle="max-width: 130px; min-width: 130px;" headerText="Nome" width="150"> 
+					<p:column id="nome" filterStyle="max-width: 130px; min-width: 130px;" headerText="Nome" width="150" > 
 						<h:outputText value="#{cliente.nome} #{cliente.sobrenome}" /> 
 					</p:column>
 					
-					<p:column id="telefone" filterStyle="max-width: 130px; min-width: 130px;"  headerText="Telefone" width="150">
+					<p:column id="telefone" filterStyle="max-width: 130px; min-width: 130px;"  headerText="Telefone" width="150" >
 						<h:outputText value="#{cliente.telefone}" />
 					</p:column>
 					
@@ -47,8 +52,13 @@
 						<h:outputText value="#{cliente.rg}" />
 					</p:column>
 					
-					<p:column id="cpf" filterStyle="max-width: 130px; min-width: 130px;"  headerText="CPF" width="150">
+					<p:column id="cpf" headerText="CPF/CNPJ" width="170">
 						<h:outputText value="#{cliente.cpf}" />
+						<h:outputText value="#{cliente.cnpj}" />
+					</p:column>
+					
+					<p:column id="cidade" headerText="Cidade" width="150" >
+						<h:outputText value="#{cliente.endereco.cidade}" />
 					</p:column>
 					
 					<p:column>

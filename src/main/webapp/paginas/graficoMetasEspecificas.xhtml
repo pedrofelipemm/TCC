@@ -51,7 +51,7 @@
 			
 			<p:panel id="painelGrafico" style="font-size: 14px; border: 0;  background: none;">	
 			
-				<p:barChart id="linear" value="#{graficoMB.linearModel}"  
+				<p:lineChart id="linear" value="#{graficoMB.linearModel}"   extender="ext" 
 					legendPosition="w" title="Meta por Produto Escífico"  minY="0" maxY="#{graficoMB.maxY}" xaxisLabel="Periodo"
 	          		yaxisLabel="Qtde Produtos" animate="true" style="height:400px"  />
 	          		

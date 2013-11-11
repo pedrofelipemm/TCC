@@ -58,13 +58,13 @@
 				<p:dialog header="Itens do Pedido" widgetVar="pedidosDialog" resizable="false" id="pedidoDialog"  
                 	showEffect="fade" hideEffect="explode" modal="true">  
   
-			       <p:dataTable id="gridPedidos" value="#{pedidoMB.selectedPedido.itensPedido}" var="itemPedido" style="text-align:center">
+			       <p:dataTable id="gridPedidos" value="#{pedidoMB.selectedPedido.itensPedido}" var="itemPedido" style="text-align:center" >
 						
 						<p:column headerText="Item" style="width:200px;text-align:left" >
 							<h:outputText value="#{itemPedido.item.nome}"/>
 						</p:column>
 						
-						<p:column headerText="Valor">
+						<p:column headerText="Valor Unitário">
 							<h:outputText value="#{itemPedido.item.precoVenda}">
 								 <f:convertNumber  type="currency" currencySymbol="R$"/>
 							</h:outputText>
@@ -74,10 +74,15 @@
 							<h:outputText value="#{itemPedido.quantidade}"/>
 						</p:column>
 						
+						<p:column headerText="Total Unitário">
+							<h:outputText value="#{itemPedido.total}">
+								 <f:convertNumber  type="currency" currencySymbol="R$"/>
+							</h:outputText>
+						</p:column>
+						
 					</p:dataTable>
-			  
-			    </p:dialog>
 
+			    </p:dialog>
 
 		</p:panel>
 		</h:form>
