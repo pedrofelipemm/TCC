@@ -3,12 +3,12 @@ package br.com.mendes.utils;
 public enum CONSTANTS {
 	METAS("metas"),
 	NOME("nome"),
-	SOBRENOME("sobrenome");
+	SOBRENOME("sobrenome"),
+	CUSTO("custo"),
+	PRECOVENDA("precoVenda"),
+	CATEGORIA("categoria");
 
 	private String descricao;
-
-	private CONSTANTS() {
-	}
 
 	private CONSTANTS(String descricao) {
 		this.descricao = descricao;
@@ -16,10 +16,6 @@ public enum CONSTANTS {
 
 	public String getDescricao() {
 		return this.descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
 	}
 
 }

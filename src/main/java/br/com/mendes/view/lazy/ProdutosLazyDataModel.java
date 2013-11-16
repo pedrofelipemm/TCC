@@ -17,7 +17,6 @@ public class ProdutosLazyDataModel extends LazyDataModel<Produto> {
 	private static final long serialVersionUID = -3522757856213883063L;
 
 	private ProdutoService produtoService;
-	private String filter;
 	private List<Produto> produtos;
 
 	public ProdutosLazyDataModel(ProdutoService produtoService) {
@@ -28,9 +27,9 @@ public class ProdutosLazyDataModel extends LazyDataModel<Produto> {
 	public List<Produto> load(int first, int pageSize, String sortField,
 			SortOrder sortOrder, Map<String, String> filters) {
 
-		this.produtos = this.produtoService.obterTodosProdutosPaginados(this.filter, first, pageSize);
+		this.produtos = this.produtoService.obterTodosProdutosPaginados(first, pageSize, sortField, sortOrder, filters);
 
-		setRowCount(this.produtoService.countBy(this.filter).intValue());
+		setRowCount(this.produtoService.countBy().intValue());
 
 		return this.produtos;
 	}
@@ -80,14 +79,6 @@ public class ProdutosLazyDataModel extends LazyDataModel<Produto> {
 
 	public void setProdutos(List<Produto> produtos) {
 		this.produtos = produtos;
-	}
-
-	public String getFilter() {
-		return this.filter;
-	}
-
-	public void setFilter(String filter) {
-		this.filter = filter;
 	}
 
 }
