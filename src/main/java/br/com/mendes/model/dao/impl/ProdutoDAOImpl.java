@@ -1,10 +1,12 @@
 package br.com.mendes.model.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -52,7 +54,14 @@ public class ProdutoDAOImpl extends DAOImpl<Produto, Long> implements ProdutoDAO
 
 				} else if (entry.getKey().equals(CONSTANTS.CATEGORIA.getDescricao())) {
 
-					criteria.add(Restrictions.eq(entry.getKey(), CategoriaProduto.getEnum(entry.getValue())));
+					List<Criterion> predicates = new ArrayList<Criterion>();
+					List<CategoriaProduto> tipos = CategoriaProduto.getEnums(entry.getValue());
+
+					for (CategoriaProduto categoriasProduto : tipos) {
+						predicates.add(Restrictions.eq(entry.getKey(), categoriasProduto));
+					}
+
+					criteria.add(Restrictions.or(predicates.toArray(new Criterion[0])));
 
 				} else {
 

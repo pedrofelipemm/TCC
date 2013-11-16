@@ -17,7 +17,6 @@ public class ServicosLazyDataModel extends LazyDataModel<Servico> {
 	private static final long serialVersionUID = 7931989888098275285L;
 
 	private ServicoService servicoService;
-	private String filter;
 	private List<Servico> servicos;
 
 	public ServicosLazyDataModel(ServicoService servicoService) {
@@ -28,9 +27,9 @@ public class ServicosLazyDataModel extends LazyDataModel<Servico> {
 	public List<Servico> load(int first, int pageSize, String sortField,
 			SortOrder sortOrder, Map<String, String> filters) {
 
-		this.servicos = this.servicoService.obterTodosServicosPaginados(this.filter, first, pageSize);
+		this.servicos = this.servicoService.obterTodosServicosPaginados(first, pageSize, sortField, sortOrder, filters);
 
-		setRowCount(this.servicoService.countBy(this.filter).intValue());
+		setRowCount(this.servicoService.countBy().intValue());
 
 		return this.servicos;
 	}
@@ -72,14 +71,6 @@ public class ServicosLazyDataModel extends LazyDataModel<Servico> {
 
 	public void setServicoService(ServicoService servicoService) {
 		this.servicoService = servicoService;
-	}
-
-	public String getFilter() {
-		return this.filter;
-	}
-
-	public void setFilter(String filter) {
-		this.filter = filter;
 	}
 
 	public List<Servico> getServicos() {

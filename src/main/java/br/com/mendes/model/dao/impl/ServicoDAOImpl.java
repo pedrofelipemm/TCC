@@ -1,17 +1,22 @@
 package br.com.mendes.model.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.primefaces.model.SortOrder;
 import org.springframework.stereotype.Repository;
 
 import br.com.mendes.model.Servico;
+import br.com.mendes.model.TipoServico;
 import br.com.mendes.model.dao.ServicoDAO;
+import br.com.mendes.utils.CONSTANTS;
 
 @Repository
 public class ServicoDAOImpl extends DAOImpl<Servico, Long> implements ServicoDAO {
@@ -29,25 +34,41 @@ public class ServicoDAOImpl extends DAOImpl<Servico, Long> implements ServicoDAO
 	}
 
 	@Override
-	public Long countBy(String filter) {
-		Criteria criteria = getSession().createCriteria(Servico.class);
-
-		if (!StringUtils.isBlank(filter)) {
-			criteria.add(Restrictions.ilike("nome", filter, MatchMode.ANYWHERE));
-		}
-
-		criteria.setProjection(Projections.rowCount());
-
-		return (Long) criteria.uniqueResult();
-	}
-
-	@Override
 	@SuppressWarnings("unchecked")
-	public List<Servico> obterTodosServicosPaginados(String filter, Integer first, Integer pageSize) {
-		Criteria criteria = getSession().createCriteria(Servico.class);
+	public List<Servico> obterTodosServicosPaginados(Integer first, Integer pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
 
-		if (!StringUtils.isBlank(filter)) {
-			criteria.add(Restrictions.ilike("nome", filter + "%", MatchMode.ANYWHERE));
+		Criteria criteria = getSession().createCriteria(Servico.class, "servico");
+
+		if (filters != null && !filters.isEmpty()) {
+
+			for (Entry<String, String> entry : filters.entrySet()) {
+
+				if (entry.getKey().equals(CONSTANTS.CUSTO.getDescricao()) || entry.getKey().equals(CONSTANTS.PRECOVENDA.getDescricao())) {
+
+					try {
+						Double valor = new Double(entry.getValue());
+						criteria.add(Restrictions.eq(entry.getKey(), valor));
+					} catch (NumberFormatException exception) {
+						criteria.add(Restrictions.isNull(entry.getKey()));
+					}
+
+				} else if (entry.getKey().equals(CONSTANTS.TIPOSERVICO.getDescricao())) {
+
+					List<Criterion> predicates = new ArrayList<Criterion>();
+					List<TipoServico> tipos = TipoServico.getEnums(entry.getValue());
+
+					for (TipoServico tipoServico : tipos) {
+						predicates.add(Restrictions.eq(entry.getKey(), tipoServico));
+					}
+
+					criteria.add(Restrictions.or(predicates.toArray(new Criterion[0])));
+
+				} else {
+
+					criteria.add(Restrictions.ilike(entry.getKey(), entry.getValue() + "%", MatchMode.ANYWHERE));
+
+				}
+			}
 		}
 
 		if (first != null) {
@@ -58,7 +79,11 @@ public class ServicoDAOImpl extends DAOImpl<Servico, Long> implements ServicoDAO
 			criteria.setMaxResults(pageSize);
 		}
 
-		criteria.addOrder(Order.asc("nome"));
+		if (sortField == null) {
+			criteria.addOrder(Order.asc("nome"));
+		} else {
+			criteria.addOrder(sortOrder.equals(SortOrder.ASCENDING) ? Order.asc(sortField) : Order.desc(sortField));
+		}
 
 		return criteria.list();
 	}

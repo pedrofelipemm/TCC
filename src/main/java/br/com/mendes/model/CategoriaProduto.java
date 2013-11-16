@@ -1,5 +1,8 @@
 package br.com.mendes.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 
 public enum CategoriaProduto {
@@ -17,18 +20,19 @@ public enum CategoriaProduto {
 		return this.descricao;
 	}
 
-	public static CategoriaProduto getEnum(String value) {
+	public static List<CategoriaProduto> getEnums(String value) {
 
 		if (value == null) {
-			throw new IllegalArgumentException();
+			return null;
 		}
 
-		for (CategoriaProduto categoriaProduto : values()) {
-			if (StringUtils.containsIgnoreCase(categoriaProduto.getDescricao(), value)) {
-				return categoriaProduto;
+		List<CategoriaProduto> tipos = new ArrayList<CategoriaProduto>();
+		for (CategoriaProduto categoria : values()) {
+			if (StringUtils.containsIgnoreCase(categoria.getDescricao(), value)) {
+				tipos.add(categoria);
 			}
 		}
 
-		return null;
+		return tipos;
 	}
 }
