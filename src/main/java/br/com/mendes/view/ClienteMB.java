@@ -79,11 +79,7 @@ public class ClienteMB implements Serializable {
 			this.cliente.setDataCadastro(new Date());
 		}
 
-		if (this.fisica) {
-			this.cliente.setCnpj(null);
-		} else {
-			this.cliente.setCpf(null);
-		}
+		switchTipoPessoa();
 
 		try {
 			this.clienteService.criarCliente(this.cliente);
@@ -99,6 +95,14 @@ public class ClienteMB implements Serializable {
 			MBUtil.addError(msg);
 		}
 
+	}
+
+	public void switchTipoPessoa() {
+		if (this.fisica) {
+			this.cliente.setCnpj(null);
+		} else {
+			this.cliente.setCpf(null);
+		}
 	}
 
 	public void pesquisa() {

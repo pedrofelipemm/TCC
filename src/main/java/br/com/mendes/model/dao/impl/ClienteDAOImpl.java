@@ -1,18 +1,20 @@
 package br.com.mendes.model.dao.impl;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.primefaces.model.SortOrder;
 import org.springframework.stereotype.Repository;
 
 import br.com.mendes.model.Cliente;
 import br.com.mendes.model.dao.ClienteDAO;
+import br.com.mendes.utils.CONSTANTS;
 
 @Repository
 public class ClienteDAOImpl extends DAOImpl<Cliente, Long> implements ClienteDAO {
@@ -49,28 +51,21 @@ public class ClienteDAOImpl extends DAOImpl<Cliente, Long> implements ClienteDAO
 	}
 
 	@Override
-	public Long countBy(String filter) {
-		Criteria criteria = getSession().createCriteria(Cliente.class);
-
-		if (!StringUtils.isBlank(filter)) {
-			criteria.add(Restrictions.or(Restrictions.ilike("nome", filter + "%", MatchMode.ANYWHERE),
-					Restrictions.ilike("sobrenome", filter + "%", MatchMode.ANYWHERE)));
-		}
-
-		criteria.setProjection(Projections.rowCount());
-
-		return (Long) criteria.uniqueResult();
-	}
-
-	@Override
 	@SuppressWarnings("unchecked")
-	public List<Cliente> obterTodosClientesPaginados(String filter, Integer first, Integer pageSize) {
+	public List<Cliente> obterTodosClientesPaginados(Integer first, Integer pageSize, SortOrder sortOrder,
+			String sortField, Map<String, String> filters) {
 		Criteria criteria = getSession().createCriteria(Cliente.class, "cliente");
 		criteria.createAlias("cliente.endereco", "endereco");
 
-		if (!StringUtils.isBlank(filter)) {
-			criteria.add(Restrictions.or(Restrictions.ilike("cliente.nome", filter + "%", MatchMode.ANYWHERE),
-					Restrictions.ilike("sobrenome", filter + "%", MatchMode.ANYWHERE)));
+		if (!filters.isEmpty()) {
+			for (Entry<String, String> entry : filters.entrySet()) {
+				if (entry.getKey().equals(CONSTANTS.NOME.getDescricao())) {
+					criteria.add(Restrictions.or(Restrictions.ilike(entry.getKey(), entry.getValue() + "%", MatchMode.ANYWHERE),
+							Restrictions.ilike(CONSTANTS.SOBRENOME.getDescricao(), entry.getValue() + "%", MatchMode.ANYWHERE)));
+				} else {
+					criteria.add(Restrictions.ilike(entry.getKey(), entry.getValue() + "%", MatchMode.ANYWHERE));
+				}
+			}
 		}
 
 		if (first != null) {
@@ -81,7 +76,11 @@ public class ClienteDAOImpl extends DAOImpl<Cliente, Long> implements ClienteDAO
 			criteria.setMaxResults(pageSize);
 		}
 
-		criteria.addOrder(Order.asc("nome"));
+		if (sortField == null) {
+			criteria.addOrder(Order.asc("nome"));
+		} else {
+			criteria.addOrder(sortOrder.equals(SortOrder.ASCENDING) ? Order.asc(sortField) : Order.desc(sortField));
+		}
 
 		return criteria.list();
 	}

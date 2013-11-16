@@ -25,7 +25,7 @@
 			    				style="padding-left: 80px; padding-bottom: 20px;">
 			    	<f:selectItem itemLabel="Física: " itemValue="#{true}" />
 			    	<f:selectItem itemLabel="Jurídica: " itemValue="#{false}" />
-			    	<f:ajax execute="@this" render="cpf cpfLabel cnpj cnpjLabel" />
+			    	<f:ajax execute="@this" render="cpf cpfLabel cnpj cnpjLabel" listener="#{clienteMB.switchTipoPessoa}"/>
 			    </p:selectOneRadio>
 		
 				<h:panelGrid align="center" columns="6" width="900" id="panelClienteDados"

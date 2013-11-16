@@ -115,3 +115,9 @@
 .esconder {
 	display: none;
 }
+
+.filterField {
+	max-width: 130px !important; 
+	min-width: 130px !important; 
+	background: #F2F5F9 !important;
+}

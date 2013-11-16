@@ -1,7 +1,9 @@
 package br.com.mendes.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
+import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,8 +35,9 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Override
 	@Transactional
-	public List<Cliente> obterTodosClientesPaginados(String filter, Integer first, Integer pageSize) {
-		return this.clienteDAO.obterTodosClientesPaginados(filter, first, pageSize);
+	public List<Cliente> obterTodosClientesPaginados(Integer first, Integer pageSize, SortOrder sortOrder,
+			String sortField, Map<String, String> filters) {
+		return this.clienteDAO.obterTodosClientesPaginados(first, pageSize, sortOrder, sortField, filters);
 	}
 
 	@Override
@@ -62,7 +65,9 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 
 	@Override
-	public Long countBy(String filter) {
-		return this.clienteDAO.countBy(filter);
+	@Transactional(readOnly = true)
+	public Long countBy() {
+		return this.clienteDAO.countBy();
 	}
+
 }

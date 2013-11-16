@@ -9,26 +9,17 @@
 
 	<ui:define name="conteudo">
 		
-		<p:panel style="width: 1120px">
+		<p:panel style="width: 1300px">
 		<h:form >
 
 				<h3>Consulta de Clientes</h3>
 				
-				<p:outputLabel for="clientes" value="Clientes: " />
-				<p:inputText  id="clientes" value="#{clienteMB.clientesLazyDataModel.filter}">
-					<p:ajax event="keyup" listener="#{clienteMB.pesquisa}" update="tabelaCliente" />
-				</p:inputText>
-				
-				<p:outputLabel for="cidades" value="Cidade: " style="padding-left: 50px;" />
-				<p:inputText id="cidades" value="#{clienteMB.clientesLazyDataModel.filter}">
-					<p:ajax event="keyup" listener="#{clienteMB.pesquisa}" update="tabelaCliente" />
-				</p:inputText>
 				
 				<p:dataTable id="tabelaCliente" var="cliente" value="#{clienteMB.clientesLazyDataModel}" widgetVar="tabelaCliente" 
 					emptyMessage="Não há clientes com essa especificação" paginator="true" rows="5" lazy="true"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
 						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"  
-					resizableColumns="true" style="width: 1120px;margin-top:30px">
+					resizableColumns="true" style="width: 1270px;margin-top:30px">
 
 					<f:facet name="header">
 						<p:outputPanel>
@@ -36,28 +27,38 @@
 						</p:outputPanel>
 					</f:facet>
 					
-					<p:column id="nome" filterStyle="max-width: 130px; min-width: 130px;" headerText="Nome" width="150" > 
+					<p:column id="nome" sortBy="#{cliente.nome}" filterBy="#{cliente.nome}" filterMatchMode="contains"
+							filterStyleClass="filterField" headerText="Nome" width="150" > 
 						<h:outputText value="#{cliente.nome} #{cliente.sobrenome}" /> 
 					</p:column>
 					
-					<p:column id="telefone" filterStyle="max-width: 130px; min-width: 130px;"  headerText="Telefone" width="150" >
+					<p:column id="telefone" sortBy="#{cliente.telefone}" filterBy="#{cliente.telefone}" filterMatchMode="contains"
+							filterStyleClass="filterField" headerText="Telefone" width="150" >
 						<h:outputText value="#{cliente.telefone}" />
 					</p:column>
 					
-					<p:column id="celular" filterStyle="max-width: 130px; min-width: 130px;"  headerText="Celular" width="150">
+					<p:column id="celular" sortBy="#{cliente.celular}" filterBy="#{cliente.celular}" filterMatchMode="contains"
+							filterStyleClass="filterField" headerText="Celular" width="150">
 						<h:outputText value="#{cliente.celular}" />
 					</p:column>
 					
-					<p:column id="rg" filterStyle="max-width: 130px; min-width: 130px;"  headerText="RG" width="150">
+					<p:column id="rg" sortBy="#{cliente.rg}" filterBy="#{cliente.rg}" filterMatchMode="contains"
+							filterStyleClass="filterField" headerText="RG" width="150">
 						<h:outputText value="#{cliente.rg}" />
 					</p:column>
 					
-					<p:column id="cpf" headerText="CPF/CNPJ" width="170">
-						<h:outputText value="#{cliente.cpf}" />
-						<h:outputText value="#{cliente.cnpj}" />
+					<p:column id="cpf" sortBy="#{cliente.cpf}" filterBy="#{cliente.cpf}" filterMatchMode="contains"
+							filterStyleClass="filterField" headerText="CPF" width="160">
+						<h:outputText value="#{cliente.cpf != null ? cliente.cpf : ' - '}" />
 					</p:column>
 					
-					<p:column id="cidade" headerText="Cidade" width="150" >
+					<p:column id="cnpj" sortBy="#{cliente.cnpj}" filterBy="#{cliente.cnpj}" filterMatchMode="contains"
+							filterStyleClass="filterField" headerText="CNPJ" width="160">
+						<h:outputText value="#{cliente.cnpj != null ? cliente.cnpj : ' - '}" />
+					</p:column>
+
+					<p:column id="cidade" sortBy="#{cliente.endereco.cidade}" filterBy="#{cliente.endereco.cidade}" 
+							 filterMatchMode="contains" filterStyleClass="filterField" headerText="Cidade" width="150" >
 						<h:outputText value="#{cliente.endereco.cidade}" />
 					</p:column>
 					
@@ -70,5 +71,13 @@
 
 		</h:form>
 		</p:panel>
+		
+		<!-- Para sobrescrever o tamanho padrão e ajustar corretamente a largura da tela. -->
+		<style>
+			#wrap {
+				width: 1300px !important;
+			}
+		</style>
+		
 	</ui:define>
 </ui:composition>

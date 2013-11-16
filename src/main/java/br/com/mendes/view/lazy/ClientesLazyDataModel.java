@@ -17,7 +17,6 @@ public class ClientesLazyDataModel extends LazyDataModel<Cliente> {
 	private static final long serialVersionUID = 8761899819547702615L;
 
 	private ClienteService clienteService;
-	private String filter;
 	private List<Cliente> clientes;
 
 	public ClientesLazyDataModel(ClienteService clienteService) {
@@ -28,9 +27,9 @@ public class ClientesLazyDataModel extends LazyDataModel<Cliente> {
 	public List<Cliente> load(int first, int pageSize, String sortField,
 			SortOrder sortOrder, Map<String, String> filters) {
 
-		this.clientes = this.clienteService.obterTodosClientesPaginados(this.filter, first, pageSize);
+		this.clientes = this.clienteService.obterTodosClientesPaginados(first, pageSize, sortOrder, sortField, filters);
 
-		setRowCount(this.clienteService.countBy(this.filter).intValue());
+		setRowCount(this.clienteService.countBy().intValue());
 
 		return this.clientes;
 	}
@@ -80,14 +79,6 @@ public class ClientesLazyDataModel extends LazyDataModel<Cliente> {
 
 	public void setClientes(List<Cliente> clientes) {
 		this.clientes = clientes;
-	}
-
-	public String getFilter() {
-		return this.filter;
-	}
-
-	public void setFilter(String filter) {
-		this.filter = filter;
 	}
 
 }
