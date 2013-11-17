@@ -17,10 +17,7 @@ public class PedidosLazyDataModel extends LazyDataModel<Pedido> {
 	private static final long serialVersionUID = 2201525350085836463L;
 
 	private PedidoService pedidoService;
-
 	private List<Pedido> pedidos;
-
-	private String filter;
 
 	public PedidosLazyDataModel(PedidoService pedidoService) {
 		this.pedidoService = pedidoService;
@@ -30,9 +27,9 @@ public class PedidosLazyDataModel extends LazyDataModel<Pedido> {
 	public List<Pedido> load(int first, int pageSize, String sortField,
 			SortOrder sortOrder, Map<String, String> filters) {
 
-		this.pedidos = this.pedidoService.obterTodosPedidosPaginados(this.filter, first, pageSize);
+		this.pedidos = this.pedidoService.obterTodosPedidosPaginados(first, pageSize, sortField, sortOrder, filters);
 
-		setRowCount(this.pedidoService.countBy(this.filter).intValue());
+		setRowCount(this.pedidoService.countBy().intValue());
 
 		return this.pedidos;
 	}
@@ -82,14 +79,6 @@ public class PedidosLazyDataModel extends LazyDataModel<Pedido> {
 
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
-	}
-
-	public String getFilter() {
-		return this.filter;
-	}
-
-	public void setFilter(String filter) {
-		this.filter = filter;
 	}
 
 }

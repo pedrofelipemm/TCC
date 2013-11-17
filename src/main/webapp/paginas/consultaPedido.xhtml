@@ -14,16 +14,11 @@
 				
 				<h3>Consulta de Pedidos</h3>
 				
-				<p:outputLabel for="cliente" value="Cliente: " />
-				<p:inputText id="cliente" value="#{pedidoMB.pedidosLazyDataModel.filter}">
-					<p:ajax event="keyup" listener="#{pedidoMB.pesquisa}" update="tabelaPedido" />
-				</p:inputText>
-				
 				<p:dataTable id="tabelaPedido" var="pedido" value="#{pedidoMB.pedidosLazyDataModel}" widgetVar="tabelaPedido" 
 					emptyMessage="Não há pedidos com essa especificação" paginator="true" rows="5" lazy="true"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
 						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"  
-					resizableColumns="true" style="width: 1100px;margin-top:30px">
+					resizableColumns="true" style="margin-top:30px">
 
 					<f:facet name="header">
 						<p:outputPanel>
@@ -31,19 +26,22 @@
 						</p:outputPanel>
 					</f:facet>
 					
-					<p:column id="cliente" filterStyle="max-width: 300px; min-width: 300px;"  headerText="Cliente" width="300"> 
-						<h:outputText value="#{pedido.cliente.nome.concat(' ').concat(pedido.cliente.sobrenome)}" /> 
+					<p:column id="cliente" sortBy="#{pedido.cliente.nome}" filterBy="#{pedido.cliente.nome}" filterMatchMode="contains"
+							filterStyleClass="filterField" headerText="Cliente" width="300"> 
+						<h:outputText value="#{pedido.cliente.nome} #{pedido.cliente.sobrenome}" /> 
 					</p:column>
 					
-					<p:column id="data" headerText="Data" width="100" > 
+					<p:column id="data" sortBy="#{pedido.dataEmissao}" filterBy="#{pedido.dataEmissao}" filterMatchMode="contains"
+							filterStyleClass="filterField" headerText="Data" width="100" > 
 						<h:outputText value="#{pedido.dataEmissao}" >
 							<f:convertDateTime pattern="dd/MM/yyyy" />
 						</h:outputText>
 					</p:column>
 					
-					<p:column id="total" headerText="Total" width="150">
+					<p:column id="total" sortBy="#{pedido.valorTotal}" filterBy="#{pedido.valorTotal}" filterMatchMode="contains"
+							filterStyleClass="filterField" headerText="Total" width="150">
 						<h:outputText value="#{pedido.valorTotal}">
-							<f:convertNumber  type="currency" currencySymbol="R$"/>
+							<f:convertNumber type="currency" currencySymbol="R$"/>
 						</h:outputText>
 					</p:column>
 					
@@ -86,5 +84,13 @@
 
 		</p:panel>
 		</h:form>
+		
+		<script>
+			jQuery(function($){
+				var date = document.getElementById('form1:tabelaPedido:data:filter');
+				$(date).mask("99/99/9999");
+			});
+		</script>
+		
 	</ui:define>
 </ui:composition>

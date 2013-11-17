@@ -140,7 +140,7 @@ public class FeedbackDAOImpl extends DAOImpl<Feedback, Long> implements
 		}
 
 		if (sortField == null) {
-			criteria.addOrder(Order.asc("cliente.nome"));
+			criteria.addOrder(Order.asc(CONSTANTS.CLIENTENOME.getDescricao()));
 		} else {
 			criteria.addOrder(sortOrder.equals(SortOrder.ASCENDING) ? Order.asc(sortField) : Order.desc(sortField));
 		}

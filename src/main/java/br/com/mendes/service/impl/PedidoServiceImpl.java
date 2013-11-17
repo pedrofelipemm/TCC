@@ -1,7 +1,9 @@
 package br.com.mendes.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
+import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,12 +54,13 @@ public class PedidoServiceImpl implements PedidoService {
 	}
 
 	@Override
-	public List<Pedido> obterTodosPedidosPaginados(String filter, Integer first, Integer pageSize) {
-		return this.pedidoDAO.obterTodosPedidosPaginados(filter, first, pageSize);
+	public List<Pedido> obterTodosPedidosPaginados(Integer first, Integer pageSize, String sortField,
+			SortOrder sortOrder, Map<String, String> filters) {
+		return this.pedidoDAO.obterTodosPedidosPaginados(first, pageSize, sortField, sortOrder, filters);
 	}
 
 	@Override
-	public Long countBy(String filter) {
-		return this.pedidoDAO.countBy(filter);
+	public Long countBy() {
+		return this.pedidoDAO.countBy();
 	}
 }

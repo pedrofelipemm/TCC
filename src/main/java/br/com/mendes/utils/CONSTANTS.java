@@ -1,16 +1,19 @@
 package br.com.mendes.utils;
 
 public enum CONSTANTS {
+	CATEGORIA("categoria"),
+	CLIENTENOME("cliente.nome"),
+	CUSTO("custo"),
+	DATAEMISSAO("dataEmissao"),
 	METAS("metas"),
 	NOME("nome"),
-	SOBRENOME("sobrenome"),
-	CUSTO("custo"),
-	PRECOVENDA("precoVenda"),
-	CATEGORIA("categoria"),
-	TIPOSERVICO("tipoServico"),
 	NOTA("nota"),
+	PEDIDOCLIENTE("pedido.cliente"),
+	PRECOVENDA("precoVenda"),
+	SOBRENOME("sobrenome"),
 	TIPOATENDIMENTO("tipoAtendimento"),
-	CLIENTENOME("cliente.nome");
+	TIPOSERVICO("tipoServico"),
+	VALORTOTAL("valorTotal");
 
 	private String descricao;
 

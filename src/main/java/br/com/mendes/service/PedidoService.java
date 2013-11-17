@@ -1,6 +1,9 @@
 package br.com.mendes.service;
 
 import java.util.List;
+import java.util.Map;
+
+import org.primefaces.model.SortOrder;
 
 import br.com.mendes.model.ItemPedido;
 import br.com.mendes.model.Pedido;
@@ -17,7 +20,8 @@ public interface PedidoService {
 
 	public abstract List<Pedido> obterPedidoPorCliente(Long codCliente);
 
-	public abstract List<Pedido> obterTodosPedidosPaginados(String filter, Integer first, Integer pageSize);
+	public abstract List<Pedido> obterTodosPedidosPaginados(Integer first, Integer pageSize, String sortField,
+			SortOrder sortOrder, Map<String, String> filters);
 
-	public abstract Long countBy(String filter);
+	public abstract Long countBy();
 }
