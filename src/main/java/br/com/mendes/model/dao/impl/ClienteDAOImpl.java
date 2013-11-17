@@ -71,9 +71,14 @@ public class ClienteDAOImpl extends DAOImpl<Cliente, Long> implements ClienteDAO
 				} else {
 					criteria.add(Restrictions.ilike(entry.getKey(), entry.getValue() + "%", MatchMode.ANYWHERE));
 				}
-			}
 
-			criteria.add(Restrictions.or(predicates.toArray(new Criterion[0])));
+				if (predicates.isEmpty()) {
+					criteria.add(Restrictions.isNull(entry.getKey()));
+				} else {
+					criteria.add(Restrictions.or(predicates.toArray(new Criterion[0])));
+				}
+
+			}
 		}
 
 		if (first != null) {

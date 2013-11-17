@@ -60,4 +60,23 @@ public class ProdutoDAOImplTest extends DAOImplTest {
 
 	}
 
+	@Test
+	public void obterTodosProdutosPaginadosApenasPorCategoriaTest() {
+		Map<String, String> filters = new HashMap<String, String>();
+
+		filters.put("categoria", "o");
+
+		List<Produto> produtos = this.produtoDAO.obterTodosProdutosPaginados(null, null, null, null, filters);
+
+		Assert.assertEquals(2D, produtos.size(), 0.1);
+
+		filters.clear();
+		filters.put("categoria", "bbgihgji");
+
+		produtos = this.produtoDAO.obterTodosProdutosPaginados(null, null, null, null, filters);
+
+		Assert.assertTrue(produtos.isEmpty());
+
+	}
+
 }

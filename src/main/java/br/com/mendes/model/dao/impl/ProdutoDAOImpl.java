@@ -61,7 +61,11 @@ public class ProdutoDAOImpl extends DAOImpl<Produto, Long> implements ProdutoDAO
 						predicates.add(Restrictions.eq(entry.getKey(), categoriasProduto));
 					}
 
-					criteria.add(Restrictions.or(predicates.toArray(new Criterion[0])));
+					if (predicates.isEmpty()) {
+						criteria.add(Restrictions.isNull(entry.getKey()));
+					} else {
+						criteria.add(Restrictions.or(predicates.toArray(new Criterion[0])));
+					}
 
 				} else {
 

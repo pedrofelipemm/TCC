@@ -61,7 +61,11 @@ public class ServicoDAOImpl extends DAOImpl<Servico, Long> implements ServicoDAO
 						predicates.add(Restrictions.eq(entry.getKey(), tipoServico));
 					}
 
-					criteria.add(Restrictions.or(predicates.toArray(new Criterion[0])));
+					if (predicates.isEmpty()) {
+						criteria.add(Restrictions.isNull(entry.getKey()));
+					} else {
+						criteria.add(Restrictions.or(predicates.toArray(new Criterion[0])));
+					}
 
 				} else {
 

@@ -107,7 +107,11 @@ public class FeedbackDAOImpl extends DAOImpl<Feedback, Long> implements
 						predicates.add(Restrictions.eq(entry.getKey(), tipoAtendimento));
 					}
 
-					criteria.add(Restrictions.or(predicates.toArray(new Criterion[0])));
+					if (predicates.isEmpty()) {
+						criteria.add(Restrictions.isNull(entry.getKey()));
+					} else {
+						criteria.add(Restrictions.or(predicates.toArray(new Criterion[0])));
+					}
 
 				} else if (entry.getKey().equals(CONSTANTS.CLIENTENOME.getDescricao())) {
 
