@@ -1,7 +1,9 @@
 package br.com.mendes.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
+import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,13 +66,14 @@ public class FeedbackServiceImpl implements FeedbackService {
 	}
 
 	@Override
-	public List<Feedback> obterTodosFeedbacksPaginados(String filter, Integer first, Integer pageSize) {
-		return this.feedbackDAO.obterTodosFeedbacksPaginados(filter, first, pageSize);
+	public List<Feedback> obterTodosFeedbacksPaginados(Integer first, Integer pageSize, String sortField,
+			SortOrder sortOrder, Map<String, String> filters) {
+		return this.feedbackDAO.obterTodosFeedbacksPaginados(first, pageSize, sortField, sortOrder, filters);
 	}
 
 	@Override
-	public Long countBy(String filter) {
-		return this.feedbackDAO.countBy(filter);
+	public Long countBy() {
+		return this.feedbackDAO.countBy();
 	}
 
 	@Override

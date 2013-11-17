@@ -1,11 +1,13 @@
 package br.com.mendes.model.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -58,14 +60,20 @@ public class ClienteDAOImpl extends DAOImpl<Cliente, Long> implements ClienteDAO
 		criteria.createAlias("cliente.endereco", "endereco");
 
 		if (filters != null && !filters.isEmpty()) {
+
+			List<Criterion> predicates = new ArrayList<Criterion>();
+
 			for (Entry<String, String> entry : filters.entrySet()) {
 				if (entry.getKey().equals(CONSTANTS.NOME.getDescricao())) {
-					criteria.add(Restrictions.or(Restrictions.ilike(entry.getKey(), entry.getValue() + "%", MatchMode.ANYWHERE),
-							Restrictions.ilike(CONSTANTS.SOBRENOME.getDescricao(), entry.getValue() + "%", MatchMode.ANYWHERE)));
+					predicates.add(Restrictions.ilike(entry.getKey(), entry.getValue() + "%", MatchMode.ANYWHERE));
+					predicates.add(Restrictions.ilike(entry.getKey().replaceAll(CONSTANTS.NOME.getDescricao(), CONSTANTS.SOBRENOME.getDescricao()),
+							entry.getValue() + "%", MatchMode.ANYWHERE));;
 				} else {
 					criteria.add(Restrictions.ilike(entry.getKey(), entry.getValue() + "%", MatchMode.ANYWHERE));
 				}
 			}
+
+			criteria.add(Restrictions.or(predicates.toArray(new Criterion[0])));
 		}
 
 		if (first != null) {
@@ -84,5 +92,4 @@ public class ClienteDAOImpl extends DAOImpl<Cliente, Long> implements ClienteDAO
 
 		return criteria.list();
 	}
-
 }

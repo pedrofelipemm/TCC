@@ -2,6 +2,9 @@ package br.com.mendes.service;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
+
+import org.primefaces.model.SortOrder;
 
 import br.com.mendes.dto.QtdePeriodoDTO;
 import br.com.mendes.model.Feedback;
@@ -20,9 +23,10 @@ public interface FeedbackService extends Serializable {
 	public abstract List<QtdePeriodoDTO> obterQtdesFeedbackNosPeriodos(
 			TipoAtendimento tipoAtendimento, List<QtdePeriodoDTO> periodos);
 
-	public abstract List<Feedback> obterTodosFeedbacksPaginados(String filter, Integer first, Integer pageSize);
+	public abstract List<Feedback> obterTodosFeedbacksPaginados(Integer first, Integer pageSize, String sortField,
+			SortOrder sortOrder, Map<String, String> filters);
 
-	public abstract Long countBy(String filter);
+	public abstract Long countBy();
 
 	public abstract void criarAtualizarFeedback(Feedback feedback);
 }

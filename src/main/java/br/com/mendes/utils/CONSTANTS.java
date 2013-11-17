@@ -7,7 +7,10 @@ public enum CONSTANTS {
 	CUSTO("custo"),
 	PRECOVENDA("precoVenda"),
 	CATEGORIA("categoria"),
-	TIPOSERVICO("tipoServico");
+	TIPOSERVICO("tipoServico"),
+	NOTA("nota"),
+	TIPOATENDIMENTO("tipoAtendimento"),
+	CLIENTENOME("cliente.nome");
 
 	private String descricao;
 

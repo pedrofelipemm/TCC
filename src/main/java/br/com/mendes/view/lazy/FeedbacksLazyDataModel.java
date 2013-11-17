@@ -17,7 +17,6 @@ public class FeedbacksLazyDataModel extends LazyDataModel<Feedback> {
 	private static final long serialVersionUID = 6167515914877475702L;
 
 	private FeedbackService feedbackService;
-	private String filter;
 	private List<Feedback> feedbacks;
 
 	public FeedbacksLazyDataModel() {
@@ -31,9 +30,9 @@ public class FeedbacksLazyDataModel extends LazyDataModel<Feedback> {
 	public List<Feedback> load(int first, int pageSize, String sortField,
 			SortOrder sortOrder, Map<String, String> filters) {
 
-		this.feedbacks = this.feedbackService.obterTodosFeedbacksPaginados(this.filter, first, pageSize);
+		this.feedbacks = this.feedbackService.obterTodosFeedbacksPaginados(first, pageSize, sortField, sortOrder, filters);
 
-		setRowCount(this.feedbackService.countBy(this.filter).intValue());
+		setRowCount(this.feedbackService.countBy().intValue());
 
 		return this.feedbacks;
 	}
@@ -75,14 +74,6 @@ public class FeedbacksLazyDataModel extends LazyDataModel<Feedback> {
 
 	public void setFeedbackService(FeedbackService feedbackService) {
 		this.feedbackService = feedbackService;
-	}
-
-	public String getFilter() {
-		return this.filter;
-	}
-
-	public void setFilter(String filter) {
-		this.filter = filter;
 	}
 
 	public List<Feedback> getFeedbacks() {

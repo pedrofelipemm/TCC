@@ -1,19 +1,24 @@
 package br.com.mendes.model.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.primefaces.model.SortOrder;
 import org.springframework.stereotype.Repository;
 
 import br.com.mendes.model.Feedback;
 import br.com.mendes.model.TipoAtendimento;
 import br.com.mendes.model.dao.FeedbackDAO;
+import br.com.mendes.utils.CONSTANTS;
 
 @Repository
 public class FeedbackDAOImpl extends DAOImpl<Feedback, Long> implements
@@ -63,14 +68,8 @@ public class FeedbackDAOImpl extends DAOImpl<Feedback, Long> implements
 	}
 
 	@Override
-	public Long countBy(String filter) {
+	public Long countBy() {
 		Criteria criteria = getSession().createCriteria(Feedback.class, "feedback");
-		criteria.createAlias("feedback.cliente", "cliente");
-
-		if (!StringUtils.isBlank(filter)) {
-			criteria.add(Restrictions.or(Restrictions.ilike("cliente.nome", filter + "%", MatchMode.ANYWHERE),
-					Restrictions.ilike("cliente.sobrenome", filter + "%", MatchMode.ANYWHERE)));
-		}
 
 		criteria.setProjection(Projections.rowCount());
 
@@ -79,13 +78,53 @@ public class FeedbackDAOImpl extends DAOImpl<Feedback, Long> implements
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Feedback> obterTodosFeedbacksPaginados(String filter, Integer first, Integer pageSize) {
+	public List<Feedback> obterTodosFeedbacksPaginados(Integer first, Integer pageSize, String sortField,
+			SortOrder sortOrder, Map<String, String> filters) {
+
 		Criteria criteria = getSession().createCriteria(Feedback.class, "feedback");
 		criteria.createAlias("feedback.cliente", "cliente");
+		criteria.createAlias("feedback.item", "item");
 
-		if (!StringUtils.isBlank(filter)) {
-			criteria.add(Restrictions.or(Restrictions.ilike("cliente.nome", filter + "%", MatchMode.ANYWHERE),
-					Restrictions.ilike("cliente.sobrenome", filter + "%", MatchMode.ANYWHERE)));
+		if (filters != null && !filters.isEmpty()) {
+
+			for (Entry<String, String> entry : filters.entrySet()) {
+
+				if (entry.getKey().equals(CONSTANTS.NOTA.getDescricao())) {
+
+					try {
+						Double valor = new Double(entry.getValue());
+						criteria.add(Restrictions.eq(entry.getKey(), valor));
+					} catch (NumberFormatException exception) {
+						criteria.add(Restrictions.isNull(entry.getKey()));
+					}
+
+				} else if (entry.getKey().equals(CONSTANTS.TIPOATENDIMENTO.getDescricao())) {
+
+					List<Criterion> predicates = new ArrayList<Criterion>();
+					List<TipoAtendimento> tipos = TipoAtendimento.getEnums(entry.getValue());
+
+					for (TipoAtendimento tipoAtendimento : tipos) {
+						predicates.add(Restrictions.eq(entry.getKey(), tipoAtendimento));
+					}
+
+					criteria.add(Restrictions.or(predicates.toArray(new Criterion[0])));
+
+				} else if (entry.getKey().equals(CONSTANTS.CLIENTENOME.getDescricao())) {
+
+					List<Criterion> predicates = new ArrayList<Criterion>();
+
+					predicates.add(Restrictions.ilike(entry.getKey(), entry.getValue() + "%", MatchMode.ANYWHERE));
+					predicates.add(Restrictions.ilike(entry.getKey().replaceAll(CONSTANTS.NOME.getDescricao(), CONSTANTS.SOBRENOME.getDescricao()),
+							entry.getValue() + "%", MatchMode.ANYWHERE));
+
+					criteria.add(Restrictions.or(predicates.toArray(new Criterion[0])));
+
+				} else {
+
+					criteria.add(Restrictions.ilike(entry.getKey(), entry.getValue() + "%", MatchMode.ANYWHERE));
+
+				}
+			}
 		}
 
 		if (first != null) {
@@ -96,7 +135,11 @@ public class FeedbackDAOImpl extends DAOImpl<Feedback, Long> implements
 			criteria.setMaxResults(pageSize);
 		}
 
-		criteria.addOrder(Order.asc("cliente.nome"));
+		if (sortField == null) {
+			criteria.addOrder(Order.asc("cliente.nome"));
+		} else {
+			criteria.addOrder(sortOrder.equals(SortOrder.ASCENDING) ? Order.asc(sortField) : Order.desc(sortField));
+		}
 
 		return criteria.list();
 	}
