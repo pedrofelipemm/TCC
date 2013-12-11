@@ -48,15 +48,17 @@
 					<p:message for="celular" />
 					
 					<p:outputLabel for="rg" value="RG: "  />
-					<p:inputMask id="rg" value="#{clienteMB.cliente.rg}" mask="99.999.999-9" />
+					<p:inputText id="rg" value="#{clienteMB.cliente.rg}" />
 					<p:message for="rg" />
 
 					<p:outputLabel id="cpfLabel" for="cpf" value="CPF: " />
-					<p:inputMask id="cpf" value="#{clienteMB.cliente.cpf}" mask="999.999.999-99" disabled="#{!clienteMB.fisica}"/>
+					<p:inputMask id="cpf" value="#{clienteMB.cliente.cpf}" required="true" requiredMessage="não pode ser nulo" 
+								mask="999.999.999-99" disabled="#{!clienteMB.fisica}"/>
 					<p:message for="cpf"/>
 					
 					<p:outputLabel id="cnpjLabel" for="cnpj" value="CNPJ: " />
-					<p:inputMask id="cnpj" value="#{clienteMB.cliente.cnpj}" mask="99.999.999/9999-99" disabled="#{clienteMB.fisica}"/>
+					<p:inputMask id="cnpj" value="#{clienteMB.cliente.cnpj}" required="true" requiredMessage="não pode ser nulo" 
+								mask="99.999.999/9999-99" disabled="#{clienteMB.fisica}"/>
 					<p:message for="cnpj"/>
 
 					<p:outputLabel for="dataNascimento" value="Data Nascimento:  " />

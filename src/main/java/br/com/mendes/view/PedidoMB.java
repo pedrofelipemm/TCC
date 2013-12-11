@@ -78,10 +78,6 @@ public class PedidoMB implements Serializable {
 		this.tiposItem = Arrays.asList(TipoItem.values());
 
 		resetDados();
-
-		this.pedidosLazyDataModel = new PedidosLazyDataModel(this.pedidoService);
-		this.tipoItem = TipoItem.PRODUTO;
-		this.itens = this.itemService.buscarTodos(this.tipoItem);
 	}
 
 	public void loadItensDialog() {
@@ -106,11 +102,13 @@ public class PedidoMB implements Serializable {
 
 		this.codCliente = null;
 		this.codItem = null;
-		this.tipoItem = null;
 		this.quantidade = 1;
 		this.itensPedido = new ArrayList<ItemPedido>();
-		this.itens = new ArrayList<Item>();
 		this.total = 0.0;
+
+		this.pedidosLazyDataModel = new PedidosLazyDataModel(this.pedidoService);
+		this.tipoItem = TipoItem.PRODUTO;
+		this.itens = this.itemService.buscarTodos(this.tipoItem);
 
 	}
 

@@ -17,7 +17,7 @@
 				<p:dataTable id="tabelaPedido" var="pedido" value="#{pedidoMB.pedidosLazyDataModel}" widgetVar="tabelaPedido" 
 					emptyMessage="Não há pedidos com essa especificação" paginator="true" rows="5" lazy="true"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
-						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"  
+						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,20"  
 					resizableColumns="true" style="margin-top:30px">
 
 					<f:facet name="header">
@@ -32,7 +32,7 @@
 					</p:column>
 					
 					<p:column id="data" sortBy="#{pedido.dataEmissao}" filterBy="#{pedido.dataEmissao}" filterMatchMode="contains"
-							filterStyleClass="filterField" headerText="Data" width="100" > 
+							filterStyleClass="filterField" headerText="Data" width="150" > 
 						<h:outputText value="#{pedido.dataEmissao}" >
 							<f:convertDateTime pattern="dd/MM/yyyy" />
 						</h:outputText>
