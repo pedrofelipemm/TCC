@@ -6,87 +6,85 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">	
 
-<h:head>
-	<link rel="shortcut icon" href="/Mendes/img/favicon.ico" type="image/x-icon" />
-	<link rel="stylesheet" href="/Mendes/css/style.css" />
-	<script language="JScript" src="/Mendes/javascript/calendarPtBr.js"></script>
-	<script src="/Mendes/javascript/jquery.maskedinput.js" type="text/javascript"></script>
-	<title>Tracking Mendes</title>
+	<h:head>
+		<link rel="shortcut icon" href="/Mendes/img/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="/Mendes/css/style.css" />
+		<script language="JScript" src="/Mendes/javascript/calendarPtBr.js"></script>
+		<script src="/Mendes/javascript/jquery.maskedinput.js" type="text/javascript"></script>
+		<title>Tracking Mendes</title>
 	
-	<script type="text/javascript">
-		function ext() {
-	        this.cfg.axes.yaxis.tickOptions = {
-	            formatString : '%d'
-	        };
-	    }
-	</script>
+		<script type="text/javascript">
+			function ext() {
+		        this.cfg.axes.yaxis.tickOptions = {
+	    	        formatString : '%d'
+		        };
+		    }
+		</script>
 	
-</h:head>
+	</h:head>
 
-<h:body style="background: url(/Mendes/img/shattered.png) !important;">
-	<div id="wrap">
-		<div id="topo">
-			<h1 class="logo" >
-				<a href="/Mendes/paginas/index.xhtml">
-					<img src="/Mendes/img/logo-site.png" width="200" />
-				</a>
-			</h1>
-			<h:form>
-				<div class="main-menu">
-					<ul class="nav">
-						<li class="list-item">
-							<a href="/Mendes/paginas/realizarPedido.xhtml">Pedido</a>
-						</li>
-						<li class="list-item">
-							<a href="#">Cadastro</a>
-							<ul class="sub-nav">
-								<li class="sub-list-item"><a href="/Mendes/paginas/cadastroCliente.xhtml">Cliente</a></li>
-								<li class="sub-list-item"><a href="/Mendes/paginas/cadastroProduto.xhtml">Produto</a></li>
-								<li class="sub-list-item"><a href="/Mendes/paginas/cadastroServico.xhtml">Serviço</a></li>
-								<li class="sub-list-item"><a href="/Mendes/paginas/cadastroFeedback.xhtml">Feedback</a></li>
-								<li class="sub-list-item"><a href="/Mendes/paginas/cadastroMetasGlobais.xhtml">Cadastro Metas Globais</a></li>
-							</ul>
-						</li>
-						<li class="list-item">
-							<a href="#">Consulta</a>
-							<ul class="sub-nav">
-								<li class="sub-list-item"><a href="/Mendes/paginas/consultaCliente.xhtml">Clientes</a></li>
-								<li class="sub-list-item"><a href="/Mendes/paginas/consultaProduto.xhtml">Produtos</a></li>
-								<li class="sub-list-item"><a href="/Mendes/paginas/consultaServico.xhtml">Serviços</a></li>
-								<li class="sub-list-item"><a href="/Mendes/paginas/consultaFeedback.xhtml">Feedbacks</a></li>
-								<li class="sub-list-item"><a href="/Mendes/paginas/consultaPedido.xhtml">Pedidos</a></li>
-							</ul>
-						</li>
-						<li class="list-item">
-							<a href="#">Estatisticas</a>
-							<ul class="sub-nav">
-								<li class="sub-list-item"><a href="/Mendes/paginas/graficoClientesConquistados.xhtml">Clientes Conquistados</a></li>
-								<li class="sub-list-item"><a href="/Mendes/paginas/graficoAtendimentosRealizados.xhtml">Atendimentos Realizados</a></li>
-								<li class="sub-list-item"><a href="/Mendes/paginas/graficoMetasEspecificas.xhtml">Produtos/Servicos Específicos</a></li>
-								<li class="sub-list-item"><a href="/Mendes/paginas/graficoProdutoServicoGeral.xhtml">Produtos/Servicos Metas Globais</a></li>
-							</ul>
-						</li>
-						<li class="list-item">
-							<a href="/Mendes/paginas/relatorios.xhtml">Relatórios</a>
-						</li>
-					</ul>
+	<h:body style="background: url(/Mendes/img/shattered.png) !important;">
+		<div id="wrap">
+			<div id="topo">
+				<h1 class="logo" >
+					<a href="/Mendes/paginas/index.xhtml">
+						<img src="/Mendes/img/logo-site.png" width="200" />
+					</a>
+				</h1>
+				<h:form>
+					<div class="main-menu">
+						<ul class="nav">
+							<li class="list-item">
+								<a href="/Mendes/paginas/realizarPedido.xhtml">Pedido</a>
+							</li>
+							<li class="list-item">
+								<a href="#">Cadastro</a>
+								<ul class="sub-nav">
+									<li class="sub-list-item"><a href="/Mendes/paginas/cadastroCliente.xhtml">Cliente</a></li>
+									<li class="sub-list-item"><a href="/Mendes/paginas/cadastroProduto.xhtml">Produto</a></li>
+									<li class="sub-list-item"><a href="/Mendes/paginas/cadastroServico.xhtml">Serviço</a></li>
+									<li class="sub-list-item"><a href="/Mendes/paginas/cadastroFeedback.xhtml">Feedback</a></li>
+									<li class="sub-list-item"><a href="/Mendes/paginas/cadastroMetasGlobais.xhtml">Cadastro Metas Globais</a></li>
+								</ul>
+							</li>
+							<li class="list-item">
+								<a href="#">Consulta</a>
+								<ul class="sub-nav">
+									<li class="sub-list-item"><a href="/Mendes/paginas/consultaCliente.xhtml">Clientes</a></li>
+									<li class="sub-list-item"><a href="/Mendes/paginas/consultaProduto.xhtml">Produtos</a></li>
+									<li class="sub-list-item"><a href="/Mendes/paginas/consultaServico.xhtml">Serviços</a></li>
+									<li class="sub-list-item"><a href="/Mendes/paginas/consultaFeedback.xhtml">Feedbacks</a></li>
+									<li class="sub-list-item"><a href="/Mendes/paginas/consultaPedido.xhtml">Pedidos</a></li>
+								</ul>
+							</li>
+							<li class="list-item">
+								<a href="#">Estatisticas</a>
+								<ul class="sub-nav">
+									<li class="sub-list-item"><a href="/Mendes/paginas/graficoClientesConquistados.xhtml">Clientes Conquistados</a></li>
+									<li class="sub-list-item"><a href="/Mendes/paginas/graficoAtendimentosRealizados.xhtml">Atendimentos Realizados</a></li>
+									<li class="sub-list-item"><a href="/Mendes/paginas/graficoMetasEspecificas.xhtml">Produtos/Servicos Específicos</a></li>
+									<li class="sub-list-item"><a href="/Mendes/paginas/graficoProdutoServicoGeral.xhtml">Produtos/Servicos Metas Globais</a></li>
+								</ul>
+							</li>
+							<li class="list-item">
+								<a href="/Mendes/paginas/relatorios.xhtml">Relatórios</a>
+							</li>
+						</ul>
+					</div>
+				</h:form>
+			</div>
+			<div id="margin-content">
+				<div id="content">
+					<p:messages id="mensagem" globalOnly="true" autoUpdate="true">
+						<p:effect type="drop" event="load" delay="5000" speed="1000" />
+					</p:messages>
+					
+					<ui:insert name="conteudo">
+						
+					</ui:insert>
 				</div>
-			</h:form>
-		</div>
-		<div id="margin-content">
-			<div id="content">
-				<p:messages id="mensagem" globalOnly="true" autoUpdate="true">
-					<p:effect type="drop" event="load" delay="5000" speed="1000" />
-				</p:messages>
-				
-				<ui:insert name="conteudo">
-				Espaço destinado ao conteúdo
-			</ui:insert>
 			</div>
 		</div>
-
-	</div>
-
-</h:body>
+	</h:body>
 
 </html>
