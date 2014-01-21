@@ -11,12 +11,12 @@
 	
 		<intercept-url pattern="/**" access="isAuthenticated()" />
 		
-		<form-login login-page="/spring_security_login"
+		<form-login login-page="/spring_security_login" 
 			default-target-url="/"
 			always-use-default-target="true"/>
 		
 	</http>
-	
+     
 	<authentication-manager>
 		<authentication-provider>
 			<user-service>

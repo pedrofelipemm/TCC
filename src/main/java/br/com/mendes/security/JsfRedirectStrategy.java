@@ -23,7 +23,7 @@ public class JsfRedirectStrategy extends DefaultRedirectStrategy {
 		if (isAjaxRequest(request)) {
 
 			try {
-				// in order for the url to be valid in the XML content
+
 				if (StringUtils.contains(url, "&")) {
 					url = StringUtils.replace(url, "&", "&amp;");
 				}
@@ -39,20 +39,17 @@ public class JsfRedirectStrategy extends DefaultRedirectStrategy {
 		super.sendRedirect(request, response, url);
 	}
 
-	/**
-	 * Copied from
-	 * org.springframework.faces.webflow.JsfAjaxHandler.isAjaxRequestInternal
-	 * 
-	 * @param request
-	 * @return
-	 */
 	private boolean isAjaxRequest(HttpServletRequest request) {
+
 		String header = request.getHeader("Faces-Request");
 		String param = request.getParameter("javax.faces.partial.ajax");
+
 		return ("partial/ajax".equals(header) || "true".equals(param)) ? true : false;
+
 	}
 
 	private void returnPartialResponseRedirect(HttpServletRequest request, HttpServletResponse response, String url) throws Exception {
+
 		String redirectUrl = calculateRedirectUrl(request.getContextPath(), url);
 		redirectUrl = response.encodeRedirectURL(redirectUrl);
 
@@ -66,34 +63,20 @@ public class JsfRedirectStrategy extends DefaultRedirectStrategy {
 		out.write(responseStr);
 		out.flush();
 		out.close();
+
 	}
 
-	/**
-	 * Copied from parent (Spring Security 3.1.2), because it's "private"!
-	 * Changed access modifier to "protected".
-	 * 
-	 * @param contextPath
-	 * @param url
-	 * @return
-	 */
 	protected String calculateRedirectUrl(String contextPath, String url) {
-		if (!UrlUtils.isAbsoluteUrl(url)) {
-			if (this.contextRelative) {
-				return url;
-			} else {
-				return contextPath + url;
-			}
-		}
 
-		// Full URL, including http(s)://
+		if (!UrlUtils.isAbsoluteUrl(url)) {
+			return this.contextRelative ? url : contextPath + url;
+		}
 
 		if (!this.contextRelative) {
 			return url;
 		}
 
-		// Calculate the relative URL from the fully qualified URL, minus the
-		// scheme and base context.
-		url = url.substring(url.indexOf("://") + 3); // strip off scheme
+		url = url.substring(url.indexOf("://") + 3);
 		url = url.substring(url.indexOf(contextPath) + contextPath.length());
 
 		if (url.length() > 1 && url.charAt(0) == '/') {
@@ -103,10 +86,6 @@ public class JsfRedirectStrategy extends DefaultRedirectStrategy {
 		return url;
 	}
 
-	/**
-	 * If <tt>true</tt>, causes any redirection URLs to be calculated minus the
-	 * protocol and context path (defaults to <tt>false</tt>).
-	 */
 	@Override
 	public void setContextRelative(boolean useRelativeContext) {
 		this.contextRelative = useRelativeContext;

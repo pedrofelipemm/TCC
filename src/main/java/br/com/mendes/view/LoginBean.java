@@ -1,32 +1,28 @@
 package br.com.mendes.view;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 
-@Controller
-@Scope("request")
+@ManagedBean(name = "loginBean")
+@ViewScoped
 public class LoginBean {
 
+	@ManagedProperty(value = "#{authenticationManager}")
 	private AuthenticationManager authenticationManager;
 
 	private String username;
 
 	private String password;
-
-	@Autowired
-	public LoginBean(AuthenticationManager authenticationManager) {
-		this.authenticationManager = authenticationManager;
-	}
 
 	public String login() {
 
@@ -51,4 +47,29 @@ public class LoginBean {
 			return "fail";
 		}
 	}
+
+	public AuthenticationManager getAuthenticationManager() {
+		return this.authenticationManager;
+	}
+
+	public void setAuthenticationManager(AuthenticationManager authenticationManager) {
+		this.authenticationManager = authenticationManager;
+	}
+
+	public String getUsername() {
+		return this.username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return this.password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 }

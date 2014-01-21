@@ -16,7 +16,7 @@
 			
 <!-- 			<h:message for="login" styleClass="alert alert-error"/> -->
 <!-- 				<div> -->
-<!-- 					<h:form id="login" method="post"> -->
+<!-- 					<h:form prependId="false"> -->
 						
 <!-- 						<h:outputLabel for="username" value="Username"/> -->
 <!-- 						<h:inputText id="username" value="#{loginBean.username}"/> -->
@@ -30,15 +30,15 @@
 <!-- 					</h:form> -->
 <!-- 				</div> -->
 
- 			<form action="j_spring_security_check" method="post">
-                <h:panelGrid columns="2" cellpadding="5">
-                    <h:outputLabel for="j_username" value="Username: *" />
-                    <h:inputText id="j_username" required="true"/>
-                    <h:outputLabel for="j_password" value="Password: * " />
-                    <h:inputSecret id="j_password" required="true"/>
-                    <h:commandButton value="Login"/>
-                </h:panelGrid>
-            </form>
+<!--  			<form action="j_spring_security_check" method="post"> -->
+<!--                 <h:panelGrid columns="2" cellpadding="5"> -->
+<!--                     <h:outputLabel for="j_username" value="Username: *" /> -->
+<!--                     <h:inputText id="j_username" required="true"/> -->
+<!--                     <h:outputLabel for="j_password" value="Password: * " /> -->
+<!--                     <h:inputSecret id="j_password" required="true"/> -->
+<!--                     <h:commandButton value="Login"/> -->
+<!--                 </h:panelGrid> -->
+<!--             </form> -->
 			
 			</ui:define>
 		</ui:decorate>
