@@ -37,7 +37,7 @@ public class ServicoDAOImplTest extends DAOImplTest {
 		List<Servico> servicos = this.servicoDAO.getAll();
 
 		Assert.assertNotNull(servicos);
-		Assert.assertFalse(servicos.isEmpty());
+		Assert.assertEquals(2, servicos.size());
 	}
 
 	@Test
@@ -50,14 +50,12 @@ public class ServicoDAOImplTest extends DAOImplTest {
 
 		List<Servico> servicos = this.servicoDAO.obterTodosServicosPaginados(0, 5, "nome", SortOrder.ASCENDING, filters);
 
-		Assert.assertEquals(2D, servicos.size(), 0.1);;
+		Assert.assertEquals(2, servicos.size());
 
 		filters.put("custo", "-");
 
 		servicos = this.servicoDAO.obterTodosServicosPaginados(0, 5, "nome", SortOrder.ASCENDING, filters);
 
 		Assert.assertTrue(servicos.isEmpty());
-
 	}
-
 }

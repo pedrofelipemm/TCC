@@ -54,10 +54,12 @@ public class MainDataLoader {
 			e.printStackTrace();
 
 		} finally {
-			if (commit) {
-				tx.commit();
-			} else {
-				tx.rollback();
+			if (tx != null) {
+				if (commit) {
+					tx.commit();
+				} else {
+					tx.rollback();
+				}
 			}
 			if (session != null) {
 				session.close();

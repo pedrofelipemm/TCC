@@ -1,6 +1,5 @@
 package br.com.mendes.model.dao.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -16,21 +15,19 @@ public class ClienteDAOImplTest extends DAOImplTest {
 	@Autowired
 	ClienteDAO clienteDAO;
 
-	Cliente cliente;
-
 	@Before
 	public void setUp() throws Exception {
-		this.cliente = new Cliente("Pedro", "Marques", "11.111.111-1", "11111111111", null, new Date());
 
-		save(this.cliente);
+		for (int i = 0; i < 100; i++) {
+			save(new Cliente(null, "Cliente" + i, null, null, null, null, null, null, null, null));
+		}
 	}
 
 	@Test
 	public void getAllTest() {
-		List<Cliente> clientes = this.clienteDAO.getAll();
 
-		Assert.assertNotNull(clientes);
-		Assert.assertFalse(clientes.isEmpty());
+		List<Cliente> clientes = clienteDAO.getAll();
+
+		Assert.assertEquals(100, clientes.size());
 	}
-
 }

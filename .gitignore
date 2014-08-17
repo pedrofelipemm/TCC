@@ -43,6 +43,7 @@ Thumbs.db
 #############################
 build/
 target/
+test-output/
 .metadata/
 .settings/
 
@@ -74,3 +75,5 @@ local.properties
 
 # PDT-specific
 .buildpath
+/target
+/target/

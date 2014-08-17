@@ -24,10 +24,10 @@ public abstract class DAOImplTest {
 
 	protected void save(Object... entidades) {
 		for (Object entidade : entidades) {
-			getSession().saveOrUpdate(entidade);
+			this.getSession().saveOrUpdate(entidade);
 		}
-		getSession().flush();
-		getSession().clear();
+		this.getSession().flush();
+		this.getSession().clear();
 	}
 
 }

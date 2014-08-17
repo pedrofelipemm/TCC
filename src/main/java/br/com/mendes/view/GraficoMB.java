@@ -129,7 +129,7 @@ public class GraficoMB implements Serializable {
 			this.tipo = this.tipoItem.name();
 		}
 
-		if (this.tipoItem.name() != this.tipo) {
+		if (this.tipoItem.name().equals(this.tipo)) {
 			this.codItem = null;
 			this.tipo = this.tipoItem.name();
 		}

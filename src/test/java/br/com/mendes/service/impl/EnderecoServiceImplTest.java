@@ -21,25 +21,32 @@ public class EnderecoServiceImplTest extends DAOImplTest{
 
 	@Before
 	public void setUp() throws Exception {
-		this.endereco = new Endereco("Rua Família musa", 31, "Jardim América", "Casa Branca", "13700-000", Estado.SP, "Brasil");
 
-		save(this.endereco);
+		endereco = new Endereco("Rua Família musa", 31, "Jardim América", "Casa Branca",
+				"13700-000", Estado.SP, "Brasil");
+
+		Endereco endereco2 = new Endereco("Rua São Francisco", 32, "Centro", "Casa Branca",
+				"13700-000", Estado.SP, "Brasil");
+
+		save(endereco, endereco2);
 	}
 
 	@Test
 	public void testObterEnderecoPorCod() {
-		Endereco endereco = this.enderecoService.obterEnderecoPorCod(this.endereco.getCodEndereco());
+
+		Endereco endereco = enderecoService.obterEnderecoPorCod(this.endereco.getCodEndereco());
 
 		Assert.assertNotNull(endereco);
-		Assert.assertEquals(this.endereco, endereco);
+		Assert.assertEquals(endereco, endereco);
 	}
 
 	@Test
 	public void testObterTodosEnderecos() {
-		List<Endereco> enderecos = this.enderecoService.obterTodosEnderecos();
+
+		List<Endereco> enderecos = enderecoService.obterTodosEnderecos();
 
 		Assert.assertNotNull(enderecos);
-		Assert.assertTrue(!enderecos.isEmpty());
+		Assert.assertEquals(2, enderecos.size());
 	}
 
 }

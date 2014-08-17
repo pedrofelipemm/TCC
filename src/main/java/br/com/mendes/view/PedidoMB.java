@@ -184,7 +184,7 @@ public class PedidoMB implements Serializable {
 		pedido.setCliente(new Cliente(this.codCliente));
 		pedido.setValorTotal(calcularTotal());
 
-		if (!this.itensPedido.isEmpty() && this.itensPedido != null) {
+		if (this.itensPedido != null && !this.itensPedido.isEmpty()) {
 			this.pedidoService.criarPedido(pedido);
 
 			for (ItemPedido ip : this.itensPedido) {

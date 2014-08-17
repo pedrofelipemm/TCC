@@ -48,10 +48,9 @@ public class PedidoDAOImplTest extends DAOImplTest {
 		List<Pedido> pedidos = this.pedidoDAO.getAll();
 
 		Assert.assertNotNull(pedidos);
-		Assert.assertFalse(pedidos.isEmpty());
+		Assert.assertEquals(2, pedidos.size());
 	}
 
-	@Test
 	public void obterTodosProdutosPaginadosTest() {
 		Map<String, String> filters = new HashMap<String, String>();
 
@@ -59,16 +58,16 @@ public class PedidoDAOImplTest extends DAOImplTest {
 		filters.put(CONSTANTS.DATAEMISSAO.getDescricao(), "01/11/2013");
 		filters.put(CONSTANTS.VALORTOTAL.getDescricao(), "10000");
 
-		List<Pedido> pedidos = this.pedidoDAO.obterTodosPedidosPaginados(0, 5, CONSTANTS.CLIENTENOME.getDescricao(), SortOrder.ASCENDING, filters);
+		List<Pedido> pedidos = this.pedidoDAO.obterTodosPedidosPaginados(0, 5,
+				CONSTANTS.CLIENTENOME.getDescricao(), SortOrder.ASCENDING, filters);
 
-		Assert.assertEquals(2D, pedidos.size(), 0.1);
+		Assert.assertEquals(2, pedidos.size());
 
 		filters.put(CONSTANTS.DATAEMISSAO.getDescricao(), "02/11/2013");
 
-		pedidos = this.pedidoDAO.obterTodosPedidosPaginados(0, 5, CONSTANTS.CLIENTENOME.getDescricao(), SortOrder.ASCENDING, filters);
+		pedidos = this.pedidoDAO.obterTodosPedidosPaginados(0, 5,
+				CONSTANTS.CLIENTENOME.getDescricao(), SortOrder.ASCENDING, filters);
 
 		Assert.assertTrue(pedidos.isEmpty());
-
 	}
-
 }

@@ -37,7 +37,7 @@ public class ProdutoDAOImplTest extends DAOImplTest {
 		List<Produto> produtos = this.produtoDAO.getAll();
 
 		Assert.assertNotNull(produtos);
-		Assert.assertFalse(produtos.isEmpty());
+		Assert.assertEquals(2, produtos.size());
 	}
 
 	@Test
@@ -50,14 +50,13 @@ public class ProdutoDAOImplTest extends DAOImplTest {
 
 		List<Produto> produtos = this.produtoDAO.obterTodosProdutosPaginados(0, 5, "nome", SortOrder.ASCENDING, filters);
 
-		Assert.assertEquals(2D, produtos.size(), 0.1);
+		Assert.assertEquals(2, produtos.size());
 
 		filters.put("custo", "-");
 
 		produtos = this.produtoDAO.obterTodosProdutosPaginados(0, 5, "nome", SortOrder.ASCENDING, filters);
 
 		Assert.assertTrue(produtos.isEmpty());
-
 	}
 
 	@Test
@@ -68,7 +67,7 @@ public class ProdutoDAOImplTest extends DAOImplTest {
 
 		List<Produto> produtos = this.produtoDAO.obterTodosProdutosPaginados(null, null, null, null, filters);
 
-		Assert.assertEquals(2D, produtos.size(), 0.1);
+		Assert.assertEquals(2, produtos.size());
 
 		filters.clear();
 		filters.put("categoria", "bbgihgji");
@@ -76,7 +75,5 @@ public class ProdutoDAOImplTest extends DAOImplTest {
 		produtos = this.produtoDAO.obterTodosProdutosPaginados(null, null, null, null, filters);
 
 		Assert.assertTrue(produtos.isEmpty());
-
 	}
-
 }
